@@ -6,22 +6,20 @@
         <artifactId>services</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>promotion-service</artifactId>
     <packaging>jar</packaging>
-
     <name>promotion-service</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>促销服务：负责满减、秒杀、限时折扣、买赠等营销活动的创建、规则计算及活动生命周期管理</description>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

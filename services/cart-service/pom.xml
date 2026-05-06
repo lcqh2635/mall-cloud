@@ -6,22 +6,20 @@
         <artifactId>services</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>cart-service</artifactId>
     <packaging>jar</packaging>
-
     <name>cart-service</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>购物车服务：负责购物车商品的增删改查、选中状态管理、价格实时计算及与库存/促销的联动</description>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

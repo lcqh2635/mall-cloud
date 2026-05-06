@@ -6,12 +6,14 @@
         <artifactId>mall-cloud</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>services</artifactId>
     <packaging>pom</packaging>
-
     <name>services</name>
-    <url>http://maven.apache.org</url>
+    <description>
+        业务微服务聚合模块：统一管理所有业务微服务子模块，包含用户、商品、订单、支付、库存、物流、购物车、
+        优惠券、促销、推荐、搜索、评价、通知、聊天及认证等核心业务服务
+    </description>
+
     <modules>
         <module>auth-service</module>
         <module>cart-service</module>
@@ -30,16 +32,7 @@
         <module>user-service</module>
     </modules>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>

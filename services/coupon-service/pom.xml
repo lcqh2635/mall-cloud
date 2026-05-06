@@ -6,22 +6,20 @@
         <artifactId>services</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>coupon-service</artifactId>
     <packaging>jar</packaging>
-
     <name>coupon-service</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>优惠券服务：负责优惠券的创建、发放、领取、核销及有效期管理，支持满减、折扣等多种券类型</description>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
