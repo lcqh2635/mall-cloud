@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 项目模型版本 -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -8,136 +9,550 @@
         <version>4.0.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <!-- 项目坐标 -->
+    <!-- 1. 以下配置是基本信息，用于描述项目的基本信息，包括项目名称、版本号、描述、URL、许可证信息、开发者信息、SCM信息等 -->
+    <!-- 指定项目的组织名或公司名，用于唯一标识项目 -->
     <groupId>com.mall</groupId>
+    <!-- 指定项目的名称，与 <groupId> 组合后可以唯一标识一个项目 -->
     <artifactId>mall-cloud</artifactId>
+    <!-- 指定项目的版本号 -->
     <version>0.0.1-SNAPSHOT</version>
+    <!-- 指定项目的打包方式，这里是 pom 类型，表示这是一个父项目，不参与打包 -->
+    <!-- 指定项目的打包类型，默认为 jar，也可以是 war, ear, pom 等 -->
     <packaging>pom</packaging>
+    <!-- 项目名称与描述 -->
+    <!-- 项目元信息，用于文档、仓库展示、许可证生成等 -->
     <name>mall-cloud</name>
     <description>mall-cloud</description>
-    <url/>
+    <url>https://gitee.com/lcqh2635/urbane-commerce</url>
+
+    <!-- 声明项目开源许可证（Maven Central 要求，企业内部项目也建议声明）-->
     <licenses>
-        <license/>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
+
+    <!-- 声明项目所属组织（常用于生成 LICENSE、NOTICE 文件）-->
+    <organization>
+        <name>某某科技有限公司</name>
+        <url>https://www.example.com</url>
+    </organization>
+
+    <!-- 列出核心开发者（用于生成项目文档、邮件列表等）-->
     <developers>
-        <developer/>
+        <developer>
+            <id>zhangsan</id>
+            <name>张三</name>
+            <email>zhangsan@example.com</email>
+            <organization>某某科技</organization>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
     </developers>
+
+    <!-- 贡献者列表 -->
+    <contributors>
+        <contributor>
+            <!-- 贡献者姓名（必填） -->
+            <name>张小明</name>
+            <!-- 邮箱（可选） -->
+            <email>zhangxiaoming@example.com</email>
+            <!-- 个人主页或 GitHub 链接（可选） -->
+            <url>https://github.com/zhangxiaoming</url>
+            <!-- 所属组织（可选） -->
+            <organization>自由开发者</organization>
+            <organizationUrl>https://example.com</organizationUrl>
+            <!-- 贡献角色（可选，可多个） -->
+            <roles>
+                <role>文档翻译</role>
+                <role>bug 修复</role>
+            </roles>
+            <!-- 时区（可选，如 +8, -5） -->
+            <timezone>+8</timezone>
+            <!-- 其他属性（可选，自定义键值对） -->
+            <properties>
+                <githubId>zhangxiaoming</githubId>
+            </properties>
+        </contributor>
+
+        <contributor>
+            <name>Wang Wu</name>
+            <email>wangwu.dev@outlook.com</email>
+            <url>https://gitlab.com/wangwu</url>
+            <roles>
+                <role>性能优化</role>
+                <role>单元测试补充</role>
+            </roles>
+            <timezone>+8</timezone>
+        </contributor>
+    </contributors>
+
+    <!-- 2. 定义多模块项目中的子模块列表 -->
     <modules>
-        <module>services</module>
-        <module>commons</module>
         <module>admin-server</module>
         <module>api-gateway</module>
         <module>code-generator</module>
+        <module>commons</module>
+        <module>services</module>
     </modules>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+
+    <!-- 3. 定义一系列属性值，用于简化配置中的硬编码字符串 -->
     <properties>
+        <!-- 全项目唯一版本号，所有子模块共享此变量 -->
+        <!-- BOM 自己维护版本号，发布时统一用命令行传入，根 pom 和 BOM 保持一致 -->
+        <revision>1.0.0</revision>
+
+        <!-- Java -->
         <java.version>25</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- ==================== 自定义占位符配置 ==================== -->
+        <!-- 使用 @...@ 作为 Maven 资源过滤的占位符，避免与 Spring EL #{...}、Thymeleaf [[${...}]] 冲突 -->
+        <!-- 推荐：@db.url@、@redis.host@ 等，视觉清晰，不易误读 -->
+        <maven.resources.delimiter>@</maven.resources.delimiter>
+
+        <!-- ==================== 环境默认值（会被 Profile 覆盖）==================== -->
+        <!-- 注意：此处为默认值，仅用于本地开发，生产环境由 CI/CD 注入 -->
+        <spring.profiles.active>dev</spring.profiles.active>
+        <db.url>@db.url@</db.url>
+        <db.username>@db.username@</db.username>
+        <db.password>@db.password@</db.password>
+        <redis.host>@redis.host@</redis.host>
+        <gateway.url>@gateway.url@</gateway.url>
+        <log.level>@log.level@</log.level>
+        <mock.enabled>@mock.enabled@</mock.enabled>
+        <powerjob.server>@powerjob.server@</powerjob.server>
+        <app.version>@project.version@</app.version> <!-- 使用 Maven 内置变量，仍用 @ 符号 -->
+
+        <docker-maven-plugin.version>0.45.0</docker-maven-plugin.version>
+        <docker.host>http://192.168.56.10:2375</docker.host>
+        <docker.cert>${project.basedir}/cert</docker.cert>
+        <!-- docker阿里云私服仓库地址 -->
+        <docker.registry>registry.cn-hangzhou.aliyuncs.com</docker.registry>
+        <!-- 阿里云镜像服务命名空间 -->
+        <docker.namespace>lcqh</docker.namespace>
+        <!-- 阿里云镜像服务命名空间 -->
+        <docker.username>龙茶清欢</docker.username>
+        <!-- 阿里云镜像服务命名空间 -->
+        <docker.password>@lf20180205049</docker.password>
+        <docker.image.prefix>urbane-commerce</docker.image.prefix>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-restclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-docker-compose</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-restclient-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
+    <!-- 7. 定义构建过程中的配置，如插件配置、环境变量等 -->
     <build>
+        <!-- 项目打包名称设定 -->
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <resources>
+            <!-- ==================== 资源过滤配置（核心！）==================== -->
+            <!-- 1. 为所有资源目录启用过滤，让 Maven 替换 @...@ 占位符 -->
+            <!-- 2. 使用自定义分隔符 @，避免与 Spring EL #{...} 冲突 -->
+            <!-- 3. filtering=true 表示启用变量替换 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <!-- 自定义占位符符号：@ 开头，@ 结尾 -->
+                <!-- 重要：必须与 properties 中的 maven.resources.delimiter 一致 -->
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.json</include>
+                    <include>**/*.conf</include>
+                </includes>
+            </resource>
+
+            <!-- 2. 非过滤资源：保留原始内容，不替换任何符号 -->
+            <!-- 例如：Dockerfile、K8s YAML、模板文件中包含的 ${} 需要保留 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <!-- 排除所有 .yml/.properties，只保留其他文件 -->
+                <excludes>
+                    <exclude>**/*.yml</exclude>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.json</exclude>
+                    <exclude>**/*.conf</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <!-- 有关 Maven 插件的配置，参考 SpringBoot 官网 https://docs.springjava.cn/spring-boot/maven-plugin/getting-started.html -->
+        <!-- 项目maven插件统一管理，如果以下插件存在于 spring-boot-dependencies 的版本管理中，则此处相当于重写了父POM配置-->
+        <pluginManagement>
+            <plugins>
+                <!-- 由于 spring-boot-dependencies 中已经包含了该插件版本管理，此处继承父POM配置，无需加版本号 -->
+                <!-- 使用教程参考官网 https://graalvm.github.io/native-build-tools/latest/index.html -->
+                <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                </plugin>
+                <!-- 用于构建和打包Spring Boot应用程序的Maven插件 -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <!-- 指定一些插件的具体配置参数 -->
+                    <configuration>
+                        <!-- 指定打包后的文件名。默认值为${project.artifactId}-${project.version} -->
+                        <finalName>${project.build.finalName}</finalName>
+                        <!-- 指定是否启用分层打包，即将应用程序的依赖项和类文件分别打包到不同的层中 -->
+                        <layers>
+                            <enabled>true</enabled>
+                        </layers>
+                        <!-- 指定要排除的依赖项，这些依赖项不会被打包进可执行的JAR文件中 -->
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                        <image>
+                            <!-- 自定义镜像名称 -->
+                            <name>${project.artifactId}:${project.version}</name>
+                            <publish>true</publish>
+                        </image>
+                        <docker>
+                            <publishRegistry>
+                                <username>user</username>
+                                <password>secret</password>
+                            </publishRegistry>
+                        </docker>
+                    </configuration>
+                </plugin>
+                <!-- 用于编译项目源代码。将Java源代码编译为Java字节码文件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <!-- 配置注解处理器路径 -->
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </path>
+                            <path>
+                                <groupId>io.github.linpeilie</groupId>
+                                <artifactId>mapstruct-plus-processor</artifactId>
+                            </path>
+                            <!-- 在 lombok 1.18.16 及以后，mapstruct 搭配 lombok 使用时需要添加这个配置 -->
+                            <!-- 参考自
+                                mapstruct-plus 的说明 https://www.mapstruct.plus/guide/faq.html#%E4%B8%8E-lombok-%E6%95%B4%E5%90%88
+                                mybatis-flex 的说明 https://mybatis-flex.com/zh/others/apt.html#%E5%92%8C-lombok%E3%80%81mapstruct-%E6%95%B4%E5%90%88
+                            -->
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok-mapstruct-binding</artifactId>
+                                <version>0.2.0</version>
+                            </path>
+                            <!-- https://mybatis-flex.com/zh/intro/maven.html -->
+                            <!-- https://mybatis-flex.com/zh/others/apt.html#%E5%92%8C-lombok%E3%80%81mapstruct-%E6%95%B4%E5%90%88 -->
+                            <path>
+                                <groupId>com.mybatis-flex</groupId>
+                                <artifactId>mybatis-flex-processor</artifactId>
+                            </path>
+                            <path>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-compile</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                            <configuration>
+                                <annotationProcessorPaths>
+                                    <path>
+                                        <groupId>org.springframework.boot</groupId>
+                                        <artifactId>spring-boot-configuration-processor</artifactId>
+                                    </path>
+                                    <path>
+                                        <groupId>org.projectlombok</groupId>
+                                        <artifactId>lombok</artifactId>
+                                    </path>
+                                </annotationProcessorPaths>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>default-testCompile</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                            <configuration>
+                                <annotationProcessorPaths>
+                                    <path>
+                                        <groupId>org.projectlombok</groupId>
+                                        <artifactId>lombok</artifactId>
+                                    </path>
+                                </annotationProcessorPaths>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- ==================== 自定义资源插件（可选，增强控制）==================== -->
+                <!-- Maven 默认资源插件已足够，但若需更复杂逻辑（如动态生成文件），可扩展 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <configuration>
+                        <!-- 关键：指定自定义分隔符，必须与 properties 中一致 -->
+                        <delimiters>
+                            <delimiter>@</delimiter>
+                        </delimiters>
+                        <!-- 是否使用默认分隔符 ${}，设为 false 避免冲突 -->
+                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                        <!-- 编码 -->
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+
+                <!-- 关于io.fabric8 docker插件配置，请查看 https://dmp.fabric8.io/ -->
+                <!-- 首先服务器需要开启Docker的SSH连接，设置Docker允许远程连接。然后配置 IDEA 连接 docker 服务，点击左下角的绿色设置图标，名称为服务，点击右侧的加号，选择 docker，配置 docker 服务的地址和证书路径 -->
+                <!-- 项目服务要打包成 docker镜像，需要连接本地/远程 docker服务，默认是本地docker服务，如果使用远程docker服务，需要配置远程服务地址和证书路径 -->
+                <!--打包好了 docker镜像后，需要将镜像推送到阿里云的镜像仓库。镜像名称必须按照阿里云的规则来，否则无法使用插件完成上传 -->
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker-maven-plugin.version}</version>
+                    <!-- docker插件配置 -->
+                    <configuration>
+                        <!-- docker远程服务地址 -->
+                        <dockerHost>${docker.host}</dockerHost>
+                        <!-- 由于docker服务使用加密通信，开启了认证，因此需要提供通信证书，如果不需要认证，则无需配置此参数 -->
+                        <!--                        <certPath>${docker.cert}</certPath>-->
+                        <!-- docker远程私服仓库地址，如阿里云效私有仓库 -->
+                        <!-- 参考阿里云官网文档，配置阿里云效私有仓库地址 https://cr.console.aliyun.com/cn-hangzhou/instance/repositories -->
+                        <registry>${docker.registry}</registry>
+                        <!-- 私服仓库认证配置，用户名为阿里云账号全名，密码为开通服务时设置的密码 -->
+                        <authConfig>
+                            <push>
+                                <username>${docker.username}</username>
+                                <password>${docker.password}</password>
+                            </push>
+                        </authConfig>
+                        <!-- 镜像制作配置，以阿里云效私有仓库为例 -->
+                        <images>
+                            <image>
+                                <!-- docker制作镜像名称，格式必须遵照阿里云的规则，否则无法使用插件完成上传 -->
+                                <!-- 镜像名称必须按照阿里云的规则来，否则无法使用插件完成上传，需要手动打 tag 上传 -->
+                                <name>${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>
+                                <!-- 镜像构建配置 -->
+                                <build>
+                                    <!-- DockerFile的存放位置，每个服务制作成docker镜像都需要一个DockerFile文件 -->
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.ly.smart-doc</groupId>
+                    <artifactId>smart-doc-maven-plugin</artifactId>
+                    <version>2.7.7</version>
+                    <configuration>
+                        <configFile>./src/main/resources/smart-doc.json</configFile>
+                        <projectName>${project.description}</projectName>
+                        <includes>
+                            <!-- 使用了mybatis-plus的Page分页需要include所使用的源码包 -->
+                            <include>com.baomidou:mybatis-plus-extension</include>
+                            <!-- 使用了mybatis-plus的IPage分页需要include mybatis-plus-core-->
+                            <include>com.baomidou:mybatis-plus-core</include>
+                            <!-- 使用了jpa的分页需要include所使用的源码包 -->
+                            <include>org.springframework.data:spring-data-commons</include>
+                        </includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <!--如果不需要在执行编译时启动smart-doc，则将phase注释掉-->
+                            <phase>compile</phase>
+                            <goals>
+                                <!--smart-doc提供了html、openapi、markdown等goal，可按需配置-->
+                                <goal>html</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <!-- 必须配置 flatten-maven-plugin，否则发布的 pom 中 ${revision} 不会被展开 -->
         <plugins>
             <plugin>
-                <groupId>org.graalvm.buildtools</groupId>
-                <artifactId>native-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.6.0</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>default-compile</id>
-                        <phase>compile</phase>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
                         <goals>
-                            <goal>compile</goal>
+                            <goal>flatten</goal>
                         </goals>
-                        <configuration>
-                            <annotationProcessorPaths>
-                                <path>
-                                    <groupId>org.springframework.boot</groupId>
-                                    <artifactId>spring-boot-configuration-processor</artifactId>
-                                </path>
-                                <path>
-                                    <groupId>org.projectlombok</groupId>
-                                    <artifactId>lombok</artifactId>
-                                </path>
-                            </annotationProcessorPaths>
-                        </configuration>
                     </execution>
                     <execution>
-                        <id>default-testCompile</id>
-                        <phase>test-compile</phase>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
                         <goals>
-                            <goal>testCompile</goal>
+                            <goal>clean</goal>
                         </goals>
-                        <configuration>
-                            <annotationProcessorPaths>
-                                <path>
-                                    <groupId>org.projectlombok</groupId>
-                                    <artifactId>lombok</artifactId>
-                                </path>
-                            </annotationProcessorPaths>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
+    <!-- 该配置会出现在 Maven 项目的仓库列表中，格式为 aliyun https://maven.aliyun.com/repository/public -->
+    <!-- 如果想使用其它代理仓库，可在<repositories></repositories>节点中加入对应的仓库使用地址。以使用 central 代理仓为例 -->
+    <repositories>
+        <!-- repository 用于存储和检索普通的 Maven 依赖构件 -->
+        <repository>
+            <id>central</id>
+            <name>阿里云 Maven 中央仓库</name>
+            <url>https://maven.aliyun.com/repository/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun</id>
+            <name>阿里云公共 Maven 仓库，central仓和jcenter仓的聚合仓</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- 还可以接着配置插件下载的仓库，如阿里云校 Maven 私有仓库，配置参考云校官网 https://packages.aliyun.com/ -->
+        <repository>
+            <id>2330291-release-Ikhm5V</id>
+            <name>阿里云效 Maven 私有仓库</name>
+            <url>https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!-- pluginRepository 用于存储和检索 Maven 插件 -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun</id>
+            <name>阿里云公共 Maven 插件仓库</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- 5. 定义项目部署配置，用于指定项目的部署仓库，如：Maven 私服、Nexus 私服、阿里云镜像仓 https://packages.aliyun.com/ 库等 -->
+    <!-- 自定义 POM 或 starter 部署到云端，需要指定部署的目标仓库，如：阿里云仓库，nexus私服等。还需要配置 Maven 的 settings.xml 文件中的 server 节点 -->
+    <!-- 自定义 POM 文件必须部署到网上的仓库，才能在其他项目中被依赖，否则无法被其他项目依赖 -->
+    <!-- 下面已将自定义 starter 部署到阿里云效私有仓库为例，残酷地址为 https://packages.aliyun.com/  点击其中的 生产库-release 即可 -->
+    <!-- 阿里云效使用文档：https://help.aliyun.com/document_detail/153834.html?spm=a2c4g.153780.0.0.19253eedDnybVd -->
+    <distributionManagement>
+        <repository>
+            <id>2330291-release-Ikhm5V</id>
+            <url>https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- 6. 定义项目多环境配置，请务必在打包时勾选上自己想要的环境，否则激活默认环境 -->
+    <!-- ==================== Maven Profiles：多环境配置 ==================== -->
+    <profiles>
+        <!-- 开发环境：默认激活 -->
+        <profile>
+            <!-- 该配置的唯一标识符，便于指定激活。配置名称可以任取，例如也可以是：dev、prod、test 等等 -->
+            <id>dev</id>
+            <!-- 默认是否激活此配置 -->
+            <activation>
+                <jdk>25</jdk>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <!-- 定义一系列的键值对，在构建过程中使用这些属性值 -->
+            <properties>
+                <!-- 环境标识，需要与配置文件的名称相对应。使用 @...@ 格式，与资源过滤器一致 -->
+                <spring.profiles.active>dev</spring.profiles.active>
+                <db.url>jdbc:postgresql://localhost:5432/insurance_dev</db.url>
+                <db.username>insurance_dev_user</db.username>
+                <db.password>dev_password_123</db.password>
+                <redis.host>localhost</redis.host>
+                <gateway.url>http://localhost:8080/api</gateway.url>
+                <log.level>DEBUG</log.level>
+                <mock.enabled>true</mock.enabled>
+                <powerjob.server>http://localhost:7700</powerjob.server>
+                <!-- 保留 Maven 内置变量，仍用 @ 符号 -->
+                <app.version>${project.version}</app.version>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <!-- 如果使用的是默认的public命名空间，可以不设置namespace，直接使用 <nacos.namespace/> 单标签 -->
+                <nacos.namespace>91452963-e494-45b7-b518-5430c283bca1</nacos.namespace>
+            </properties>
+        </profile>
+
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <db.url>jdbc:postgresql://pg-test.company.com:5432/insurance_test</db.url>
+                <db.username>test_user</db.username>
+                <db.password>test_pass</db.password>
+                <redis.host>redis-test.company.com</redis.host>
+                <gateway.url>https://api-test.company.com/gateway</gateway.url>
+                <log.level>INFO</log.level>
+                <mock.enabled>true</mock.enabled>
+                <powerjob.server>https://powerjob-test.company.com</powerjob.server>
+                <app.version>${project.version}</app.version>
+            </properties>
+        </profile>
+
+        <!-- 生产环境 -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <db.url>jdbc:postgresql://pg-prod.company.com:5432/insurance_prod</db.url>
+                <db.username>prod_user</db.username>
+                <!-- 生产密码不写入 pom.xml！此处仅为占位，实际由 CI/CD 注入 -->
+                <db.password>@db.password@</db.password>
+                <redis.host>redis-prod.company.com</redis.host>
+                <gateway.url>https://api.company.com/gateway</gateway.url>
+                <log.level>INFO</log.level>
+                <mock.enabled>false</mock.enabled>
+                <powerjob.server>https://powerjob-prod.company.com</powerjob.server>
+                <app.version>${project.version}</app.version>
+                <!-- 生产构建跳过测试 -->
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
