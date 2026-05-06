@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    nacos:
+      # 生产环境全部从环境变量注入，不写任何明文
+      server-addr: ${NACOS_SERVER_ADDR}
+      username: ${NACOS_USERNAME}
+      password: ${NACOS_PASSWORD}
+      discovery:
+        namespace: ${NACOS_DISCOVERY_NAMESPACE}
+        group: DEFAULT_GROUP
+      config:
+        namespace: ${NACOS_CONFIG_NAMESPACE}
+        group: DEFAULT_GROUP
+
+# 生产环境日志级别：精简
+logging:
+  level:
+    root: WARN
+    com.mallcloud: INFO
+
+# 生产环境收窄暴露的监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  boot:
+    admin:
+      client:
+        url: ${ADMIN_SERVER_URL}

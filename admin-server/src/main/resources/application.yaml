@@ -2,7 +2,6 @@
 server:
   port: 7777
 
-# 配置配置应用的常规、非敏感、不变动的属性
 spring:
   # 配置 admin 服务端地址和认证信息
   boot:
@@ -15,43 +14,60 @@ spring:
       notify:
         mail:
           enabled: false   # 按需开启邮件告警
-  # Nacos 配置中心配置（基础连接信息）
   cloud:
-    # 负载均衡配置
+    # ==================== 负载均衡配置 ====================
     loadbalancer:
       nacos:
+        # 开启基于 Nacos 权重和元数据的负载均衡
         enabled: true
     nacos:
-      # Nacos 服务器地址
+      # ==================== Nacos 服务器连接 ====================
+      # 支持集群模式：server-addr: 192.168.1.1:8848,192.168.1.2:8848
       server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
-      # 用户名和密码（如果 Nacos 启用了认证）
+      # Nacos 认证信息，通过环境变量注入，不写明文
       username: ${NACOS_USERNAME:nacos}
       password: ${NACOS_PASSWORD:nacos}
-      # 服务发现配置（如果使用）
+      # ==================== 注册中心配置 ====================
       discovery:
-        # 命名空间（可选，用于环境隔离）
-        namespace: ${NACOS_NAMESPACE:}
-        # 服务分组
-        group: DEFAULT_GROUP
-      # 配置中心特定配置
+        # 命名空间：用于环境隔离（dev/test/prod 各一个命名空间）
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:}
+        # 服务分组：同一命名空间下进一步隔离
+        group: ${NACOS_DISCOVERY_GROUP:DEFAULT_GROUP}
+        # 开启服务注册
+        register-enabled: true
+        # 心跳间隔（毫秒）：每 5 秒发送一次心跳
+        heart-beat-interval: 5000
+        # 心跳超时（毫秒）：15 秒未收到心跳则标记为不健康
+        heart-beat-timeout: 15000
+        # 服务元数据：可用于灰度发布、版本路由
+        metadata:
+          version: ${spring.application.version:1.0.0}
+          env: ${spring.profiles.active:dev}
+      # ==================== 配置中心配置 ====================
       config:
-        # 命名空间（可选，用于环境隔离）
-        namespace: ${NACOS_NAMESPACE:}
+        # 命名空间：与注册中心可以相同，也可以独立
+        namespace: ${NACOS_CONFIG_NAMESPACE:}
         # 配置分组
-        group: DEFAULT_GROUP
-        # 配置文件扩展名
-        file-extension: yaml
-        # 配置中心文件配置是否支持动态刷新
-        refresh-enabled: true
-        # 是否启用配置监听
-        enable-remote-sync-config: true
-  # 配置导入（关键！Spring Boot 3 的新方式）
+        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
+  # ==================== 配置导入 ====================
   config:
     import:
-      # 导入 Nacos 配置
-      - optional:nacos:${spring.application.name}.yaml
-      # 导入环境特定的 Nacos 配置
-      - optional:nacos:${spring.application.name}-${spring.profiles.active:default}.yaml
-      # 导入共享配置
-      - optional:nacos:common-config.yaml
-      - optional:nacos:application.yaml?group=DEFAULT_GROUP&refreshable=true
+      # ---------- 服务专属配置（每个服务必须引入）----------
+      # 服务主配置，如：urbane-user.yaml
+      - optional:nacos:${spring.application.name}.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      # 服务环境配置，如：urbane-user-dev.yaml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active:dev}.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+
+      # ---------- 公共基础配置（所有服务共享）----------
+      # 数据库连接池公共配置
+      - optional:nacos:common-datasource.yaml?group=COMMON_GROUP&refreshEnabled=true
+      # Redis 公共配置
+      - optional:nacos:common-redis.yaml?group=COMMON_GROUP&refreshEnabled=true
+      # MyBatis-Plus 公共配置
+      - optional:nacos:common-mybatis.yaml?group=COMMON_GROUP&refreshEnabled=true
+      # Spring Security + JWT 公共配置
+      - optional:nacos:common-security.yaml?group=COMMON_GROUP&refreshEnabled=true
+      # 接口文档公共配置（Knife4j）
+      - optional:nacos:common-openapi.yaml?group=COMMON_GROUP&refreshEnabled=true
+      # 对象存储公共配置（OSS/MinIO）
+      - optional:nacos:common-oss.yaml?group=COMMON_GROUP&refreshEnabled=true
