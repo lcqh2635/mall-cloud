@@ -6,16 +6,10 @@
         <artifactId>services</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>auth-service</artifactId>
     <packaging>jar</packaging>
-
     <name>auth-service</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>认证授权服务：负责用户登录、注册、Token 签发与校验、OAuth2 第三方登录等认证授权功能</description>
 
     <dependencies>
         <dependency>
