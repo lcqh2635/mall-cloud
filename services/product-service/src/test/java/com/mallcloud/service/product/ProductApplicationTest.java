@@ -1,10 +1,10 @@
-package com.mallcloud.service.recommendation;
+package com.mallcloud.service.product;
 
 /**
  * Hello world!
  *
  */
-public class RecommendationApplication
+public class ProductApplicationTest
 {
     public static void main( String[] args )
     {

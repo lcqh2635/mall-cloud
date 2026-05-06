@@ -1,10 +1,10 @@
-package com.mallcloud.service.promotion;
+package com.mallcloud.service.order;
 
 /**
  * Hello world!
  *
  */
-public class PromotionApplication
+public class OrderApplicationTest
 {
     public static void main( String[] args )
     {

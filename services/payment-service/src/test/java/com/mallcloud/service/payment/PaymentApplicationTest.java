@@ -1,10 +1,10 @@
-package com.mallcloud.service.user;
+package com.mallcloud.service.payment;
 
 /**
  * Hello world!
  *
  */
-public class UserApplication
+public class PaymentApplicationTest
 {
     public static void main( String[] args )
     {

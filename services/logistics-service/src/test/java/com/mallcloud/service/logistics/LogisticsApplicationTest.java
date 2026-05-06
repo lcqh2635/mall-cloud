@@ -1,10 +1,10 @@
-package com.mallcloud.serivce.notification;
+package com.mallcloud.service.logistics;
 
 /**
  * Hello world!
  *
  */
-public class NotificationApplication
+public class LogisticsApplicationTest
 {
     public static void main( String[] args )
     {

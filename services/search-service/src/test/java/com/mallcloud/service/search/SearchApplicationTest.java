@@ -1,10 +1,10 @@
-package com.mallcloud.service.logistics;
+package com.mallcloud.service.search;
 
 /**
  * Hello world!
  *
  */
-public class LogisticsApplication
+public class SearchApplicationTest
 {
     public static void main( String[] args )
     {

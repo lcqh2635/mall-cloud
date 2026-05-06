@@ -1,10 +1,10 @@
-package com.mallcloud.service.inventory;
+package com.mallcloud.service.promotion;
 
 /**
  * Hello world!
  *
  */
-public class InventoryApplication
+public class PromotionApplicationTest
 {
     public static void main( String[] args )
     {

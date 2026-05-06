@@ -1,10 +1,10 @@
-package com.mallcloud.service.order;
+package com.mallcloud.service.review;
 
 /**
  * Hello world!
  *
  */
-public class OrderApplication
+public class ReviewApplicationTest
 {
     public static void main( String[] args )
     {
