@@ -42,7 +42,10 @@ liberapay: lcqh2635
 
 # Custom URL - 自定义资助链接
 # 可以指向任何你想要的资助页面
-custom: https://example.com/donate
+# 支持多个自定义链接
+custom:
+  - https://afdian.com/a/your-username
+  - https://your-website.com/donate
 
 # 注意事项：
 # 1. 所有字段都必须是小写
