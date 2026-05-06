@@ -57,37 +57,22 @@ spring:
       password: ${NACOS_PASSWORD:nacos}
       # 服务发现配置（如果使用）
       discovery:
-        # 是否启用服务发现
-        enabled: true
         # 命名空间（可选，用于环境隔离）
         namespace: ${NACOS_NAMESPACE:}
         # 服务分组
         group: DEFAULT_GROUP
       # 配置中心特定配置
       config:
-        # 是否启用配置中心
-        enabled: true
-        # 配置中心文件配置是否支持动态刷新
-        refresh-enabled: true
         # 命名空间（可选，用于环境隔离）
         namespace: ${NACOS_NAMESPACE:}
         # 配置分组
         group: DEFAULT_GROUP
         # 配置文件扩展名
         file-extension: yaml
-        # 文件编码
-        encode: UTF-8
-        # 配置超时时间（毫秒）
-        timeout: 3000
-        # 最大重试次数
-        max-retry: 3
-        # 重试间隔（毫秒）
-        config-retry-time: 2000
+        # 配置中心文件配置是否支持动态刷新
+        refresh-enabled: true
         # 是否启用配置监听
         enable-remote-sync-config: true
-        # 配置导入（Spring Boot 3 新方式）
-        import-check:
-          enabled: true
   # 配置导入（关键！Spring Boot 3 的新方式）
   config:
     import:
