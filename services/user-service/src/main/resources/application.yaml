@@ -35,6 +35,24 @@ spring:
   # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
+
+  # urbane-user.yaml（用户服务专属）
+  datasource:
+    url: jdbc:mysql://localhost:3306/mall_user
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      database: 1        # 每个服务用不同的 database 隔离
+
+  # 用户服务特有配置
+  user:
+    avatar:
+      default-url: https://mall-cloud.oss.com/default-avatar.png
+    register:
+      code-expire: 300     # 验证码过期时间（秒）
   # 配置 admin 服务端地址和认证信息
   boot:
     admin:

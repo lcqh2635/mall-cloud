@@ -1,0 +1,8 @@
+# common-rocketmq.yaml
+rocketmq:
+  producer:
+    send-message-timeout: 3000
+    retry-times-when-send-failed: 3
+    retry-times-when-send-async-failed: 3
+  consumer:
+    pull-batch-size: 32

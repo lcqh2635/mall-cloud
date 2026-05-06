@@ -1,0 +1,11 @@
+# common-redis.yaml
+spring:
+  data:
+    redis:
+      timeout: 3000ms
+      lettuce:
+        pool:
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
+          max-wait: -1ms

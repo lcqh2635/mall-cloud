@@ -1,0 +1,8 @@
+# common-oss.yaml
+oss:
+  endpoint: https://oss-cn-hangzhou.aliyuncs.com
+  bucket-name: mall-cloud
+  url-prefix: https://mall-cloud.oss-cn-hangzhou.aliyuncs.com/
+  # 敏感的 accessKey 通过环境变量注入
+  access-key-id: ${OSS_ACCESS_KEY_ID}
+  access-key-secret: ${OSS_ACCESS_KEY_SECRET}

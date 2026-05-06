@@ -1,0 +1,11 @@
+# common-security.yaml
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 7200
+    refresh-expiration: 604800
+  ignore-urls:
+    - /auth/**
+    - /actuator/**
+    - /v3/api-docs/**
+    - /swagger-ui/**

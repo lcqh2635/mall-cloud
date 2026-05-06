@@ -1,0 +1,12 @@
+# common-openapi.yaml
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    enable-swagger-models: true
+    enable-document-manage: true
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true

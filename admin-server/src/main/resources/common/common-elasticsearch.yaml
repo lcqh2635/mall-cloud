@@ -1,0 +1,7 @@
+# common-elasticsearch.yaml
+spring:
+  elasticsearch:
+    connection-timeout: 5s
+    socket-timeout: 30s
+    max-connections: 100
+    max-connections-per-route: 10
