@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.mall</groupId>
+        <artifactId>mall-cloud</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>services</artifactId>
+    <packaging>pom</packaging>
+
+    <name>services</name>
+    <url>http://maven.apache.org</url>
+    <modules>
+        <module>auth-service</module>
+        <module>cart-service</module>
+        <module>chat-service</module>
+        <module>coupon-service</module>
+        <module>inventory-service</module>
+        <module>logistics-service</module>
+        <module>notification-service</module>
+        <module>order-service</module>
+        <module>payment-service</module>
+        <module>product-service</module>
+        <module>promotion-service</module>
+        <module>recommendation-service</module>
+        <module>review-service</module>
+        <module>search-service</module>
+        <module>user-service</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
