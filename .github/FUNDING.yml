@@ -1,0 +1,52 @@
+# 在仓库中显示赞助者按钮，以提高开源项目资助选项的可见性。
+# 参考官方文档 https://docs.github.com/zh/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository?ref=private-packagist
+#github: [octocat, surftocat]
+#patreon: octocat
+#tidelift: npm/octo-package
+#custom: ["https://www.paypal.me/octocat", octocat.com]
+
+
+# FUNDING.yml 配置示例
+# 该文件用于指定项目接受资助的渠道，GitHub 会自动识别并显示在项目页面上
+
+# 支持的资助平台列表（支持多个平台）
+# 每个平台都必须使用其官方支持的格式
+
+# GitHub Sponsors - GitHub 官方赞助平台
+# 用户可以通过 GitHub 的赞助功能直接支持你
+github: lcqh2635
+
+# Patreon - 一个流行的众筹平台
+# 用户可以每月定期支持你的项目
+patreon: lcqh2635
+
+# Open Collective - 开源社区资金池
+# 适合开源项目团队共同管理资金
+open_collective: tauri-bun-ts
+
+# Ko-fi - 一个简单的打赏平台
+# 用户可以一次性打赏支持你
+ko_fi: lcqh2635
+
+# PayPal - 支付宝/PayPal 账户
+# 用户可以直接通过 PayPal 转账支持
+#paypal: lcqh2635@your-email.com
+
+# Buy Me a Coffee - 一个专门为开发者设计的打赏平台
+# 用户可以购买一杯咖啡来支持你
+buy_me_a_coffee: lcqh2635
+
+# Liberapay - 一个开源的持续资助平台
+# 用户可以设置每月固定金额支持
+liberapay: lcqh2635
+
+# Custom URL - 自定义资助链接
+# 可以指向任何你想要的资助页面
+custom: https://example.com/donate
+
+# 注意事项：
+# 1. 所有字段都必须是小写
+# 2. 值必须是有效的用户名或 URL
+# 3. 不同平台的值格式可能不同，请参考各平台文档
+# 4. 该文件应放在项目根目录下
+# 5. GitHub 会在项目主页自动显示这些资助选项
