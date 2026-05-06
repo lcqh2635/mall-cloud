@@ -1,0 +1,109 @@
+# 服务器配置
+server:
+  port: 8004
+  # servlet 配置
+  servlet:
+    # 请求基础路径，用于处理请求，默认为 /
+    context-path: @project.artifactId@
+  # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
+  compression:
+    enabled: true
+    # 执行压缩所需的最小 Content-Length 值，默认为 2048 字节即 2KB，小于该值的响应体将不压缩
+    min-response-size: 10KB
+  # HTTP/2 配置，用于支持 HTTP/2 协议
+  http2:
+    # 是否开启 HTTP/2 支持，默认关闭
+    enabled: true
+
+# 配置配置应用的常规、非敏感、不变动的属性
+spring:
+  # 应用名称
+  application:
+    name: @project.artifactId@
+  # 时间日期格式化配置
+  Jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  # 配置 admin 服务端地址和认证信息
+  boot:
+    admin:
+      instance-auth:
+        default-user-name: admin
+        default-password: 479368
+  # Nacos 配置中心配置（基础连接信息）
+  cloud:
+    # 负载均衡配置
+    loadbalancer:
+      nacos:
+        enabled: true
+    nacos:
+      # Nacos 服务器地址
+      server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+      # 用户名和密码（如果 Nacos 启用了认证）
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      # 服务发现配置（如果使用）
+      discovery:
+        # 是否启用服务发现
+        enabled: true
+        # 命名空间（可选，用于环境隔离）
+        namespace: ${NACOS_NAMESPACE:}
+        # 服务分组
+        group: DEFAULT_GROUP
+      # 配置中心特定配置
+      config:
+        # 是否启用配置中心
+        enabled: true
+        # 配置中心文件配置是否支持动态刷新
+        refresh-enabled: true
+        # 命名空间（可选，用于环境隔离）
+        namespace: ${NACOS_NAMESPACE:}
+        # 配置分组
+        group: DEFAULT_GROUP
+        # 配置文件扩展名
+        file-extension: yaml
+        # 文件编码
+        encode: UTF-8
+        # 配置超时时间（毫秒）
+        timeout: 3000
+        # 最大重试次数
+        max-retry: 3
+        # 重试间隔（毫秒）
+        config-retry-time: 2000
+        # 是否启用配置监听
+        enable-remote-sync-config: true
+        # 配置导入（Spring Boot 3 新方式）
+        import-check:
+          enabled: true
+  # 配置导入（关键！Spring Boot 3 的新方式）
+  config:
+    import:
+      # 导入 Nacos 配置
+      - optional:nacos:${spring.application.name}.yaml
+      # 导入环境特定的 Nacos 配置
+      - optional:nacos:${spring.application.name}-${spring.profiles.active:default}.yaml
+      # 导入共享配置
+      - optional:nacos:common-config.yaml
+      - optional:nacos:application.yaml?group=DEFAULT_GROUP&refreshable=true
+
+# 配置 actuator 对外指标
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  # 配置 Prometheus 监控
+  Prometheus:
+    metrics:
+      export:
+        enabled: true
+  # 这个应用所有上报的 metrics 都会带上 application 这个标签的值，用于区分不同应用
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# 然后可以通过访问 http://localhost:8081/actuator 获取应用指标信息
+# 然后可以通过访问 http://localhost:8081/actuator/prometheus 获取Prometheus格式的指标数据
