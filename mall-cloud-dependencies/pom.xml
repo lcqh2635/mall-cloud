@@ -115,135 +115,140 @@
 
             <!-- ========== 项目自身模块 ========== -->
             <dependency>
-                <groupId>com.urbane</groupId>
-                <artifactId>gateway</artifactId>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>admin-server</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>api-gateway</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>code-generator</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <!-- 自定义公共模块 -->
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-banner</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-cache</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-job</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-logging</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-model</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-openapi</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-oss</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-security</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-utils</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>auth-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>cart-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>coupon-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>inventory-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>logistics-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>notification-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>order-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>product-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>promotion-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>recommendation-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>search-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.urbane</groupId>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>user-service</artifactId>
                 <version>${revision}</version>
             </dependency>
