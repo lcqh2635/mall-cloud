@@ -137,7 +137,7 @@ logging:
   level:
     # 根日志级别（各环境在对应 yaml 中覆盖）
     root: INFO
-    com.mallcloud: INF
+    com.mallcloud: INFO
 
 # ==================== Actuator 监控端点 ====================
 management:
