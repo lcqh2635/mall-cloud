@@ -20,16 +20,33 @@ spring:
   # 应用名称
   application:
     name: @project.artifactId@
+  # 默认激活开发环境，生产通过启动参数覆盖
+  profiles:
+    active: dev
   # 时间日期格式化配置
   Jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+  # 开启虚拟线程功能
+  threads:
+    virtual:
+      enabled: true
+  # 虚拟线程的一个副作用是它们是守护线程。如果其所有线程都是守护线程，则 JVM 将退出。
+  # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
+  main:
+    keep-alive: true
   # 配置 admin 服务端地址和认证信息
+  # Admin 登录账号
   boot:
     admin:
+      ui:
+        title: Urbane Commerce 服务监控
       instance-auth:
         default-user-name: admin
         default-password: 479368
+      notify:
+        mail:
+          enabled: false   # 按需开启邮件告警
   # Nacos 配置中心配置（基础连接信息）
   cloud:
     # 负载均衡配置
