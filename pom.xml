@@ -11,6 +11,7 @@
     <groupId>com.mall</groupId>
     <artifactId>mall-cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>mall-cloud</name>
     <description>mall-cloud</description>
     <url/>
@@ -20,6 +21,13 @@
     <developers>
         <developer/>
     </developers>
+    <modules>
+        <module>services</module>
+        <module>commons</module>
+        <module>admin-server</module>
+        <module>api-gateway</module>
+        <module>code-generator</module>
+    </modules>
     <scm>
         <connection/>
         <developerConnection/>

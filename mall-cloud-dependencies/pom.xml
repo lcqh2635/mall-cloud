@@ -1,0 +1,307 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 1. 模型版本，固定写法 -->
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 2. 完整坐标（无parent必须写全） -->
+    <!-- ✅ 不写 <parent>，完全独立 -->
+    <groupId>com.urbane</groupId>
+    <artifactId>urbane-dependencies</artifactId>
+    <version>${revision}</version>
+    <!-- 3. 当前模块打包方式 -->
+    <packaging>pom</packaging>
+    <!-- 4. 当前模块显示的名称：简短，通常与 artifactId 保持一致 -->
+    <name>urbane-dependencies</name>
+    <!-- 5. 当前模块的详细描述：说明职责和功能 -->
+    <description>全局依赖版本管理模块：统一管控全项目所有第三方依赖的版本号，避免各模块间依赖版本冲突</description>
+    <url>https://github.com/urbane/urbane-commerce</url>
+    <!-- 在根 pom.xml 中引入 BOM 之前，需要先单独构建并安装 BOM，只需执行一次（或版本变更时执行）
+        cd urbane-dependencies
+        mvn clean install -Drevision=1.0.0
+    -->
+
+    <!-- 6. 许可证 -->
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <!-- 7. 版本属性常量 -->
+    <properties>
+        <!-- 全项目唯一版本号，所有子模块共享此变量 -->
+        <!-- BOM 自己维护版本号，发布时统一用命令行传入，根 pom 和 BOM 保持一致 -->
+        <revision>1.0.0</revision>
+
+        <!-- Java -->
+        <java.version>25</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Spring 核心 -->
+        <spring-boot.version>4.0.6</spring-boot.version>
+        <spring-boot-admin.version>4.0.3</spring-boot-admin.version>
+        <spring-cloud.version>2025.1.1</spring-cloud.version>
+        <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
+        <spring-ai.version>2.0.0-M5</spring-ai.version>
+
+        <!-- 数据库 -->
+        <mysql.version>8.0.33</mysql.version>
+        <mybatis-plus.version>3.5.7</mybatis-plus.version>
+        <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
+        <druid.version>1.2.22</druid.version>
+        <p6spy.version>3.9.1</p6spy.version>
+
+        <!-- 缓存 -->
+        <redisson.version>3.29.0</redisson.version>
+
+        <!-- 安全 -->
+        <jjwt.version>0.12.5</jjwt.version>
+        <sa-token.version>1.38.0</sa-token.version>
+
+        <!-- 工具类 -->
+        <hutool.version>5.8.27</hutool.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <lombok.version>1.18.32</lombok.version>
+        <guava.version>33.2.0-jre</guava.version>
+        <fastjson2.version>2.0.51</fastjson2.version>
+
+        <mapstruct-plus.version>1.5.0</mapstruct-plus.version>
+        <mybatis-flex.version>1.11.3</mybatis-flex.version>
+    </properties>
+
+    <!-- 8. 依赖版本锁定管理 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- ========== Spring 全家桶 BOM 导入 ========== -->
+            <!-- 直接 import 官方 BOM，无需手动列举 Spring 子依赖版本 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring ai 依赖管理 -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- ========== 项目自身模块 ========== -->
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>gateway</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>code-generator</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 自定义公共模块 -->
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-banner</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-job</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-model</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-openapi</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-oss</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>commons-utils</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>auth-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>cart-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>coupon-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>inventory-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>logistics-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>notification-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>order-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>product-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>promotion-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>recommendation-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>search-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.urbane</groupId>
+                <artifactId>user-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
+            <!-- ========== 数据库 ========== -->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-3-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
+
+            <!-- ========== 缓存 ========== -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 9. 发布管理（需要发布到私服时添加） -->
+    <!-- 定义项目部署配置，用于指定项目的部署仓库，如：Maven 私服、Nexus 私服、阿里云镜像仓 https://packages.aliyun.com/ 库等 -->
+    <!-- 自定义 POM 或 starter 部署到云端，需要指定部署的目标仓库，如：阿里云仓库，nexus私服等。还需要配置 Maven 的 settings.xml 文件中的 server 节点 -->
+    <!-- 自定义 POM 文件必须部署到网上的仓库，才能在其他项目中被依赖，否则无法被其他项目依赖 -->
+    <!-- 下面已将自定义 starter 部署到阿里云效私有仓库为例，残酷地址为 https://packages.aliyun.com/  点击其中的 生产库-release 即可 -->
+    <!-- 阿里云效使用文档：https://help.aliyun.com/document_detail/153834.html?spm=a2c4g.153780.0.0.19253eedDnybVd -->
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>
