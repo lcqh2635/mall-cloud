@@ -3,12 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!-- 项目模型版本 -->
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
     <!-- 项目坐标 -->
     <!-- 1. 以下配置是基本信息，用于描述项目的基本信息，包括项目名称、版本号、描述、URL、许可证信息、开发者信息、SCM信息等 -->
     <!-- 指定项目的组织名或公司名，用于唯一标识项目 -->
@@ -148,6 +142,24 @@
         <docker.password>@lf20180205049</docker.password>
         <docker.image.prefix>urbane-commerce</docker.image.prefix>
     </properties>
+
+    <!-- 4. 定义项目依赖管理，用于统一管理子模块中的依赖版本 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- 👇 关键：引入你的公司 BOM -->
+            <!-- 在根 pom.xml 中引入 BOM 之前，需要先单独构建并安装 BOM，只需执行一次（或版本变更时执行）
+                cd urbane-dependencies
+                mvn clean install -Drevision=1.0.0
+            -->
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>mall-cloud-dependencies</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <!-- 7. 定义构建过程中的配置，如插件配置、环境变量等 -->
     <build>
