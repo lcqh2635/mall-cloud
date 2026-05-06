@@ -1,0 +1,74 @@
+# 以下内容参考自 https://github.com/JamesIves/github-pages-deploy-action
+# https://github.com/yanglbme/gitee-pages-action
+
+
+# https://zhuanlan.zhihu.com/p/663023274
+
+
+# 工作流名称：在 GitHub Actions 中显示为 "publish"
+# 说明：这是该 CI/CD 工作流的名称，会在 GitHub 的 Actions 标签页中显示。
+name: Build and Deploy
+
+on:
+  push:
+#    branches:
+#      - release
+    tags:
+      - v*
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        # 此示例项目是使用 npm 构建的，并将结果输出到 'build' 文件夹。替换为构建项目所需的命令，或者如果您的站点是预构建的，则完全删除此步骤。
+      - name: Install and Build
+        run: |
+          npm ci
+          npm run build
+
+        # 使用 GitHub Action 自动部署 Github Pages，将文档产物提交到gh-pages分支
+        # https://github.com/JamesIves/github-pages-deploy-action
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build # 作应部署的文件夹。
+
+        # 使用 GitHub Action 自动部署 Gitee Pages
+        # 官方文档 https://github.com/yanglbme/gitee-pages-action
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          # cat ~/.ssh/id_rsa | wl-copy
+          # 注意在 Settings -> Secrets 配置 GITEE_RSA_PRIVATE_KEY
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+        with:
+          # 注意替换为你的 GitHub 源仓库地址
+          source-repo: git@github.com:lcqh2635/tauri-bun-ts.git
+          # 注意替换为你的 Gitee 目标仓库地址
+          destination-repo: git@gitee.com:lcqh2635/tauri-bun-ts.git
+      - name: Build Gitee Pages
+        uses: yanglbme/gitee-pages-action@main
+        with:
+          # 注意替换为你的 Gitee 用户名
+          gitee-username: lcqh2635
+          # 注意在 Settings -> Secrets 配置 GITEE_PASSWORD
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          # 注意替换为你的 Gitee 仓库，仓库名严格区分大小写，请准确填写，否则会出错
+          gitee-repo: lcqh2635/tauri-bun-ts
+          # 要部署的分支，默认是 master，若是其他分支，则需要指定（指定的分支必须存在）
+          branch: release
+
+
+# 1、在 GitHub 项目的 Settings -> Pages 路径下配置 Build and deployment，source选Deploy from a branch，branch选择gh-pages，路径选择 /root。
+# 2、在 Gitee 项目的 服务 -> Gitee Pages 中设置部署分支为 gh-pages，部署目录则不用填。
+# 3、在本机电脑的命令行终端或 Git Bash 使用命令 ssh-keygen 生成 SSH Key，连续三次回车。生成的 id_rsa 是私钥，id_rsa.pub 是公钥。如果已经生成过则跳过
+# 4、将生成的 id_rsa.pub 公钥分别配置到 GitHub 和 Gitee 账号的 SSH Keys 中。
+    # cat ~/.ssh/id_rsa.pub | wl-copy
+    # 配置 Gitee 密钥	https://gitee.com/profile/sshkeys
+    # 配置 Github 密钥	https://github.com/settings/keys
+# 5、在 GitHub 项目的 Settings -> Secrets -> Secrets and variables 路径下配置好命名为 GITEE_RSA_PRIVATE_KEY 密钥。值为 id_rsa 私钥。
+    # cat ~/.ssh/id_rsa | wl-copy
+    # 在 Github 配置 id_rsa 私钥。 	https://github.com/lcqh2635/tauri-bun-ts/settings/secrets/actions

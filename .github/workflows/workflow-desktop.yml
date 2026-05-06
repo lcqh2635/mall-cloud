@@ -1,0 +1,144 @@
+# 以下内容参考自 https://github.com/tauri-apps/tauri-action?tab=readme-ov-file#usage
+
+# 工作流名称：在 GitHub Actions 中显示为 "publish"
+# 说明：这是该 CI/CD 工作流的名称，会在 GitHub 的 Actions 标签页中显示。
+name: workflow-desktop.yml
+
+# 触发条件：当向名为 'release' 的分支推送代码时触发此工作流
+# 此工作流不会在 main 或其他分支触发。只有当你将代码推送到 release 分支时，才会自动执行构建和发布。推荐用于“预发布”或“正式发布”流程，避免频繁发布。
+on:
+  push:
+    branches:
+      - release
+
+# 这是发布带签名证书的通用 macOS 应用的示例。
+# 每次推送到 `release` 分支时，它会创建或更新一个 GitHub Release，
+# 构建你的应用，并将构建产物（artifacts）上传到该 Release。
+jobs:
+  publish-tauri:
+    # 给予此 Job 操作仓库内容的写权限（用于创建/更新 GitHub Release）
+    permissions:
+      contents: write
+    # 构建策略配置
+    strategy:
+      # 即使某个任务失败，也继续运行其他任务（这里只有一个任务，作用不大）。
+      fail-fast: false
+      # 手动定义构建任务矩阵。
+      matrix:
+        include:
+            # 使用最新的 macOS 虚拟机（GitHub Hosted Runner）。
+          - platform: "macos-latest" # 适用于基于 Arm 的 Mac（M1 及更高版本）
+            # 告诉 cargo tauri build 构建适用于基于 Arm 的 Mac（Apple Silicon（M1/M2）及更高版本）
+            args: "--target aarch64-apple-darwin"
+          - platform: "macos-latest" # 适用于基于 Intel 的 Mac。
+            args: "--target x86_64-apple-darwin"
+          - platform: 'ubuntu-24.04'
+            args: ''
+          - platform: 'windows-latest'
+            args: ''
+    # 指定运行此 Job 的虚拟机环境（从 matrix 中动态获取）
+    runs-on: ${{ matrix.platform }}
+    # 构建步骤列表
+    steps:
+      # 第一步：检出代码仓库（包括子模块）
+      # 使用 GitHub 官方的 checkout 动作，将代码拉取到 CI 环境中。
+      # 默认会递归检出子模块（Tauri 有时依赖 git 子模块）。
+      - uses: actions/checkout@v4
+
+      # 第二步：安装 Tauri 在 Debian 系操作系统上的系统依赖
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-24.04' # 这必须与上面定义的平台值匹配。
+        run: |
+          sudo apt update
+          sudo apt install -y libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
+        # webkitgtk 4.0 适用于 Tauri v1 - webkitgtk 4.1 适用于 Tauri v2。
+        # 您可以删除不适用于您的应用程序的那个，以稍微加快工作流程。
+
+      # 第三步：安装 Rust 稳定版工具链
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          # 为 macOS 平台安装两个目标架构的交叉编译支持
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      # 第四步：安装 Node.js 环境，参考官方文档 https://github.com/actions/setup-node
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*     # 安装最新的 LTS 版本 Node.js
+          registry-url: 'https://registry.npmmirror.com'  # 配置 npm 镜像
+
+      # 安装并配置 bun (如果你使用 bun)，参考官方文档 https://github.com/oven-sh/setup-bun
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+          registry-url: 'https://registry.npmmirror.com'
+
+      # 第五步：安装前端依赖
+      - name: install frontend dependencies
+        run: bun install     # 根据您使用的选项，将其更改为 npm、yarn、pnpm 或 bun。
+
+      # 第六步：使用 Tauri Action 构建、签名并发布应用。参考官方文档 https://github.com/tauri-apps/tauri-action
+      - name: build and publish
+        uses: tauri-apps/tauri-action@v0
+        env:
+          # GitHub Token（自动提供）
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 如果使用了 Tauri 更新器插件则必须要配置，参考 Tauri 文档 https://v2.tauri.org.cn/plugin/updater/
+          # 将 bun tauri signer generate 生成的 tauri-key.pub (公钥)和tauri-key.key (私钥) 手动配置到 Github 上
+          # cat ~/.tauri/tauri-bun-vite.key.pub
+          # 需要自己手动配置，进入 GitHub 仓库的 Settings → Secrets and variables → Actions 具体链接如下：
+          # https://github.com/lcqh2635/tauri-bun-ts/settings/secrets/actions
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          #  发布的标签名：格式为 app-v1.0.0（自动替换 __VERSION__ 为 package.json 中的版本）
+          tagName: v__VERSION__ # 该作会自动将 \_\_VERSION\_\_ 替换为应用程序版本。
+          # Release 显示名称
+          releaseName: "Tauri Bun TS v__VERSION__"
+          # Release 描述内容
+          releaseBody: |
+            # v0.1.0 - 初始发布
+  
+            ## 🚀 新特性
+            - **用户登录**：支持用户注册和登录功能
+            - **任务管理**：提供简单易用的任务管理界面
+  
+            ## 🐛 修复问题
+            - 修复了首次启动时的崩溃问题
+            - 优化了任务列表的加载速度
+  
+            ## 🎨 界面改进
+            - 重新设计了主界面布局，提升用户体验
+            - 添加了夜间模式支持
+  
+            ## 👩‍💻 开发者工具
+            - 使用 Tauri 构建跨平台应用
+            - 使用 Rust 作为后端逻辑语言
+  
+            ## 📦 下载
+            - [Windows 版本](https://github.com/yourusername/yourrepo/releases/download/v0.1.0/YourApp-v0.1.0.exe)
+            - [macOS 版本](https://github.com/yourusername/yourrepo/releases/download/v0.1.0/YourApp-v0.1.0.dmg)
+            - [Linux 版本](https://github.com/yourusername/yourrepo/releases/download/v0.1.0/YourApp-v0.1.0.AppImage)
+
+            ## 📸 截图预览
+            ![主界面](https://example.com/main-ui.png)
+            ![任务管理](https://example.com/task-manager.png)
+  
+            ## 🤝 贡献
+            欢迎提交 Issue 或 Pull Request！
+
+          # 是否为草稿（建议设为 true，人工确认后再发布）
+          releaseDraft: false
+          # 是否为预发布版本
+          prerelease: false
+          # 构建参数（从 matrix 中传入）
+          args: ${{ matrix.args }}
+
+
+# 使用与 Release 相同的名称
+# 在 release 仓库代码提交前必须先创建 tag 否则应用在 GitHub 仓库中只有 Releases 而 Tags 不会生成
+# git add . && git commit -m 'backup'
+# git tag v0.1.0
+# git push origin --tags
