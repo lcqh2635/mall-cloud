@@ -1,0 +1,124 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /order
+spring:
+  application:
+    name: @project.artifactId@
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+# springdoc-openapi 项目配置，参考
+springdoc:
+  # 参考 SwaggerUiConfigProperties 类
+  swagger-ui:
+    enabled: false
+    path: /swagger-ui.html           # 接口文档地址   http://localhost:8888/swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    syntax-highlight:
+      activated: true
+  # 参考 SpringDocConfigProperties 类中的 ApiDocs 静态内部类
+  api-docs:
+    enabled: true
+    path: /v3/api-docs               # 接口文档地址   http://localhost:8888/v3/api-docs
+  # TODO  一个微服务一个分组，如果是微服务架构，可以配置多个分组。且分组 display-name 要和 knife4j.documents.group 一致。否则自定义文档集合无法显示
+  # 参考 SpringDocConfigProperties 类中的 GroupConfig 静态内部类
+  # 对应于 knife4j 主页信息中的分组配置
+  # 参考 springdoc-openapi 官网 https://springdoc.org/#migrating-from-springfox
+  group-configs:
+    - group: 'user'
+      display-name: '用户服务'
+      # 扫描的请求接口路径，多个用逗号分隔
+      paths-to-match: '/**'
+      # 扫描的包路径，多个用逗号分隔
+      packages-to-scan: com.example.swagger.controller
+#    - group: 'order'
+#      display-name: '订单服务'
+#      # 扫描的请求接口路径，多个用逗号分隔
+#      paths-to-match: '/order/**'
+#      # 扫描的包路径，多个用逗号分隔
+#      packages-to-scan: com.example.knife4j
+
+# knife4j的增强配置，不需要增强可以不配置。参考 Knife4jProperties 类
+# 参考 https://doc.xiaominfo.com/docs/features/enhance
+knife4j:
+  # 是否开启Knife4j增强模式，默认为 false
+  enable: true
+  # 是否开启默认跨域，默认为 false
+  cors: true
+  # 是否开启BasicHttp验证，默认为 false
+  basic:
+    # basic 是否开启,默认为 false
+    enable: true
+    # basic 用户名
+    username: admin
+    # basic 密码
+    password: 123456
+  # 是否开启生产环境保护策略，默认为 false
+  production: false
+  # 前端Ui的个性化配置属性
+  setting:
+    # Ui默认显示语言,目前主要有两种:中文(zh-CN)、英文(en-US)
+    language: zh_cn
+    # 是否显示界面中SwaggerModel功能
+    enable-swagger-models: true
+    # 重命名SwaggerModel名称,默认 Swagger Models
+    swagger-model-name: 表实体类列表
+    # 是否显示界面中"文档管理"功能
+    enable-document-manage: true
+    # 是否开启界面中对某接口的版本控制,如果开启，后端变化后Ui界面会存在小蓝点
+    enable-version: false
+    # 是否开启请求参数缓存功能,默认 true
+    enable-request-cache: true
+    # 是否开启自定义主页内容,默认 false
+    enable-home-custom: false
+    # 自定义主页内容的文件位置
+    home-custom-location: classpath:markdown/custom.html
+    # 主页内容Markdown文件路径
+    home-custom-path: /custom.html
+    # 是否开启Ui界面中的搜索框,默认 true
+    enable-search: true
+    # 是否显示Footer信息,默认 true
+    enable-footer: true
+    # 是否开启自定义Footer内容,默认 false
+    enable-footer-custom: true
+    # 自定义的 Footer 内容
+    footer-custom-content: Apache License 2.0 | Copyright  2019-[浙江八一菜刀股份有限公司](https://gitee.com/xiaoym/knife4j)
+    # 显示OpenAPI规范，默认为 true
+    enable-open-api: true
+    # TODO 显示服务分组，默认为 true 会在左侧菜单顶部存在一个下拉菜单，可以切换分组，导航到不同服务的API文档
+    enable-group: true
+  # 导入自定义文档集合，该属性是数组。会新建一个菜单，显示自定义文档集合
+  documents:
+    - group: 用户服务            # 这个分组要和上面的 group-configs 中的 display-name 一致,否则无法显示
+      name: 自定义文档        # 菜单名称
+      locations: classpath:markdown/*      # 自定义文档的存放路径
+  # 配置 knife4j 的监控功能
+  insight:
+    # 是否启动Knife4jInsight自动上报功能，默认为 false
+    enable: false
+    # 上传服务名称，配置后使用该名称，如果未配置，默认再读取spring. application. name名称，如果都未空，无法上传
+    service-name: boot3
+    # 上报Knife4jInsight数据源地址，可以使用在线版本，例如：http://console.knife4j.net
+    server: http://localhost:10086
+    # 上传用户凭证密钥，在Knife4jInsight用户中心获取
+    secret: S6CsnS8AnPVyb8vvChcdXm4R3p6A6KlAISxBg3IIEgk=
+    # 上传namespace,如果不指定，Knife4jInsight会默认根据当前应用的application-name生成，如果应用名称为空,那么会随机生成一个
+    namespace: spring3
+
+
+# knife4j-spring-boot-starter 相关配置参考 https://doc.xiaominfo.com/
+# https://doc.xiaominfo.com/docs/quick-start
+# 访问 knife4j 控制台：  http://localhost:8888/doc.html
+
+# 配置参考 https://gitee.com/xiaoym/swagger-bootstrap-ui-demo/tree/master/knife4j-spring-boot3-demo
+# 访问 knife4j 控制台：  http://localhost:8888/doc.html
+
+# 将 knife4j 配置单独抽离成一个模块，方便集成到其他项目中。避免在多个微服务中配置重复的配置。对于自定义的部分可以通过重写完成
