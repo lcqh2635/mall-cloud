@@ -6,23 +6,12 @@
         <artifactId>commons</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>commons-openapi</artifactId>
     <packaging>jar</packaging>
-
     <name>commons-openapi</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>接口文档模块：基于 SpringDoc/Knife4j 封装统一的 OpenAPI 文档配置、全局参数注入及文档聚合基础支持</description>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>

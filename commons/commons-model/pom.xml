@@ -6,23 +6,13 @@
         <artifactId>commons</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>commons-model</artifactId>
     <packaging>jar</packaging>
-
     <name>commons-model</name>
-    <url>http://maven.apache.org</url>
+    <description>公共数据模型模块：定义各服务共享的基础实体、枚举、通用分页对象及跨服务传输的公共 DTO/VO</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>

@@ -6,23 +6,12 @@
         <artifactId>commons</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>commons-utils</artifactId>
     <packaging>jar</packaging>
-
     <name>commons-utils</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>工具类公共模块：提供日期、字符串、加解密、JSON、雪花 ID、正则校验等项目通用工具类的统一封装</description>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>

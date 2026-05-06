@@ -6,16 +6,10 @@
     <artifactId>commons</artifactId>
     <version>${revision}</version>
   </parent>
-
   <artifactId>commons-banner</artifactId>
   <packaging>jar</packaging>
-
   <name>commons-banner</name>
-  <url>http://maven.apache.org</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <description>启动 Banner 模块：统一定制和管理各微服务启动时的控制台 Banner 输出样式与项目版本信息展示</description>
 
   <dependencies>
     <dependency>

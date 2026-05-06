@@ -6,23 +6,15 @@
     <artifactId>mall-cloud</artifactId>
     <version>${revision}</version>
   </parent>
-
   <artifactId>admin-server</artifactId>
   <packaging>jar</packaging>
-
   <name>admin-server</name>
-  <url>http://maven.apache.org</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <description>
+    服务监控模块：基于 Spring Boot Admin Server 提供所有微服务的健康状态监控、
+    JVM 内存与线程实时查看、日志级别动态调整及 Actuator 端点的统一可视化管理
+  </description>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
 </project>

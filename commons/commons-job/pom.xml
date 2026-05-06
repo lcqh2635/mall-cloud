@@ -6,23 +6,12 @@
         <artifactId>commons</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>commons-job</artifactId>
     <packaging>jar</packaging>
-
     <name>commons-job</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>定时任务模块：基于 XXL-Job 或 Quartz 封装定时任务的统一配置、任务注册及分布式调度基础支持</description>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>

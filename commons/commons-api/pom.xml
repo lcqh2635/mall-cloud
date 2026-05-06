@@ -6,23 +6,12 @@
         <artifactId>commons</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>commons-api</artifactId>
     <packaging>jar</packaging>
-
     <name>commons-api</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>公共接口模块：定义各微服务间远程调用的 Feign 客户端接口及请求/响应 DTO，统一管理服务间 API 契约</description>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>

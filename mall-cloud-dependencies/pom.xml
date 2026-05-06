@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- 2. 完整坐标（无parent必须写全） -->
     <!-- ✅ 不写 <parent>，完全独立 -->
-    <groupId>com.mall</groupId>
+    <groupId>com.mallcloud</groupId>
     <artifactId>mall-cloud-dependencies</artifactId>
     <version>${revision}</version>
     <!-- 3. 当前模块打包方式 -->

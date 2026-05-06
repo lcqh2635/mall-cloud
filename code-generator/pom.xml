@@ -6,23 +6,15 @@
     <artifactId>mall-cloud</artifactId>
     <version>${revision}</version>
   </parent>
-
   <artifactId>code-generator</artifactId>
   <packaging>jar</packaging>
-
   <name>code-generator</name>
-  <url>http://maven.apache.org</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <description>
+    代码生成模块：基于 MyBatis-Plus 及 Velocity 模板引擎，根据数据库表结构自动生成 Entity、Mapper、
+    Service、Controller 等各层样板代码，提升开发效率，统一代码风格规范
+  </description>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
 </project>

@@ -23,7 +23,10 @@
     <!-- 项目名称与描述 -->
     <!-- 项目元信息，用于文档、仓库展示、许可证生成等 -->
     <name>mall-cloud</name>
-    <description>mall-cloud 根模块：基于 Spring Boot 4 + Spring Cloud 2025 微服务架构构建的云原生分布式电商平台，集成 Nacos、RocketMQ、Elasticsearch、Redis 等核心中间件，涵盖用户、商品、订单、支付、库存、物流等完整电商业务域</description>
+    <description>
+        mall-cloud 根模块：基于 Spring Boot 4 + Spring Cloud 2025 微服务架构构建的云原生分布式电商平台，
+        集成 Nacos、RocketMQ、Elasticsearch、Redis 等核心中间件，涵盖用户、商品、订单、支付、库存、物流等完整电商业务域
+    </description>
     <url>https://github.com/lcqh2635/mall-cloud</url>
 
     <!-- 声明项目开源许可证（Maven Central 要求，企业内部项目也建议声明）-->

@@ -6,12 +6,14 @@
         <artifactId>mall-cloud</artifactId>
         <version>${revision}</version>
     </parent>
-
     <artifactId>commons</artifactId>
     <packaging>pom</packaging>
-
     <name>commons</name>
-    <url>http://maven.apache.org</url>
+    <description>
+        公共基础模块聚合：统一管理所有公共基础设施子模块，包含核心工具、数据模型、缓存、安全、
+        日志、接口文档、对象存储、MyBatis 扩展、定时任务、OpenAPI 及启动Banner自定义 等基础能力
+    </description>
+
     <modules>
         <module>commons-api</module>
         <module>commons-banner</module>
@@ -27,16 +29,7 @@
         <module>commons-utils</module>
     </modules>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>
