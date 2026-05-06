@@ -1,0 +1,8 @@
+${AnsiColor.BRIGHT_CYAN}██████╗ ██╗      ██████╗  ██████╗     ${AnsiColor.BRIGHT_CYAN} ██████╗██╗      ██████╗ ██╗   ██╗██████╗     ${AnsiColor.BRIGHT_CYAN} ██╗    ██████╗     ██████╗
+${AnsiColor.BRIGHT_CYAN}██╔══██╗██║     ██╔═══██╗██╔════╝     ${AnsiColor.BRIGHT_CYAN}██╔════╝██║     ██╔═══██╗██║   ██║██╔══██╗    ${AnsiColor.BRIGHT_CYAN}███║   ██╔═████╗   ██╔═████╗
+${AnsiColor.BRIGHT_CYAN}██████╔╝██║     ██║   ██║██║  ███╗    ${AnsiColor.BRIGHT_CYAN}██║     ██║     ██║   ██║██║   ██║██║  ██║    ${AnsiColor.BRIGHT_CYAN}╚██║   ██║██╔██║   ██║██╔██║
+${AnsiColor.BRIGHT_CYAN}██╔══██╗██║     ██║   ██║██║   ██║    ${AnsiColor.BRIGHT_CYAN}██║     ██║     ██║   ██║██║   ██║██║  ██║    ${AnsiColor.BRIGHT_CYAN} ██║   ████╔╝██║   ████╔╝██║
+${AnsiColor.BRIGHT_CYAN}██████╔╝███████╗╚██████╔╝╚██████╔╝    ${AnsiColor.BRIGHT_CYAN}╚██████╗███████╗╚██████╔╝╚██████╔╝██████╔╝    ${AnsiColor.BRIGHT_CYAN} ██║██╗╚██████╔╝██╗╚██████╔╝
+${AnsiColor.BRIGHT_CYAN}╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝     ${AnsiColor.BRIGHT_CYAN} ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝     ${AnsiColor.BRIGHT_CYAN} ╚═╝╚═╝ ╚═════╝ ╚═╝ ╚═════╝
+
+${AnsiColor.BLUE}:: blog cloud :: ${spring.application.name}:${AnsiColor.RED}${spring.profiles.active}${AnsiColor.BLUE} :: Running SpringBoot ${spring-boot.version} :: ${AnsiColor.BRIGHT_BLACK}

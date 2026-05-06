@@ -1,0 +1,285 @@
+# api-docs/openapi/services-user.yaml
+# https://www.openapis.org/
+# https://swagger.org.cn/docs/specification/v3_0/basic-structure/
+# https://swagger.org.cn/specification/v3/
+# https://learn.openapis.org/specification/structure.html
+# https://spec.openapis.org/oas/latest.html
+# https://springdoc.org/#demos
+
+# OpenAPI 文档使用的 OpenAPI 规范版本 的 语义版本号
+openapi: 3.1.2
+
+# 信息对象，必需。提供有关 API 的元数据
+info:
+  # 必需。API 的标题
+  title: OpenApi 接口文档 - 遵循 OpenAPI 3 规范
+  # API 简要介绍
+  summary: A pet store manager.
+  # API 的描述
+  description: 管理用户基本信息、收货地址、偏好设置
+  # API 服务条款的 URL
+  termsOfService: https://example.com/terms/
+  # 联系人对象，公开 API 的联系信息
+  contact:
+    # 联系人/组织的标识名称
+    name: API Support
+    # 指向联系信息的 URL
+    url: https://www.example.com/support
+    # 联系人/组织的电子邮件地址
+    email: 123456789@qq.com
+  # 许可证对象，公开 API 的许可证信息
+  license:
+    # 必需。用于 API 的许可证名称
+    name: Apache 2.0
+    # 用于 API 的许可证的 URL
+    url: https://apache.ac.cn/licenses/LICENSE-2.0.html
+  # 必需。OpenAPI 文档的版本
+  version: 1.0.1
+
+# 服务器对象，一个服务器对象数组，提供与目标服务器的连接信息
+servers:
+    # 必需。目标主机的 URL
+  - url: https://{username}.gigantic-server.com:{port}/{basePath}
+    # 描述 URL 指定主机的可选字符串
+    description: 开发环境
+    # 变量名与其值之间的映射。该值用于服务器的 URL 模板中的替换
+    variables:
+      username:
+        # note! no enum here means it is an open value
+        default: demo
+      port:
+        enum:
+          - '8443'
+          - '443'
+        default: '8443'
+      basePath:
+        # open meaning there is the opportunity to use special base paths as assigned by the provider, default is `v2`
+        default: v2
+  - url: https://localhost:8082/api/v1
+    description: 测试环境
+  - url: https://localhost:8083/api/v1
+    description: 生产环境
+
+# 路径对象，必需。API 可用的路径和操作
+paths:
+  /user:
+    get:
+      summary: 获取当前用户基本信息
+      description: 返回登录用户的昵称、头像、等级、邮箱等非敏感信息
+      tags:
+        - User
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: 成功返回用户信息
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserBaseInfo'
+        '401':
+          description: 未授权
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ================================================================
+  # 2. 更新用户昵称
+  # ================================================================
+  /user/nickname:
+    put:
+      summary: 修改用户昵称
+      description: 更新当前登录用户的显示名称
+      tags:
+        - User
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NicknameUpdateRequest'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: 昵称格式错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ================================================================
+  # 3. 收货地址列表
+  # ================================================================
+  /user/addresses:
+    get:
+      summary: 获取用户所有收货地址
+      description: 返回用户所有已保存的收货地址，按是否默认排序
+      tags:
+        - User
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 50
+      responses:
+        '200':
+          description: 成功返回地址列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedAddressList'
+
+# 组件对象，用于保存规范的各种 Schema 的元素
+components:
+  schemas:
+    UserBaseInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        username:
+          type: string
+          example: 张三
+        nickname:
+          type: string
+          example: 小张
+        avatar:
+          type: string
+          example: https://cdn.example.com/avatar/123.jpg
+        email:
+          type: string
+          example: z***@example.com
+        level:
+          type: string
+          enum: [ NORMAL, GOLD, PLATINUM, DIAMOND ]
+          example: GOLD
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-01-01T00:00:00Z"
+
+    NicknameUpdateRequest:
+      type: object
+      properties:
+        nickname:
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: "阿强"
+      required:
+        - nickname
+
+    SuccessResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: "操作成功"
+        data:
+          type: object
+          nullable: true
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: "认证失败：Token 已过期"
+        path:
+          type: string
+          example: "/user/me"
+        timestamp:
+          type: string
+          format: date-time
+
+    PagedAddressList:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 3
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressItem'
+        page:
+          type: integer
+          example: 1
+        size:
+          type: integer
+          example: 10
+
+    AddressItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 456
+        receiverName:
+          type: string
+          example: 张三
+        phone:
+          type: string
+          example: 138****1234
+        province:
+          type: string
+          example: 广东省
+        city:
+          type: string
+          example: 广州市
+        district:
+          type: string
+          example: 天河区
+        detail:
+          type: string
+          example: 珠江新城XX大厦A座1001
+        isDefault:
+          type: boolean
+          example: true
+
+# 安全要求对象，声明可用于整个 API 的安全机制
+security:
+  - {}
+  - petstore_auth:
+      - write:pets
+      - read:pets
+
+# 标签对象，规范使用的标签列表，带有附加元数据
+tags:
+  - name: User
+    description: 用户相关接口

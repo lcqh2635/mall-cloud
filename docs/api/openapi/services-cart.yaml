@@ -1,0 +1,28 @@
+# https://www.openapis.org/
+# https://swagger.org.cn/docs/specification/v3_0/basic-structure/
+# https://swagger.org.cn/specification/v3/
+# https://learn.openapis.org/specification/structure.html
+# https://spec.openapis.org/oas/latest.html
+# https://springdoc.org/#demos
+
+openapi: 3.1.2
+
+info:
+  title: OpenApi 接口文档 - 遵循 OpenAPI 3 规范
+  description: 管理用户基本信息、收货地址、偏好设置
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8081/api/v1
+    description: 开发环境
+  - url: http://localhost:8082/api/v1
+    description: 测试环境
+  - url: http://localhost:8083/api/v1
+    description: 生产环境
+
+tags:
+  - name: Cart
+    description: 用户相关接口
+
+paths:
+  

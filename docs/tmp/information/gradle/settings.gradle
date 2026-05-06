@@ -1,0 +1,41 @@
+// 版本管理：虽然你可以直接在 plugins {} 块中指定插件版本，但有时你可能希望集中管理这些版本，
+// 特别是在多模块项目中。这时可以结合使用 settings.gradle 文件中的 pluginManagement 块来集中定义插件版本。
+// 在这种情况下，你可以在根项目的 build.gradle 文件中省略版本号：
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == 'org.springframework.boot') {
+                useVersion '3.4.1'
+            } else if (requested.id.id == 'io.spring.dependency-management') {
+                useVersion '1.1.7'
+            }
+        }
+    }
+}
+
+// 在 Gradle 的多项目构建中，所有子模块及其嵌套的子模块（即子模块的子模块）都应该在根项目的 settings.gradle 文件中定义。
+// 这是因为 settings.gradle 文件的作用是告诉 Gradle 构建系统哪些目录和子项目应该被视为整个构建的一部分。
+// 嵌套项目：如果你有嵌套的子项目结构，你可以使用带有路径的 include 来包含它们。
+rootProject.name = 'blog-cloud-gradle'
+
+// 定义一级子模块
+include 'blog-cloud-auth'
+include 'blog-cloud-chat'
+include 'blog-cloud-common'
+include 'blog-cloud-gateway'
+include 'blog-cloud-manager'
+include 'blog-cloud-monitor'
+include 'blog-cloud-service'
+
+// 定义 common 模块下的二级子模块
+include 'blog-cloud-common:blog-cloud-api'
+findProject(':blog-cloud-common:blog-cloud-api')?.name = 'blog-cloud-api'
+include 'blog-cloud-common:blog-cloud-cache'
+findProject(':blog-cloud-common:blog-cloud-cache')?.name = 'blog-cloud-cache'
+
+// 是否需要 findProject 取决于你的具体需求。如果你只是想包含子模块而不需要对其进行额外配置，那么简单的 include 语句就足够了。但是，如果你需要对子模块进行更细粒度的控制，如重命名或应用额外配置，那么 findProject 是一种有效的方法。
+// 当你使用 IntelliJ IDEA 创建多模块项目时，IDEA 可能会自动生成带有 findProject 的配置，以确保项目的结构和名称与预期一致。特别是当你通过图形界面创建复杂的嵌套模块结构时，IDEA 会尝试生成能够正确解析和管理这些模块的构建脚本。

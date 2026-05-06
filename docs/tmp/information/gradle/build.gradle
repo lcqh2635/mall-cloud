@@ -1,0 +1,163 @@
+// 根项目的 build.gradle 文件顶层配置：这些配置（如插件、扩展属性、依赖管理）仅在根项目中有效。
+// 子项目不会自动继承这些配置，除非你在 allprojects 或 subprojects 中显式应用。
+
+
+// 插件列表。对应Maven的：<build> <plugins>
+// plugins {} 块在 Gradle 中不仅仅用于插件版本管理，它是一个更全面的机制，用于声明和应用插件。
+// 声明插件：告诉 Gradle 项目需要哪些插件。
+// 指定插件版本：确保所有开发者和构建环境使用相同的插件版本。
+// 应用插件：决定插件是否立即应用于当前项目或延迟应用。
+// 立即应用：默认情况下，声明的插件会立即应用于当前项目。例如，id 'java' 会立即将 Java 插件应用到当前项目中。
+// 延迟应用：如果你不想让某个插件自动应用于当前项目，可以使用 apply false。然后，你可以在子项目或其他地方显式地应用该插件。
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1' apply(false)
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.graalvm.buildtools.native' version '0.10.4'
+}
+
+// 定义项目的依赖。对应Maven的：<dependencies>
+// 更细粒度地控制依赖的作用域（如implementation, api, compileOnly, runtimeOnly, testImplementation, testRuntimeOnly等）。
+// 对应 Maven：<scope>标签内的值（如compile, provided, runtime, test）
+// implementation：这个配置用来添加那些在编译和运行时都需要的依赖。
+// compileOnly：这个配置用来添加那些只需要在编译时存在的依赖。
+// annotationProcessor：这个配置专用于声明注解处理器（如APT - Annotation Processing Tool）。注解处理器是在编译阶段处理源代码上的注解，并生成额外的Java源文件或类。因此，这些处理器也是编译时依赖，但它们有特别的目的。
+// runtimeOnly：这个配置用来添加那些只需要在运行时存在的依赖。
+// testImplementation：这个配置用来添加那些仅在测试时存在的依赖。
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'de.codecentric:spring-boot-admin-starter-client'
+    implementation 'de.codecentric:spring-boot-admin-starter-server'
+    implementation 'org.springframework.amqp:spring-rabbit-stream'
+    implementation 'org.springframework.cloud:spring-cloud-function-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter'
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway-mvc'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// 根项目和所有子项目都使用的配置
+// allprojects 会将配置应用于根项目及其所有的子项目。这通常用于设置适用于整个构建树的通用属性或依赖项。
+// 适用内容： 定义全局变量（如版本号、组织名等）、配置仓库、设置编码格式、应用插件等。
+allprojects {
+    // 设置打包信息。对应Maven：<groupId>, <artifactId>, <version>
+    group = 'com.example'
+    version = '0.0.1-SNAPSHOT'
+
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    java {
+        // 指定了编译器应该接受的源代码的语言级别。例如，如果你设置为 21，那么你可以使用 Java 21 中的新语言特性。
+        // sourceCompatibility = JavaVersion.toVersion(21)
+        // 指定了编译器生成的 .class 文件的目标 JVM 版本。这意味着这些 .class 文件可以在指定版本的 JVM 或更高版本上运行。
+        // targetCompatibility = JavaVersion.toVersion(21)
+        // 工具链（Toolchain）配置用于确保构建过程中使用的 JDK 是特定版本。它不仅控制了编译器的行为，还确保了所有相关工具（如 Javadoc、测试运行器等）都使用相同的 Java 版本。
+        // 这个配置会寻找并使用符合指定版本要求的 JDK 来执行整个构建过程。如果本地没有合适的 JDK，Gradle 可以尝试下载一个（取决于你的环境配置）。
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    // 定义可以在整个构建脚本或跨多个项目使用的外部变量。
+    // 对应Maven：<properties>中的自定义属性。
+    ext {
+        set('javaVersion', "21")
+        set('springBootVersion', "3.4.1")
+        set('springBootAdminVersion', "3.4.1")
+        set('springCloudVersion', "2024.0.0")
+        set('springCloudAlibabaVersion', "2023.0.3.2")
+    }
+
+    // 定义依赖库的版本。对应Maven的：<dependencyManagement>
+    // 在根项目的顶层定义 dependencyManagement 是最常见和推荐的做法。这样可以确保所有子项目都能继承这些依赖管理规则，同时保持根项目的简洁性和一致性。
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+            mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+        }
+    }
+
+    // 定义依赖库的仓库来源。对应 Maven 的：<repositories>
+    // 依赖包寻找顺序，优先级从上到下
+    repositories {
+        // 本地仓库,需要本地安装了gradle并配置了环境变量
+        mavenLocal()
+        // 国内第三方镜像加速仓库
+        maven {
+            url = uri("https://maven.aliyun.com/repository/public")
+        }
+        // 官方仓库
+        mavenCentral()
+    }
+
+    // 将所有子项目的Java编译任务的编码设置为UTF-8
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+}
+
+// 仅子项目使用的配置
+// subprojects 只会对根项目下的所有子项目应用配置，而不影响根项目本身。这适合于那些只应由子项目继承的配置。
+// 适用内容： 应用特定于子项目的插件（如 Spring Boot 插件）、添加子项目的依赖项、配置任务（如编译选项）等。
+subprojects {
+    apply plugin: 'java'
+
+
+    // 这段代码的作用是告诉Gradle，compileOnly配置应继承自annotationProcessor配置。
+    // 这意味着任何被标记为annotationProcessor的依赖也会自动包含在compileOnly配置中。
+    // 换句话说，所有在annotationProcessor配置中声明的依赖项也将被视为compileOnly依赖项。
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    // 定义项目的依赖。对应Maven的：<dependencies>
+    // 更细粒度地控制依赖的作用域（如implementation, api, compileOnly, runtimeOnly, testImplementation, testRuntimeOnly等）。
+    // 对应 Maven：<scope>标签内的值（如compile, provided, runtime, test）
+    // implementation：这个配置用来添加那些在编译和运行时都需要的依赖。
+    // compileOnly：这个配置用来添加那些只需要在编译时存在的依赖。
+    // annotationProcessor：这个配置专用于声明注解处理器（如APT - Annotation Processing Tool）。注解处理器是在编译阶段处理源代码上的注解，并生成额外的Java源文件或类。因此，这些处理器也是编译时依赖，但它们有特别的目的。
+    // runtimeOnly：这个配置用来添加那些只需要在运行时存在的依赖。
+    // testImplementation：这个配置用来添加那些仅在测试时存在的依赖。
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}

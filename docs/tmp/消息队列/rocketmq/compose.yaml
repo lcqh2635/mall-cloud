@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  # ========== NameServer ==========
+  namesrv:
+    image: apache/rocketmq:latest
+    container_name: rocketmq-namesrv
+    hostname: namesrv
+    ports:
+      - 9876:9876
+    volumes:
+      - rocketmq-namesrv-logs:/home/rocketmq/logs
+    environment:
+      - JAVA_OPT_EXT=-Xms256m -Xmx256m -Xmn128m
+    restart: always
+    networks:
+      - rocketmq-net
+    command: sh mqnamesrv
+
+  # ========== Broker ==========
+  broker:
+    image: apache/rocketmq:latest
+    container_name: rocketmq-broker
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    volumes:
+      - rocketmq-broker-logs:/home/rocketmq/logs
+      - rocketmq-broker-store:/home/rocketmq/store
+      - ./config/broker/broker.conf:/home/rocketmq/rocketmq-5.1.4/conf/broker.conf
+    environment:
+      - NAMESRV_ADDR=rmqnamesrv:9876
+    restart: always
+    depends_on:
+      - namesrv
+    networks:
+      - rocketmq-net
+    command: sh mqbroker -c /home/rocketmq/rocketmq-5.1.4/conf/broker.conf
+
+  # ========== Proxy ==========
+  proxy:
+    image: apache/rocketmq:latest
+    container_name: rocketmq-proxy
+    networks:
+      - rocketmq-net
+    depends_on:
+      - namesrv
+      - broker
+    ports:
+      - 8080:8080
+      - 8081:8081
+    restart: on-failure
+    environment:
+      - NAMESRV_ADDR=rmqnamesrv:9876
+    command: sh mqproxy
+
+  # ========== Dashboard ==========
+  dashboard:
+    image: apacherocketmq/rocketmq-dashboard:latest
+    container_name: rocketmq-dashboard
+    ports:
+      - 8070:8080
+    environment:
+      - JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
+    restart: always
+    depends_on:
+      - namesrv
+    networks:
+      - rocketmq-net
+
+# ========== 自定义网络 ==========
+networks:
+  rocketmq-net:
+    name: rocketmq-net
+    driver: bridge
+
+# ========== 命名数据卷 ==========
+volumes:
+  rocketmq-namesrv-logs:
+    name: rocketmq-namesrv-logs
+  rocketmq-broker-logs:
+    name: rocketmq-broker-logs
+  rocketmq-broker-store:
+    name: rocketmq-broker-store

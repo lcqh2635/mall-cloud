@@ -1,0 +1,60 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_HOST:192.168.56.10}:${NACOS_PORT:8848}
+        namespace: @nacos.namespace@
+        # 如果用户名和密码没有自定义可以不配置使用默认配置
+        username: @nacos.username@
+        password: @nacos.password@
+      # 以下配置默认读取 blog-cloud-auth-dev.yaml 应用的配置
+      config:
+        # Nacos 服务器的地址，包括 IP 和端口
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # Nacos 中的命名空间，默认为空字符串，表示公共命名空间
+        namespace: @nacos.namespace@
+        # 配置文件所属的组，默认为 DEFAULT_GROUP
+        group: DEFAULT_GROUP
+        # 配置文件的扩展名，默认为 yaml 或 properties
+        file-extension: yaml
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        # shared-configs 可以让你在一个 Nacos 命名空间内共享配置文件给多个服务。这在多个服务需要访问相同的配置数据时非常有用。
+        shared-configs:
+          # 共享配置文件的数据 ID
+          - data-id: datasource.yaml
+            # 共享配置文件所在的组，默认为 DEFAULT_GROUP
+            group: DEFAULT_GROUP
+            # 是否启用热更新
+            refresh: true
+        # extension-configs 则允许你定义多个额外的配置来源，比如可以用来覆盖默认的配置文件，或者为特定的服务提供额外的配置数据
+        extension-configs:
+          - data-id: mybatis-config.yaml
+            # 共享配置文件所在的组，默认为 DEFAULT_GROUP
+            group: DEFAULT_GROUP
+            # 是否启用热更新
+            refresh: true
+
+  profiles:
+    active: @profiles.active@
+
+# 使用 bootstrap.yaml 配置文件需要添加 spring-cloud-starter-bootstrap 依赖，否则 bootstrap.yaml 配置文件不会生效。
+# bootstrap.yaml 文件则用于更早的配置阶段。当 Spring Boot 启动时，它会先读取 bootstrap.yaml 文件中的配置来初始化上下文环境，
+# 然后再读取 application.yaml 文件中的配置。这意味着在 bootstrap.yaml 中定义的属性可以在 application.yaml 文件中被引用。
+# 如果两个文件中有相同的属性，那么 application.yaml 中的配置会覆盖 bootstrap.yaml 中的相同配置
+
+
+# 只要使用了置配置中心，默认主配置为 application.name-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+# extension-configs 优先级大于 shared-configs，在 shared-configs 之后加载
+# 配置加载顺序为: config > shared-config > extension-configs 这就意味着后加载的配置可以覆盖前面加载的配置。
+# 虽然extension-configs和shared-configs区别不大，建议 shared-configs 用于公共共享配置，extension-configs 用于独属本应用范围扩展主配置，例如可以将mysql数据源从主配置抽离成扩展配置
+# 配置文件加载优先级：bootstrap > application 优先级越高越先被加载，如果存在相同的配置项，后加载的会覆盖先加载的配置项；但如果配置中心和本地配置重复了，则一切以配置中心的准。
+# 在配置中心的配置文件中如果存在相同的配置项，则一切以主配置为准，其次是扩展配置，最后是共享配
+# 在读取配置中心的配置文件时，会同时扫描以下三种格式的配置文件，但最终只会读取最匹配的配置文件，而其他两中格式的配置文件不管配置中心有还是没有，程序都会在Console控制台打印警告告知被忽略
+# 1、application.name-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+# 2、application.name-${spring.profiles.active}
+# 3、application.name.${spring.cloud.nacos.config.file-extension}
+
+# 总结： 配置中心的配置 > 本地 application.yaml 配置 > 本地 bootstrap.yaml 配置，优先级依次降低。也就是加载顺序为：bootstrap > application > 配置中心
+# 1、配置中心的配置优先级高于本地配置，配置中心的配置可以共享给多个服务，可以实现配置的集中管理和共享。
+# 2、配置中心的配置可以热更新，可以实现配置的动态更新，而本地配置只能重启应用才能生效。

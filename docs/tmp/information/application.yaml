@@ -1,0 +1,318 @@
+# 服务器配置
+server:
+  port: 8082
+  # servlet 配置
+  servlet:
+    # 请求基础路径，用于处理请求，默认为 /
+    context-path: /
+  # 开启 SSL 支持, 用于 HTTPS 通信，默认关闭
+  ssl:
+    enabled: false
+    key-store: classpath:certs/keystore.jks
+    key-store-password: password
+    key-store-type: JKS
+    key-alias: tomcat
+    # 证书文件路径，用于 HTTPS 通信，默认为空
+    # certificate: classpath:certs/server.crt
+  # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
+  compression:
+    enabled: true
+    # 执行压缩所需的最小 Content-Length 值，默认为 2048 字节即 2KB，小于该值的响应体将不压缩
+    min-response-size: 10KB
+    # 压缩支持的 MIME 类型，默认为8种常见的 MIME 类型，表示所有类型都支持压缩
+    mime-types:
+      - text/html
+      - text/css
+      - text/javascript
+      - text/xml
+      - text/plain
+      - application/json
+      - application/xml
+      - application/javascript
+  # HTTP/2 配置，用于支持 HTTP/2 协议
+  http2:
+    # 是否开启 HTTP/2 支持，默认关闭
+    enabled: true
+  # undertow 配置，用于调整、优化 Undertow 服务器的性能
+  undertow:
+    # 每个缓冲区的大小。默认值派生自 JVM 可用的最大内存量。
+    buffer-size: 1024
+    # 是否在 Java 堆之外分配缓冲区。默认值派生自 JVM 可用的最大内存量。
+    direct-buffers: true
+    # Undertow 使用两组线程：I/O 线程和业务线程。I/O 线程处理网络 I/O，建议将其设置为 CPU 核心数的 2 倍。
+    threads:
+      # 要为 worker 创建的 I/O 线程数。默认值派生自可用处理器的数量。适合 8 核心 CPU
+      io: 8
+      # 工作线程数。默认值是 I/O 线程数的 8 倍。业务线程数影响应用处理请求的能力，可以根据需求增加。
+      worker: 200
+
+# 配置配置应用的常规、非敏感、不变动的属性
+spring:
+  # 应用名称
+  application:
+    name: @project.artifactId@
+  # 时间日期格式化配置
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    # 数据库连接 URL
+    url: jdbc:mysql://192.168.56.10:3306/blog_cloud?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=GMT%2B8
+    # 数据库用户名
+    username: lcqh
+    # 数据库密码
+    password: 479368
+    # 数据库驱动类名
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 显式指定数据源类型为 HikariDataSource
+    type: com.zaxxer.hikari.HikariDataSource
+    # HikariCP 是一个高性能的 JDBC 连接池实现，它通常用于提高应用程序的性能和响应速度
+    hikari:
+      # 连接池中最小空闲连接数
+      minimum-idle: 5
+      # 连接池中最大连接数
+      maximum-pool-size: 10
+      # 连接闲置超时时间（毫秒）
+      idle-timeout: 600000
+      # 获取连接的超时时间（毫秒）
+      connection-timeout: 30000
+  # Redis 配置
+  data:
+    redis:
+      # Redis 服务器的 IP 地址
+      host: 192.168.56.10
+      # Redis 服务器的端口号，默认为 6379
+      port: 6379
+      # 默认使用的数据库索引，默认为 0
+      database: 0
+      # Redis 服务器的密码，如果没有设置密码，则设置为 null
+      password: 479368
+      # 命令执行的超时时间（毫秒）
+      timeout: 10000
+      # Lettuce 是 Redis 的异步客户端，它提供了高性能的非阻塞 I/O 操作。默认使用 Lettuce 作为 Redis 客户端
+  # 缓存配置, 使用 Redis 作为缓存。启用缓存配置还需要加上 @EnableCaching 注解
+  cache:
+    type: redis
+    # Redis 缓存策略
+    redis:
+      # 允许缓存 null 值。解决缓存穿透问题
+      cache-null-values: true
+      # 缓存过期时间，默认情况下，缓存永不过期。单位：秒
+      time-to-live: 3600s
+      # 缓存写入 Redis 时是否使用 prefix 作为 key 前缀
+      use-key-prefix: true
+      # 缓存 key 的前缀 prefix
+      key-prefix: "redis:cache:"
+  # 开启虚拟线程功能
+  threads:
+    virtual:
+      enabled: true
+  # 虚拟线程的一个副作用是它们是守护线程。如果其所有线程都是守护线程，则 JVM 将退出。
+  # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
+  main:
+    keep-alive: true
+  # 安全配置
+  security:
+    oauth2:
+      # OAuth2 客户端的配置信息，配置参考官方文档： https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html
+      client:
+        # 配置第三方登录的客户端信息
+        registration:
+          # 唯一标识客户注册的 ID。
+          gitee:
+            provider: gitee
+            # 客户标识符。
+            client-id: your-gitee-client-id
+            # 客户密钥。
+            client-secret: your-gitee-client-secret
+            # 客户认证方法。是一个枚举类型，包括 client_secret_post 和 private_key_jwt 等
+            client-authentication-method: client_secret_post
+            # 授权类型。是一个枚举类型，包括 authorization_code、client_credentials、password 以及扩展授权类型 jwt-bearer 等
+            authorization-grant-type: authorization_code
+            # 授权回调地址，必须与第三方登录的回调地址一致。
+            redirect-uri: http://localhost:9001/auth/oauth2/code/gitee/callback
+            # 客户端在授权请求流程中请求的范围，如 openid、电子邮件或个人资料。
+            scope:
+              - user_info
+              - email
+              - repos
+              - issues
+            # 用于客户端的描述性名称。该名称可在某些情况下使用，例如在自动生成的登录页面中显示客户名称时。
+            client-name: Gitee
+          # 唯一标识客户注册的 ID。
+          github:
+            provider: github
+            # 客户标识符。
+            clientId: your-github-client-id
+            # 客户密钥。
+            clientSecret: your-github-client-secret
+            # 客户认证方法。是一个枚举类型，包括 client_secret_post 和 private_key_jwt 等
+            client-authentication-method: client_secret_post
+            # 授权类型。是一个枚举类型，包括 authorization_code、client_credentials、password 以及扩展授权类型 jwt-bearer 等
+            authorization-grant-type: authorization_code
+            # 授权回调地址，必须与第三方登录的回调地址一致。
+            redirect-uri: http://localhost:9001/auth/oauth2/code/github/callback
+            # 客户端在授权请求流程中请求的范围，如 openid、电子邮件或个人资料。
+            scope:
+              - user
+              - user:email
+              - user:follow
+            # 用于客户端的描述性名称。该名称可在某些情况下使用，例如在自动生成的登录页面中显示客户名称时。
+            client-name: Github
+          # 唯一标识客户注册的 ID。
+          qq:
+            provider: qq
+            # 客户标识符。
+            clientId: your-qq-client-id
+            # 客户密钥。
+            clientSecret: your-qq-client-secret
+            # 客户认证方法。是一个枚举类型，包括 client_secret_post 和 private_key_jwt 等
+            client-authentication-method: client_secret_post
+            # 授权类型。是一个枚举类型，包括 authorization_code、client_credentials、password 以及扩展授权类型 jwt-bearer 等
+            authorization-grant-type: authorization_code
+            # 授权回调地址，必须与第三方登录的回调地址一致。
+            redirect-uri: http://localhost:9001/auth/oauth2/code/qq/callback
+            # 客户端在授权请求流程中请求的范围，如 openid、电子邮件或个人资料。
+            scope:
+              - user
+              - user_follow
+              - user_info
+            # 用于客户端的描述性名称。该名称可在某些情况下使用，例如在自动生成的登录页面中显示客户名称时。
+            client-name: QQ
+          # 唯一标识客户注册的 ID。
+          wechat:
+            provider: wechat
+            # 客户标识符。
+            clientId: your-wechat-client-id
+            # 客户密钥。
+            clientSecret: your-wechat-client-secret
+            # 客户认证方法。是一个枚举类型，包括 client_secret_post 和 private_key_jwt 等
+            client-authentication-method: client_secret_post
+            # 授权类型。是一个枚举类型，包括 authorization_code、client_credentials、password 以及扩展授权类型 jwt-bearer 等
+            authorization-grant-type: authorization_code
+            # 授权回调地址，必须与第三方登录的回调地址一致。
+            redirect-uri: http://localhost:9001/auth/oauth2/code/wechat/callback
+            # 客户端在授权请求流程中请求的范围，如 openid、电子邮件或个人资料。
+            scope:
+              - snsapi_login
+              - snsapi_userinfo
+              - snsapi_base
+              - snsapi_privateinfo
+            # 用于客户端的描述性名称。该名称可在某些情况下使用，例如在自动生成的登录页面中显示客户名称时。
+            client-name: WeChat
+        # 第三方登录的配置信息
+        provider:
+          gitee:
+            # 授权服务器的授权端点 URI。
+            authorization-uri: https://gitee.com/oauth/authorize
+            # 授权服务器的令牌端点 URI。
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-info-authentication-method: form
+            user-name-attribute: sub
+            # 用于从授权服务器检索 JSON 网络密钥（JWK）集的 URI，其中包含用于验证 ID 令牌的 JSON 网络签名（JWS）和（可选）用户信息回复的加密密钥。
+            jwk-set-uri: https://gitee.com/oauth/jwkset
+            # 返回 OpenID Connect 1.0 提供商或 OAuth 2.0 授权服务器的发行方标识符 URI。
+            issuer-uri: https://gitee.com/oauth/
+          github:
+            # 授权服务器的授权端点 URI。
+            authorization-uri: https://gitee.com/oauth/authorize
+            # 授权服务器的令牌端点 URI。
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-info-authentication-method: form
+            user-name-attribute: sub
+            # 用于从授权服务器检索 JSON 网络密钥（JWK）集的 URI，其中包含用于验证 ID 令牌的 JSON 网络签名（JWS）和（可选）用户信息回复的加密密钥。
+            jwk-set-uri: https://gitee.com/oauth/jwkset
+            # 返回 OpenID Connect 1.0 提供商或 OAuth 2.0 授权服务器的发行方标识符 URI。
+            issuer-uri: https://gitee.com/oauth/
+          qq:
+            # 授权服务器的授权端点 URI。
+            authorization-uri: https://gitee.com/oauth/authorize
+            # 授权服务器的令牌端点 URI。
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-info-authentication-method: form
+            user-name-attribute: sub
+            # 用于从授权服务器检索 JSON 网络密钥（JWK）集的 URI，其中包含用于验证 ID 令牌的 JSON 网络签名（JWS）和（可选）用户信息回复的加密密钥。
+            jwk-set-uri: https://gitee.com/oauth/jwkset
+            # 返回 OpenID Connect 1.0 提供商或 OAuth 2.0 授权服务器的发行方标识符 URI。
+            issuer-uri: https://gitee.com/oauth/
+          wechat:
+            # 授权服务器的授权端点 URI。
+            authorization-uri: https://gitee.com/oauth/authorize
+            # 授权服务器的令牌端点 URI。
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-info-authentication-method: form
+            user-name-attribute: sub
+            # 用于从授权服务器检索 JSON 网络密钥（JWK）集的 URI，其中包含用于验证
+            jwk-set-uri: https://gitee.com/oauth/jwkset
+            # 返回 OpenID Connect 1.0 提供商或 OAuth 2.0 授权服务器的发行方标识符 URI。
+            issuer-uri: https://gitee.com/oauth/
+      # OAuth2 资源服务器的配置信息
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://cnbj1.fds.api.xiaomi.com/mi-files/v1/rest/jwt/public_key?appId=1400603526&timestamp=1620000000&nonce=1234567890&signature=1234567890
+          jws-algorithms: [ RS256 ]
+          issuer-uri: https://cnbj1.fds.api.xiaomi.com
+          public-key-location: banner.txt
+          audiences: justauth
+          authority-prefix: ROLE_
+          authorities-claim-delimiter: ,
+          authorities-claim-name: authorities
+          principal-claim-name: username
+        opaquetoken:
+          client-id: justauth
+          client-secret: justauth
+          introspection-uri: https://cnbj1.fds.api.xiaomi.com/mi-auth/v2/oauth2/introspect
+
+# mybatis-plus 配置
+mybatis-plus:
+  # 指定 Mapper 对应的 XML 文件扫描位置
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 全局配置
+  global-config:
+    # 关闭 mybatis-plus 横幅打印
+    banner: true
+    # 逻辑删除配置
+    db-config:
+      # 表名前缀
+      table_prefix: t_
+      # 表主键生成策略，ASSIGN_ID 自动分配 ID，适用于 Long、Integer、String 类型的主键。默认使用雪花算法通过 IdentifierGenerator 的 nextId 实现
+      id-type: ASSIGN_ID
+      # 全局逻辑删除的实体字段名
+      logic-delete-field: is_deleted
+      # 逻辑已删除值(默认为 1) 也可设置为 true
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0) 也可设置为 false
+      logic-not-delete-value: 0
+  # MyBatis 配置
+  configuration:
+    # 启用 sql 打印，生产环境建议关闭
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# 配置 actuator 对外指标
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+  # 配置 Prometheus 监控
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  # 这个应用所有上报的 metrics 都会带上 application 这个标签的值，用于区分不同应用
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# 然后可以通过访问 http://localhost:8081/actuator 获取应用指标信息
+# 然后可以通过访问 http://localhost:8081/actuator/prometheus 获取Prometheus格式的指标数据

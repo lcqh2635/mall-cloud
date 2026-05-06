@@ -1,0 +1,1485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 项目模型版本 -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 项目坐标 -->
+    <groupId>com.urbane</groupId>
+    <artifactId>demo1</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <!-- 项目名称与描述 -->
+    <!-- 项目元信息，用于文档、仓库展示、许可证生成等 -->
+    <name>microservice-platform</name>
+    <description>基于 JDK25 的多模块微服务架构平台</description>
+    <url>https://github.com/your-company/microservice-platform</url>
+
+    <!-- 声明项目开源许可证（Maven Central 要求，企业内部项目也建议声明）-->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- 声明项目所属组织（常用于生成 LICENSE、NOTICE 文件）-->
+    <organization>
+        <name>某某科技有限公司</name>
+        <url>https://www.example.com</url>
+    </organization>
+
+    <!-- 列出核心开发者（用于生成项目文档、邮件列表等）-->
+    <developers>
+        <developer>
+            <id>zhangsan</id>
+            <name>张三</name>
+            <email>zhangsan@example.com</email>
+            <organization>某某科技</organization>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <!-- 声明源码仓库地址，支持 Maven Release Plugin 自动打标签、发布 -->
+    <scm>
+        <connection>scm:git:https://github.com/your-company/microservice-platform.git</connection>
+        <developerConnection>scm:git:git@github.com:your-company/microservice-platform.git</developerConnection>
+        <url>https://github.com/your-company/microservice-platform</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <!-- 声明问题跟踪系统（如 Jira、GitHub Issues）-->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/your-company/microservice-platform/issues</url>
+    </issueManagement>
+
+    <!-- 声明 CI/CD 系统地址（如 Jenkins、GitLab CI）-->
+    <ciManagement>
+        <system>GitLab CI</system>
+        <url>https://gitlab.example.com/your-group/microservice-platform/pipelines</url>
+    </ciManagement>
+
+    <!-- 配置构件（jar、pom）发布目标仓库（如 Nexus、Artifactory、阿里云效）-->
+    <!-- 注意：<id> 需与 ~/.m2/settings.xml 中的 <server> ID 一致，用于认证 -->
+    <distributionManagement>
+        <!-- 快照版本仓库 -->
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://nexus.example.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+        <!-- 正式版本仓库 -->
+        <repository>
+            <id>nexus-releases</id>
+            <url>https://nexus.example.com/repository/maven-releases/</url>
+        </repository>
+        <!-- 站点文档发布（可选） -->
+        <site>
+            <id>site-server</id>
+            <url>scp://server.example.com/var/www/site</url>
+        </site>
+    </distributionManagement>
+
+    <!-- 属性定义：统一管理版本号，便于升级 -->
+    <properties>
+        <!-- Java 与编码 -->
+        <revision>1.0.0</revision>
+
+        <!-- Java 与项目编码 -->
+        <java.version>25</java.version>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Spring 生态版本 -->
+        <spring-boot.version>4.0.0-SNAPSHOT</spring-boot.version>
+        <spring-cloud.version>2025.1.0-M2</spring-cloud.version>
+        <spring-cloud-alibaba.version>2025.0.0.0-preview</spring-cloud-alibaba.version>
+        <spring-boot-admin.version>3.5.0</spring-boot-admin.version>
+        <spring-ai.version>1.0.1</spring-ai.version>
+
+        <!-- Maven 插件版本 -->
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+
+        <!-- 第三方组件版本 -->
+        <mybatis-plus.version>3.5.14</mybatis-plus.version>
+        <dynamic-ds.version>4.3.1</dynamic-ds.version>
+        <fastjson2.version>2.0.58</fastjson2.version>
+        <jjwt.version>0.13.0</jjwt.version>
+        <hutool.version>5.8.40</hutool.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <redisson.version>3.51.0</redisson.version>
+        <caffeine.version>3.2.2</caffeine.version>
+        <easy-es.version>3.0.0</easy-es.version>
+        <xxl-job.version>3.2.0</xxl-job.version>
+        <fastexcel.version>1.2.0</fastexcel.version>
+        <jasypt.version>3.0.5</jasypt.version>
+        <arthas.version>3.6.7</arthas.version>
+        <druid.version>1.2.27</druid.version>
+    </properties>
+
+    <!-- 模块声明：列出所有子模块 -->
+    <modules>
+        <module>common</module>           <!-- 公共工具、实体、异常等 -->
+        <module>gateway</module>          <!-- API 网关 -->
+        <module>auth-service</module>     <!-- 认证授权服务 -->
+        <module>user-service</module>     <!-- 用户服务 -->
+        <module>order-service</module>    <!-- 订单服务 -->
+        <module>job-service</module>      <!-- 定时任务服务 -->
+        <module>admin-server</module>     <!-- 监控中心 -->
+    </modules>
+
+    <!-- 全局依赖：所有子模块都会继承的依赖 -->
+    <dependencies>
+        <!--
+            Spring Boot Web 启动器（基于 Servlet 的传统 Web 应用支持）。
+            自动配置基于 Spring MVC 的 Web 应用，内嵌 Tomcat 服务器（默认），
+            适用于构建同步、阻塞式的 RESTful 服务或传统 Web 应用。
+            注意：此依赖与 spring-boot-starter-webflux 同时引入时，
+            Spring Boot 会默认以 Servlet 模式运行（即 MVC 优先），WebFlux 会退化为兼容模式，
+            通常不建议同时使用，除非有特殊混合需求。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Undertow 启动器。
+            用于将内嵌 Web 服务器从默认的 Tomcat 替换为 Undertow（由 JBoss 开发的高性能、轻量级 Web 服务器）。
+            Undertow 特点：
+                - 非阻塞 I/O 架构，支持高并发
+                - 内存占用低，启动速度快
+                - 支持 HTTP/1.1、HTTP/2、WebSocket、Servlet 4.0+
+                - 无额外依赖（纯 Java 实现）
+            引入此依赖后，Spring Boot 会自动排除 Tomcat 并配置 Undertow 作为内嵌容器。
+            适用于对性能、资源消耗敏感的微服务或云原生场景。
+            注意：若项目同时引入了 spring-boot-starter-web 和此依赖，Tomcat 会被自动排除。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+            <version>3.5.4</version>
+        </dependency>
+
+        <!--
+            Spring Boot WebFlux 启动器（响应式 Web 支持）。
+            基于 Project Reactor 提供响应式、非阻塞的编程模型，
+            支持两种运行时：Netty（默认）或 Servlet 容器（如 Tomcat，但以异步非阻塞方式运行）。
+            适用于高并发、低延迟场景，如实时数据流、事件驱动架构等。
+            若项目以响应式为主，应避免同时引入 spring-boot-starter-web。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot WebSocket 启动器。
+            提供对 WebSocket 协议的支持，用于实现全双工通信（如实时聊天、推送通知等）。
+            在基于 spring-boot-starter-web（Servlet 环境）下，使用 Tomcat 或 Jetty 的原生 WebSocket 支持；
+            若与 WebFlux 一起使用，则基于响应式 WebSocket（Reactive WebSocket）实现。
+            注意：其运行模式取决于底层 Web 堆栈（MVC 或 WebFlux）。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot JPA 启动器。
+            提供基于 Jakarta Persistence API (JPA) 的关系型数据库访问支持，
+            默认集成 Hibernate 作为 JPA 实现，自动配置 DataSource、EntityManager、事务管理等。
+            适用于 MySQL、PostgreSQL、Oracle 等传统关系型数据库。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Elasticsearch 启动器。
+            提供与 Elasticsearch 的集成支持，基于 Spring Data Elasticsearch，
+            支持通过 Repository 接口操作 Elasticsearch 文档，适用于全文检索、日志分析等场景。
+            注意：此依赖基于阻塞式客户端（如 Elasticsearch REST High Level Client，旧版本），
+            新版本可能使用新的 Java API Client，但仍属于同步/阻塞模型。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot MongoDB 启动器（阻塞式）。
+            提供基于 Spring Data MongoDB 的同步数据库操作支持，
+            使用 MongoTemplate 或 MongoRepository 进行 CRUD 操作，
+            适用于传统阻塞式 Web 应用（如基于 spring-boot-starter-web 的项目）。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot 响应式 MongoDB 启动器。
+            提供基于 Project Reactor 的响应式 MongoDB 支持（ReactiveMongoTemplate / ReactiveMongoRepository），
+            适用于响应式编程模型（如 WebFlux 应用），实现非阻塞、异步的数据访问。
+            与 spring-boot-starter-data-mongodb 互为阻塞/非阻塞版本，通常二选一。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Redis 启动器（阻塞式）。
+            提供基于 Lettuce 或 Jedis 的 Redis 客户端支持（默认 Lettuce），
+            通过 RedisTemplate 或 StringRedisTemplate 实现同步 Redis 操作，
+            适用于缓存、会话存储、消息队列等场景，常用于传统 Web 应用。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot 响应式 Redis 启动器。
+            提供基于 Reactor 的响应式 Redis 支持（ReactiveRedisTemplate），
+            支持非阻塞的 Redis 操作，适用于 WebFlux 等响应式应用架构。
+            与 spring-boot-starter-data-redis 功能对应，但编程模型为响应式。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot 缓存抽象启动器。
+            提供统一的缓存抽象（@Cacheable, @CacheEvict, @CachePut 等注解），
+            可集成多种缓存实现（如 Redis、Caffeine、EhCache、ConcurrentMap 等），
+            实际缓存行为由底层缓存提供者决定（需额外引入对应依赖，如 Redis）。
+            本身不包含具体缓存实现，仅提供 Spring Cache 的自动配置支持。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+
+        <!--
+            Spring Boot Security 启动器。
+            提供 Spring Security 的自动配置，用于实现应用的认证（Authentication）和授权（Authorization）。
+            默认启用基本的安全防护（如 CSRF、会话管理、登录页面等），适用于 Web 应用、REST API 等场景。
+            是构建安全应用的基础依赖，其他 OAuth2 模块通常在其之上扩展。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot OAuth2 客户端启动器。
+            用于将应用配置为 OAuth2 客户端（即第三方登录场景，如“使用 Google 登录”）。
+            支持从授权服务器（如 Google、GitHub、Auth0 或自建授权服务器）获取用户信息，
+            并集成到 Spring Security 的认证流程中。
+            常用于 Web 应用实现社交登录或单点登录（SSO）。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot OAuth2 授权服务器启动器。
+            用于将当前应用构建为 OAuth2 授权服务器（Authorization Server），
+            支持颁发访问令牌（Access Token）、刷新令牌（Refresh Token）等，
+            实现 OAuth2 的授权码模式、密码模式、客户端凭证模式等。
+            注意：自 Spring Security 5.7 起，官方提供了新的授权服务器实现（spring-authorization-server），
+            此 starter 基于该实现，替代了已废弃的 Spring Security OAuth 项目。
+            适用于需要自建认证中心的场景。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot OAuth2 资源服务器启动器。
+            用于将应用配置为 OAuth2 资源服务器（Resource Server），
+            能够验证由授权服务器签发的 JWT 或 opaque token，
+            保护受控资源（如 REST API），仅允许携带有效令牌的请求访问。
+            通常用于微服务架构中，作为被保护的服务端点。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Actuator 启动器。
+            提供生产就绪的监控和管理端点（endpoints），如 /actuator/health（健康检查）、
+            /actuator/metrics（指标）、/actuator/info（应用信息）、/actuator/loggers（日志级别调整）等。
+            用于监控应用运行状态、性能指标、配置信息等，是构建可观测性（Observability）的基础组件。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!--
+            Micrometer Prometheus 注册表实现。
+            将 Actuator 暴露的指标（metrics）格式化为 Prometheus 可抓取的文本格式（通过 /actuator/prometheus 端点）。
+            需配合 Prometheus 服务器进行指标采集，并可进一步集成 Grafana 进行可视化。
+            scope 设为 runtime 表示该依赖在运行时生效，编译时不需要直接引用其 API。
+        -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            Spring Boot Admin 客户端启动器（由 codecentric 提供）。
+            用于将当前应用注册到 Spring Boot Admin Server（监控中心），
+            自动上报健康状态、日志、JVM 信息、配置等数据。
+            适用于微服务架构中，让各个服务实例被集中监控。
+            通常部署在被监控的服务（client）端。
+        -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Admin 服务端启动器（由 codecentric 提供）。
+            用于搭建 Spring Boot Admin Server，提供 Web UI 界面集中监控多个 Spring Boot 应用实例。
+            支持查看服务状态、日志、线程、内存、环境变量、HTTP 跟踪等信息，并可触发日志级别调整等操作。
+            通常作为独立的监控服务部署。
+            注意：client 和 server 一般不会同时用在同一个应用中（除非是自监控场景）。
+        -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Gateway 基于 WebFlux 的响应式网关启动器。
+            适用于构建高性能、非阻塞的 API 网关，底层基于 Project Reactor 和 Netty。
+            注意：WebFlux 是响应式编程模型，不能与传统的 Servlet（如 Tomcat）混合使用。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Gateway 基于 WebMvc 的传统阻塞式网关启动器（实验性或特定版本支持）。
+            使用传统的 Spring MVC 编程模型，运行在 Servlet 容器（如 Tomcat）上。
+            注意：官方主推的是 WebFlux 版本，WebMvc 版本可能功能受限或仅用于兼容场景，
+            通常不建议与 WebFlux 网关同时使用，二者互斥。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway-server-webmvc</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud LoadBalancer 启动器。
+            提供客户端负载均衡能力，用于在服务调用时自动从服务注册中心（如 Eureka、Nacos）
+            获取可用实例列表并进行负载均衡（如轮询、随机等策略）。
+            替代了早期的 Ribbon 组件，是 Spring Cloud 新一代负载均衡解决方案。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud OpenFeign 启动器。
+            基于 Feign 的声明式 HTTP 客户端，简化服务间 REST 调用。
+            结合 @FeignClient 注解，可像调用本地方法一样调用远程服务，
+            并自动集成 Ribbon（已弃用）或 Spring Cloud LoadBalancer 实现负载均衡。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+
+        <!--
+            Spring Boot Session 与 Redis 集成启动器。
+            将 Web 应用的 HTTP 会话（HttpSession）持久化到 Redis 中，实现：
+                - 会话共享：支持多实例应用集群共享用户登录状态（解决 Session 无法跨节点的问题）
+                - 会话高可用：即使某个应用实例宕机，用户会话也不会丢失
+                - 会话集中管理：便于统一监控、清理或与 Spring Security 集成
+            自动配置 Spring Session + Redis，使用 Redis 作为 Session 存储后端，
+            默认通过 Cookie（名为 SESSION）传递会话 ID，并支持 WebSocket 会话同步。
+            适用于需要水平扩展的传统 Web 应用或微服务架构。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-session-data-redis</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Data REST 启动器。
+            基于 Spring Data Repositories 自动生成 RESTful API，无需编写 Controller。
+            例如：定义一个 JpaRepository<User, Long>，Data REST 会自动暴露 /users 端点，
+            支持 GET/POST/PUT/DELETE 等操作，并遵循 HAL（Hypertext Application Language）规范，
+            返回包含 _links 的超媒体格式 JSON。
+            适用于快速构建原型、内部管理接口或符合 REST 原则的资源服务。
+            注意：在生产环境中需谨慎使用，因其自动暴露所有 Repository，可能带来安全或设计风险，
+            建议配合 @RestResource 注解或自定义配置进行细粒度控制。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+
+
+        <!--
+            Spring Boot RestClient 启动器（Spring Boot 3.2+ 引入）。
+            提供对 Spring Framework 6.1+ 新增的 RestClient 的自动配置支持。
+            RestClient 是对 RestTemplate 的现代化替代，基于 WebClient 构建，但提供同步、简洁、流畅的 API，
+            支持声明式风格（如 .get().retrieve().body()）、拦截器、错误处理、Jackson 自动序列化等。
+            适用于传统阻塞式（Servlet）Web 应用中发起 HTTP 请求，代码更简洁且与 Spring 生态深度集成。
+            注意：RestClient 本质是 WebClient 的同步封装，底层仍使用响应式基础设施（如 Reactor Netty）。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-restclient</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot WebClient 启动器。
+            提供对 WebClient 的自动配置支持。WebClient 是 Spring 5 引入的响应式、非阻塞 HTTP 客户端，
+            适用于 WebFlux（响应式）或 WebMvc（传统）应用，支持函数式链式调用、流式数据处理、
+            背压（backpressure）、异步请求等特性。
+            在 WebFlux 应用中是首选 HTTP 客户端；在 WebMvc 应用中也可用于异步或高性能场景。
+            默认使用 Reactor Netty 作为底层 HTTP 客户端（也可切换为 Jetty 或 Apache HttpClient）。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webclient</artifactId>
+        </dependency>
+
+
+        <!--
+            Micrometer Tracing 与 Brave 的桥接器。
+            将 Micrometer Tracing（Spring Boot 3+ 推荐的分布式追踪抽象）与 Brave（Zipkin 的官方 Java 客户端）集成，
+            实现自动的分布式链路追踪（Distributed Tracing）。
+            支持在微服务调用链中生成 traceId、spanId，并通过 HTTP 头（如 b3 或 traceparent）透传，
+            最终可将追踪数据上报至 Zipkin、Jaeger 等后端系统。
+            通常配合 spring-boot-starter-actuator 和 Zipkin 服务使用。
+        -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Bus（消息总线）。
+            通过轻量级消息代理（如 RabbitMQ、Kafka）连接分布式系统中的各个节点，
+            实现配置变更的广播通知（例如：Nacos 或 Git 配置更新后，通过 /actuator/bus-refresh 触发所有实例刷新）。
+            常用于微服务架构中动态刷新配置（替代手动逐个调用 /actuator/refresh），
+            也可用于自定义事件广播（如缓存清空、状态同步等）。
+            需配合 spring-cloud-starter-amqp 或 spring-cloud-starter-stream-kafka 使用。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-bus</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Function Web 支持。
+            为 Spring Cloud Function 提供 Web 端点暴露能力，允许将函数（Function, Consumer, Supplier）自动映射为 REST API。
+            例如：定义一个 Function<String, String> uppercase，即可通过 POST /uppercase 自动调用。
+            支持 JSON、文本等多种输入输出格式，适用于构建轻量级函数即服务（FaaS）或简化 REST 接口开发。
+            在响应式环境中（WebFlux）也支持非阻塞调用。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-function-web</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Thymeleaf 启动器。
+            集成 Thymeleaf 模板引擎，用于在服务端渲染 HTML 页面。
+            Thymeleaf 支持自然模板（可在浏览器中直接预览）、强大的表达式语法（如 ${...}、*{...}）、
+            与 Spring 表达式语言（SpEL）无缝集成，并天然支持 Spring Boot 的自动配置（如模板路径、缓存等）。
+            默认模板位置：src/main/resources/templates/，文件后缀为 .html。
+            适用于构建传统的服务端渲染 Web 应用（如管理后台、内容网站等）。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot FreeMarker 启动器。
+            集成 Apache FreeMarker 模板引擎，同样用于服务端 HTML 渲染。
+            FreeMarker 使用类似 ${variable} 的语法，支持条件、循环、宏等模板指令，
+            与 Spring MVC 集成良好，可自动配置模板加载路径、编码、缓存等。
+            默认模板位置：src/main/resources/templates/，文件后缀通常为 .ftl。
+            常用于邮件模板、静态页面生成或传统 Web 应用开发。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot GraphQL 启动器。
+            提供对 GraphQL API 的支持，基于 Spring for GraphQL（底层使用 GraphQL Java）。
+            允许客户端按需查询数据，避免 REST API 的过度获取或多次请求问题。
+            支持 Schema 定义（.graphqls 文件）、数据获取器（@SchemaMapping）、异常处理、订阅（需结合 WebSocket）等。
+            默认 GraphQL 端点为 /graphql，适用于构建灵活的数据查询接口。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Quartz 启动器。
+            集成 Quartz 调度框架，用于执行定时任务和复杂调度（如 cron 表达式、任务持久化、集群调度等）。
+            比 Spring 自带的 @Scheduled 更强大，支持任务持久化到数据库、任务状态管理、高可用集群等场景。
+            适用于需要可靠、可恢复、分布式调度的企业级定时任务。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot AMQP 启动器（通常用于 RabbitMQ）。
+            提供对高级消息队列协议（AMQP）的支持，默认集成 RabbitMQ 客户端。
+            支持消息生产者/消费者、监听器（@RabbitListener）、消息确认、死信队列、延迟消息等高级特性。
+            适用于构建基于消息队列的异步通信、解耦、削峰填谷等微服务架构场景。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot Batch 启动器。
+            集成 Spring Batch 框架，用于处理大批量数据的批处理任务（如数据导入/导出、报表生成、ETL 等）。
+            提供作业（Job）、步骤（Step）、读取器（ItemReader）、处理器（ItemProcessor）、写入器（ItemWriter）等核心抽象，
+            支持事务管理、失败重试、跳过策略、作业状态持久化等功能。
+            适用于需要高可靠性和可追踪性的离线数据处理场景。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Task 启动器。
+            用于构建短生命周期的微服务任务（即“任务型”应用），通常在云平台（如 Kubernetes、Cloud Foundry）中按需启动并执行后退出。
+            支持任务生命周期管理、任务参数传递、任务执行历史记录（可选持久化到数据库）等。
+            常与 Spring Batch 结合使用（例如：每次启动一个 Task 来执行一个 Batch Job）。
+            注意：这是 Spring Cloud 生态组件，需配合 Spring Cloud 版本使用。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-task</artifactId>
+        </dependency>
+
+
+        <!--
+            Spring Cloud Bootstrap 上下文启动器。
+            在 Spring Boot 2.4+ 和 Spring Cloud 2020.0.0+ 中，默认不再加载 bootstrap.yml/bootstrap.properties。
+            引入此依赖可重新启用 Bootstrap 上下文，使得应用在主 ApplicationContext 初始化前，
+            先通过 bootstrap 阶段加载配置（如从 Nacos、Config Server 获取配置）。
+            常用于需要在应用启动早期就加载外部配置的场景（例如：配置中心地址本身由 bootstrap 配置）。
+            注意：若使用 Spring Cloud Config 或 Nacos Config 且依赖 bootstrap 配置文件，需显式引入此 starter。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!--
+            Druid 数据库连接池 Spring Boot 3 专用启动器（由阿里巴巴开源）。
+            Druid 是高性能、功能丰富的 Java 数据库连接池，提供：
+                - 监控统计（SQL 执行性能、连接池状态）
+                - 防 SQL 注入
+                - 连接泄漏检测
+                - 内置 Web 监控页面（/druid）
+            此版本（druid-spring-boot-3-starter）专为 Spring Boot 3.x（基于 Jakarta EE 9+）设计，
+            自动配置 DataSource，并支持通过 application.yml 配置连接池参数。
+            注意：需显式指定 version，因它未被 Spring Boot 官方 BOM 管理。
+        -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
+            <version>1.2.27</version>
+        </dependency>
+
+        <!--
+            Arthas Spring Boot Starter（Java 诊断利器）。
+            Arthas 是阿里巴巴开源的 Java 应用诊断工具，无需重启即可在线排查问题，支持：
+                - 查看 JVM 信息、线程堆栈、内存使用
+                - 动态追踪方法调用（trace/watch/monitor）
+                - 反编译类（jad）
+                - 热更新代码（redefine，谨慎使用）
+            此 starter 会在应用启动时自动嵌入 Arthas Agent（默认不开启 Telnet/Web 控制台），
+            可通过 HTTP API 或外部 attach 方式激活诊断功能。
+            scope 设为 runtime 表示仅在运行时生效，不影响编译。
+            注意：生产环境建议按需启用，避免安全风险。
+        -->
+        <dependency>
+            <groupId>com.taobao.arthas</groupId>
+            <artifactId>arthas-spring-boot-starter</artifactId>
+            <version>3.6.7</version>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <!--
+            Spring Cloud Stream RabbitMQ 绑定器启动器。
+            基于 Spring Cloud Stream 编程模型，提供与 RabbitMQ 的集成支持。
+            开发者只需关注消息的生产（Source）与消费（Sink）逻辑（如使用 @Input/@Output 或函数式编程），
+            无需直接操作 RabbitMQ 客户端 API。自动处理连接、交换器、队列、绑定等基础设施配置。
+            适用于希望以统一消息编程模型对接 RabbitMQ 的微服务应用。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Stream Kafka 绑定器启动器。
+            基于 Spring Cloud Stream，提供与 Apache Kafka 的无缝集成。
+            支持 Kafka 主题的自动创建、消费者组管理、分区策略、错误处理等，
+            允许开发者通过声明式方式发送和接收消息，屏蔽底层 Kafka 客户端复杂性。
+            适用于高吞吐、分布式日志、事件驱动架构等场景。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Alibaba 提供的 RocketMQ 绑定器启动器。
+            由 Alibaba Cloud 维护，用于将 Spring Cloud Stream 与 Apache RocketMQ 集成。
+            支持 RocketMQ 的消息发送、顺序消息、事务消息、延迟消息等高级特性，
+            并兼容 Spring Cloud Stream 的统一编程模型（如函数式绑定）。
+            适用于已在使用 RocketMQ 或阿里云消息队列（ONS）的企业级应用。
+            注意：此依赖属于 Spring Cloud Alibaba 生态，需配合其版本管理使用。
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Alibaba Sentinel 启动器。
+            集成阿里巴巴开源的流量治理组件 Sentinel，提供：
+                - 实时熔断（Circuit Breaking）
+                - 流量控制（Rate Limiting / QPS 控制）
+                - 系统自适应保护（System Protection）
+                - 热点参数限流
+            通过 @SentinelResource 注解或 Web 拦截器自动保护 REST 接口、Feign 调用等。
+            默认提供本地 Dashboard 监控（需单独启动 sentinel-dashboard）。
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!--
+            Sentinel 与 Spring Cloud Gateway 的集成模块。
+            为基于 Spring Cloud Gateway 构建的 API 网关提供路由级别的流量控制和熔断能力。
+            支持按路由 ID、自定义 API 分组进行限流规则配置，规则可动态推送至 Sentinel Dashboard。
+            适用于在网关层统一实施入口流量防护。
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+        </dependency>
+
+        <!--
+            Sentinel 动态数据源扩展支持。
+            允许将 Sentinel 的限流、熔断等规则持久化到外部数据源（如 Nacos、Apollo、ZooKeeper、Redis 等），
+            实现规则的动态配置与集中管理，避免重启服务生效。
+            常与 Nacos 配合使用，实现“规则配置 → 推送 → 生效”闭环。
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-sentinel-datasource</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Alibaba Nacos 服务发现启动器。
+            集成 Nacos 作为服务注册与发现中心，替代 Eureka/ZooKeeper。
+            应用启动时自动向 Nacos 注册自身服务（IP、端口、元数据等），
+            并可通过 RestTemplate + @LoadBalanced 或 OpenFeign 自动发现并调用其他服务。
+            支持健康检查、集群分组、权重路由等高级特性。
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Alibaba Nacos 配置中心启动器。
+            将 Nacos 作为外部配置中心，支持动态刷新 application.yml / properties 配置。
+            应用启动时从 Nacos 加载配置，配合 @RefreshScope 可实现运行时配置热更新。
+            支持多环境（namespace）、多配置文件（dataId）、配置监听等能力。
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!--
+            Spring Cloud Alibaba Seata 分布式事务启动器。
+            集成 Seata（原 Fescar）实现分布式事务一致性，支持 AT（自动补偿）、TCC、Saga 等模式。
+            在微服务调用链中，通过 @GlobalTransactional 注解开启全局事务，
+            确保跨多个数据库或服务的数据最终一致性。
+            需配合 Seata Server（TC）和数据库 undo_log 表使用。
+        -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+        </dependency>
+
+
+        <!--
+            Spring Boot Developer Tools（开发工具）。
+            为开发阶段提供便捷功能，主要包括：
+                - 自动重启（Classpath 变更时自动重启应用，比热部署更快）
+                - LiveReload（静态资源变更时自动刷新浏览器）
+                - 默认禁用模板缓存（便于开发时实时查看页面修改）
+                - 更友好的错误页面（包含条件报告、配置属性等）
+            该依赖仅在开发时生效，不会包含在生产构建中（因标记为 optional + runtime）。
+            注意：需在 IDE 中启用“自动编译”才能触发自动重启。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!--
+            Spring Boot Docker Compose 支持模块（Spring Boot 3.1+ 引入）。
+            在应用启动时自动检测项目根目录下的 docker-compose.yml 文件，
+            并自动启动其中定义的服务（如数据库、Redis、消息队列等），
+            便于本地开发时快速拉起依赖的基础设施，无需手动运行 docker-compose up。
+            启动后会自动将服务连接信息注入到 Spring Environment（如数据库 URL、端口等）。
+            仅在开发和测试环境使用，生产环境应禁用（通过配置 spring.docker.compose.enabled=false）。
+            标记为 optional 和 runtime，确保不会影响生产部署。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!--
+            MySQL 官方 JDBC 驱动（适用于 MySQL 8.0+）。
+            用于连接和操作 MySQL 数据库，支持 TLS、连接池、字符集等特性。
+            从 MySQL 8.0 开始，驱动类名为 com.mysql.cj.jdbc.Driver（旧版为 com.mysql.jdbc.Driver）。
+            scope 设为 runtime 表示该驱动在编译时不需要，仅在运行时由 Spring Boot 的数据源自动加载。
+        -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            MariaDB 官方 JDBC 驱动。
+            用于连接 MariaDB 数据库（MySQL 的一个开源分支），兼容 MySQL 协议，
+            支持高性能、SSL、故障转移、批量操作等特性。
+            驱动类名为 org.mariadb.jdbc.Driver。
+            同样设为 runtime，因为应用代码通常只依赖 JDBC 接口，不直接引用驱动类。
+        -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            PostgreSQL 官方 JDBC 驱动。
+            用于连接和操作 PostgreSQL 数据库，支持高级特性如数组、JSON、UUID、SSL、连接池等。
+            驱动类名为 org.postgresql.Driver。
+            作为 runtime 依赖，由 Spring Boot 在运行时根据配置自动加载，无需在代码中显式引用。
+        -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            Spring Boot 邮件发送启动器。
+            自动配置 JavaMailSender，简化邮件发送功能（支持 SMTP），
+            可用于发送简单文本邮件、HTML 邮件、带附件邮件等。
+            需在 application.properties/yml 中配置邮件服务器（如 host、port、username、password 等）。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot 数据校验启动器。
+            集成 Jakarta Bean Validation（如 Hibernate Validator），
+            支持使用 @NotBlank、@Email、@Min 等注解对请求参数、表单、DTO 等进行自动校验。
+            常用于 Controller 层方法参数校验，配合 @Valid、@Validated 使用。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!--
+            Spring Boot 配置处理器（Configuration Processor）。
+            在编译时生成 spring-configuration-metadata.json 文件，
+            为 application.properties 或 application.yml 提供 IDE 的自动补全、提示和文档支持。
+            标记为 optional=true 表示该依赖仅在编译期有用，不会传递给下游模块，也不包含在最终构建产物中。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--
+            Lombok 工具库。
+            通过注解（如 @Data、@Getter、@Setter、@NoArgsConstructor 等）自动生成 Java 类的样板代码（getter/setter/toString 等），
+            减少冗余代码，提升开发效率。
+            需要 IDE 安装 Lombok 插件才能正确识别生成的代码。
+            标记为 optional=true 表示仅在编译期使用，运行时不需要，且不会被依赖项目传递引入。
+        -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--
+            Spring Boot 测试启动器。
+            提供完整的测试支持，集成 JUnit Jupiter（JUnit 5）、Spring Test、Mockito、AssertJ、Hamcrest、JSONPath 等。
+            用于编写单元测试和集成测试（如 @SpringBootTest、@WebMvcTest、@DataJpaTest 等）。
+            scope 设为 test 表示该依赖仅在测试编译和运行时有效，不会打包到生产代码中。
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!--
+            MyBatis-Plus Spring Boot 3 专用启动器。
+            MyBatis-Plus 是 MyBatis 的增强工具，在 MyBatis 的基础上只做增强，不做改变，
+            简化 CRUD 操作，提供：
+              - 通用 Mapper（BaseMapper）
+              - 条件构造器（QueryWrapper / LambdaQueryWrapper）
+              - 自动分页插件
+              - 逻辑删除、乐观锁、自动填充等特性
+            此版本专为 Spring Boot 3.x（Jakarta EE 9+）设计，自动配置 SqlSessionFactory、Mapper 扫描等。
+        -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>3.5.14</version>
+        </dependency>
+
+        <!--
+            MyBatis-Plus 多数据源（Dynamic Datasource）Spring Boot 3 启动器。
+            支持在同一个应用中动态切换多个数据源（如主从读写分离、多租户、跨库查询等），
+            通过 @DS("db1") 注解或配置文件灵活指定数据源。
+            自动集成 MyBatis-Plus，支持 Seata 分布式事务（需额外配置）。
+            适用于需要连接多个数据库的复杂业务场景。
+        -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+
+        <!--
+            MyBatis-Plus 代码生成器。
+            可根据数据库表结构自动生成 Entity、Mapper、Service、Controller 等模板代码，
+            大幅提升开发效率，尤其适用于单表 CRUD 场景。
+            通常在开发阶段通过 Java 程序或 Maven 插件调用，不建议打包到生产环境。
+            注意：此依赖不含 Spring Boot 自动配置，仅用于代码生成逻辑。
+        -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.12</version>
+        </dependency>
+
+        <!--
+            MyBatis-Plus Join 插件（MyBatis-Join）Spring Boot 启动器。
+            解决 MyBatis-Plus 原生不支持多表关联查询（JOIN）的问题，
+            通过自定义注解（如 @JoinColumn）或链式 API 实现一对多、多对一等关联查询，
+            返回结果自动映射为嵌套对象（如 Order 包含 List<Item>）。
+            适用于需要复杂关联查询但又想保留 MP 简洁性的场景。
+        -->
+        <dependency>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join-boot-starter</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
+        <!--
+            Jasypt Spring Boot 启动器（用于配置属性加密）。
+            支持对 application.yml / application.properties 中的敏感信息（如数据库密码、密钥）进行加密，
+            启动时自动解密，避免明文暴露。
+            使用方式：通过 ENC(加密内容) 包裹密文，并通过命令行参数或环境变量传入解密密钥（如 jasypt.encryptor.password=xxx）。
+            提升应用配置安全性，适用于安全合规要求较高的环境。
+        -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
+        <!--
+            Knife4j OpenAPI 3（Jakarta 版）Spring Boot 启动器。
+            Knife4j 是 Swagger 的增强 UI，提供更美观、功能更丰富的 API 文档界面，
+            支持：
+              - 在线调试、参数缓存、导出 Markdown/HTML
+              - 生产环境文档保护（需授权访问）
+              - 国际化、个性化配置
+            此版本适配 Spring Boot 3.x（Jakarta EE 9+）和 OpenAPI 3.0 规范，
+            自动集成 SpringDoc（springdoc-openapi），无需额外配置即可访问 /doc.html 查看增强文档。
+        -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
+        <!--
+            Redisson Spring Boot 启动器。
+            Redisson 是一个基于 Redis 的 Java 客户端，提供丰富的分布式对象和服务（如分布式锁、信号量、队列、Map、Set 等）。
+            此 starter 为 Spring Boot 应用自动配置 RedissonClient，并支持通过 application.yml 配置 Redis 连接（单机、哨兵、集群、云托管等模式）。
+            核心优势：
+              - 提供开箱即用的分布式锁（RLock），支持可重入、公平锁、红锁（RedLock）等
+              - 支持异步、响应式（Reactive）和 RxJava 编程模型
+              - 内置 Spring Cache、Spring Session 集成
+            适用于需要高级 Redis 功能（尤其是分布式协调）的微服务场景。
+            注意：版本需与 Redis 服务器兼容，且未被 Spring Boot 官方 BOM 管理，需显式指定 version。
+        -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.51.0</version>
+        </dependency>
+
+        <!--
+            Caffeine 高性能本地缓存库。
+            Caffeine 是 Guava Cache 的下一代替代品，采用 Window TinyLFU 算法，提供极低的内存开销和极高的命中率。
+            特性包括：
+              - 自动过期（基于写入时间、访问时间）
+              - 异步加载（AsyncLoadingCache）
+              - 统计监控（命中率、加载次数等）
+              - 与 Spring Cache 无缝集成（通过 @EnableCaching + CaffeineCacheManager）
+            适用于需要高性能本地缓存的场景（如热点数据缓存、防穿透缓存），常与 Redis 组成多级缓存（本地 + 分布式）。
+            注意：此依赖仅提供缓存实现，需配合 Spring Cache 或手动编码使用。
+        -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+
+        <!--
+            Easy-Es Spring Boot 启动器。
+            Easy-Es 是一款面向 Java 开发者的 Elasticsearch ORM 框架，灵感来源于 MyBatis-Plus，
+            旨在简化 Elasticsearch 的操作，让开发者像操作 MySQL 一样使用 ES。
+
+            核心特性包括：
+              - 零学习成本：提供类似 MyBatis-Plus 的链式 API（如 lambdaQuery().eq().like()）
+              - 自动映射：通过 @IndexName、@EsId 等注解将实体类与 ES 索引/文档自动绑定
+              - 内置 CRUD：无需手写 DSL，自动生成查询、插入、更新、删除语句
+              - 高级功能支持：高亮、聚合、分页、多字段匹配、geo 查询等
+              - 与 Spring Boot 深度集成：自动配置 RestHighLevelClient，支持配置文件管理连接参数
+
+            适用于希望快速集成 Elasticsearch 且避免编写复杂 DSL 的 Spring Boot 项目。
+            注意：此版本（3.0.0）通常适配 Elasticsearch 8.x 及 Spring Boot 3.x（Jakarta EE），
+            使用前请确认与您 ES 集群版本的兼容性。
+        -->
+        <dependency>
+            <groupId>org.dromara.easy-es</groupId>
+            <artifactId>easy-es-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!--
+            Fastjson2（阿里巴巴新一代高性能 JSON 库）。
+            是 fastjson 的全面升级版，提供更优的性能、更强的安全性和更好的标准兼容性（支持 JSON Schema、JSON Path 等）。
+            核心优势：
+              - 比 fastjson 1.x 和 Jackson 更快的序列化/反序列化速度
+              - 默认安全模式，有效防御反序列化漏洞
+              - 支持 Java 17+、Jakarta EE（适配 Spring Boot 3）
+              - 提供 @JSONField 注解控制字段序列化行为
+            可作为 Spring Boot 默认 JSON 处理器（需配置 HttpMessageConverter），
+            适用于对性能和安全性要求较高的 JSON 处理场景。
+        -->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.58</version>
+        </dependency>
+
+        <!--
+            FastExcel 轻量级 Excel 读写工具。
+            由 cn.idev 开发，专注于高性能、低内存占用的 Excel 操作，特别适合处理大文件（百万级数据）。
+            特性包括：
+              - 流式写入（避免 OOM）
+              - 简洁 API（类似 EasyExcel，但更轻量）
+              - 支持样式、公式、合并单元格
+              - 无 POI 全量依赖（仅需 poi-ooxml，体积小）
+            适用于需要导出报表、批量导入导出 Excel 的 Web 应用。
+            注意：与阿里巴巴的 EasyExcel 功能类似，但 FastExcel 更轻量，社区活跃度相对较低。
+        -->
+        <dependency>
+            <groupId>cn.idev.excel</groupId>
+            <artifactId>fastexcel</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <!--
+            XXL-JOB 核心依赖（分布式任务调度平台）。
+            XXL-JOB 是一款开源的轻量级分布式任务调度框架，提供 Web UI 管理控制台，支持：
+              - 动态任务管理（增删改查、启停）
+              - 执行日志查看、失败告警、任务依赖
+              - 路由策略（轮询、故障转移、分片广播等）
+              - 执行器自动注册与发现
+            此依赖用于将当前应用注册为 XXL-JOB 的“执行器”（Executor），
+            通过 @XxlJob 注解定义可被调度的任务方法。
+            需配合独立部署的 xxl-job-admin 调度中心使用。
+            广泛应用于定时批处理、数据同步、报表生成等场景。
+        -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <!--
+            Hutool System 模块。
+            Hutool 是一个 Java 工具库，"hutool-system" 子模块专注于操作系统和 JVM 相关信息的获取，
+            提供简洁 API 获取：
+              - 系统属性（OS 名称、版本、架构）
+              - CPU 使用率、内存使用情况（堆/非堆）
+              - 磁盘、网络接口信息
+              - 进程 ID（PID）、JVM 启动参数等
+            底层部分能力依赖于 oshi-core，但通过 Hutool 封装后使用更便捷。
+            适用于监控、运维、日志埋点等需要系统环境信息的场景。
+        -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-system</artifactId>
+            <version>5.8.40</version>
+        </dependency>
+
+        <!--
+            OSHI（Operating System and Hardware Information）核心库。
+            一个跨平台的 Java 库，用于获取操作系统和硬件的详细信息，无需本地依赖（纯 Java 实现）。
+            支持获取：
+              - CPU 详细信息（型号、频率、核心数、负载）
+              - 内存与交换分区使用情况
+              - 磁盘分区、文件系统、IO 统计
+              - 网络接口、MAC 地址、IP 配置
+              - 电池、USB 设备、传感器（温度等，部分平台支持）
+            是 Hutool-system、Spring Boot Actuator 等工具的底层依赖之一。
+            适用于需要深度硬件监控或构建系统诊断工具的应用。
+        -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.8.3</version>
+        </dependency>
+
+        <!--
+            Hutool Captcha 模块。
+            提供生成常见验证码（CAPTCHA）的能力，支持多种类型：
+              - 普通文本验证码（数字、字母、混合）
+              - 算术验证码（如 "3 + 5 = ?"）
+              - Gif 动图验证码（增强防机器识别）
+              - 中文验证码
+            生成结果包含验证码文本和对应的 BufferedImage 图像，可直接用于 Web 接口返回。
+            适用于登录、注册等需要人机验证的场景，使用简单，无需额外依赖。
+        -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-captcha</artifactId>
+            <version>5.8.40</version>
+        </dependency>
+
+        <!--
+            Java JWT（JSON Web Token）官方实现库（JJWT）。
+            JJWT 是一个功能完整、安全且易于使用的 Java 库，用于创建和验证 JWT（RFC 7519）。
+            核心功能包括：
+              - 生成签名的 JWT（支持 HS256、HS384、HS512、RS256 等算法）
+              - 解析和验证 JWT 的签名、过期时间（exp）、签发时间（iat）、受众（aud）等声明（claims）
+              - 支持 JWT、JWS（签名）、JWE（加密）标准（本版本主要侧重 JWS）
+              - 提供 Builder/Parser 链式 API，代码简洁清晰
+
+            常用于实现基于 Token 的无状态认证（如 OAuth2、Spring Security 集成），
+            适用于微服务、前后端分离架构中的用户身份凭证管理。
+
+            注意：
+              - 自 0.10.0 起，JJWT 拆分为多个模块（如 jjwt-api、jjwt-impl、jjwt-jackson），
+                但 0.13.0 版本仍提供单体 jar（包含所有依赖），使用方便；
+              - 在生产环境中，建议使用强密钥（如 256 位以上）并设置合理的过期时间；
+              - 若项目使用 Spring Boot 3+，需确保兼容 Jakarta EE（JJWT 0.12+ 已支持）。
+        -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+
+        <!--
+            MapStruct 核心 API 依赖。
+            MapStruct 是一个代码生成器，用于在 Java Bean 之间进行高性能、类型安全的对象映射（如 DTO 与 Entity 转换）。
+            此依赖提供了 @Mapper、@Mapping 等注解，供开发者声明映射规则。
+            实际的映射实现类由编译期注解处理器（mapstruct-processor）自动生成，
+            生成的代码为纯 Java 方法调用（无反射），性能接近手写代码。
+            适用于需要频繁进行对象转换的分层架构（如 Controller ↔ Service ↔ DAO）。
+        -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+
+        <!--
+            MapStruct 注解处理器（Annotation Processor）。
+            在编译阶段（如 Maven compile 或 IDE 构建）自动扫描 @Mapper 注解，
+            并根据映射规则生成具体的实现类（如 UserMapperImpl）。
+            必须与 mapstruct 依赖配合使用，否则编译时无法生成实现代码。
+            注意：此依赖应配置为编译期使用（通常 scope 为 compile，但不会打包到最终 JAR/WAR 中）。
+
+            IDE 支持：需在 IntelliJ IDEA 或 Eclipse 中启用注解处理，才能在开发时看到生成的类。
+        -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+    </dependencies>
+
+    <!-- 依赖管理：统一控制所有子模块的依赖版本，避免冲突 -->
+    <dependencyManagement>
+        <dependencies>
+            <!--
+                Spring Boot 官方依赖管理 BOM。
+                导入后，项目中所有 Spring Boot 相关的 starter（如 spring-boot-starter-web、spring-boot-starter-data-jpa 等）
+                将自动使用该 BOM 中定义的统一版本，无需显式指定版本号。
+                这是 Spring Boot 项目版本控制的核心机制，确保所有 Boot 模块版本一致。
+            -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--
+                Spring Cloud 官方依赖管理 BOM。
+                提供 Spring Cloud 各子项目（如 Gateway、OpenFeign、Config、LoadBalancer 等）的兼容版本集合。
+                必须与特定版本的 Spring Boot 配合使用（参考官方版本兼容表）。
+                导入后，Spring Cloud 相关依赖可省略版本号，由 BOM 统一管理。
+            -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--
+                Spring Cloud Alibaba 依赖管理 BOM。
+                由阿里巴巴维护，统一管理 Nacos、Sentinel、Seata、RocketMQ 等 Alibaba 生态组件的兼容版本。
+                需注意其与 Spring Boot 和 Spring Cloud 版本的三方兼容性（例如：2022.x 通常对应 Boot 3.x + Cloud 2022.x）。
+            -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--
+                Spring Boot Admin 依赖管理 BOM。
+                由 codecentric 提供，用于统一管理 Spring Boot Admin Server 和 Client 的版本。
+                确保监控端（Server）与被监控应用（Client）版本兼容，避免因版本不一致导致注册失败或 UI 异常。
+            -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring-boot-admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--
+                Spring AI 官方 BOM（Spring AI 是 Spring 生态对人工智能应用的支持）。
+                统一管理 Spring AI 核心模块及其与大模型提供商（如 OpenAI、Azure、Ollama、Gemini 等）集成的客户端版本。
+                适用于构建基于 LLM（大语言模型）的 Java 应用，提供 Prompt 工程、向量存储、RAG 等能力。
+                注意：Spring AI 目前仍处于积极开发阶段（非 GA），需关注版本演进。
+            -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 构建配置 -->
+    <build>
+        <!-- 全局构建配置 -->
+        <finalName>${project.artifactId}</finalName>
+        <defaultGoal>install</defaultGoal>
+
+        <!-- 资源过滤：允许在 application.yml 中使用 ${xxx} 占位符 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <!-- 排除非文本文件，避免二进制文件被破坏 -->
+                <excludes>
+                    <exclude>**/*.woff</exclude>
+                    <exclude>**/*.woff2</exclude>
+                    <exclude>**/*.ttf</exclude>
+                    <exclude>**/*.eot</exclude>
+                    <exclude>**/*.svg</exclude>
+                    <exclude>**/*.png</exclude>
+                    <exclude>**/*.jpg</exclude>
+                    <exclude>**/*.jpeg</exclude>
+                    <exclude>**/*.gif</exclude>
+                    <exclude>**/*.ico</exclude>
+                </excludes>
+            </resource>
+            <!-- 非过滤资源（二进制文件） -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.woff</include>
+                    <include>**/*.woff2</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.eot</include>
+                    <include>**/*.svg</include>
+                    <include>**/*.png</include>
+                    <include>**/*.jpg</include>
+                    <include>**/*.jpeg</include>
+                    <include>**/*.gif</include>
+                    <include>**/*.ico</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <!-- 插件管理：统一插件版本，子模块可继承 -->
+        <pluginManagement>
+            <plugins>
+                <!-- Spring Boot Maven 插件：用于构建可执行 Jar（在子模块中启用）-->
+                <!-- 注意：通常在子模块（如 user-service）中声明，根 POM 仅管理版本 -->
+                <!-- 同时 Docker 镜像构建插件（Spring Boot 3.1+ 原生支持） -->
+                <!-- 在子模块执行：mvn spring-boot:build-image -Dspring-boot.build-image.imageName=your-registry/your-app -->
+                <!-- 无需额外插件，利用 Buildpacks 自动分层 -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal> <!-- 生成可执行 fat jar -->
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- 主启动类（可选，自动检测） -->
+                        <!-- <mainClass>com.example.Application</mainClass> -->
+                        <!-- 排除测试依赖 -->
+                        <excludeDevtools>true</excludeDevtools>
+                        <!-- 分层构建（支持 Docker Layer 缓存） -->
+                        <layers>
+                            <enabled>true</enabled>
+                            <includeLayerTools>true</includeLayerTools>
+                        </layers>
+
+                        <image>
+                            <runImage>paketobuildpacks/ubuntu-noble-run-base:latest</runImage>
+                        </image>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <!-- GraalVM Native Image 插件（仅管理版本） -->
+                <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                    <version>0.11.0</version> <!-- 与 Spring Boot 3.3 兼容 -->
+                    <extensions>true</extensions>
+                    <configuration>
+                        <imageName>${project.artifactId}</imageName>
+                        <!-- 启用 Spring AOT 优化（Spring Boot 3.2+ 推荐） -->
+                        <buildArgs>
+                            <arg>--enable-preview</arg> <!-- 如使用虚拟线程 -->
+                            <arg>-H:+AddAllCharsets</arg>
+                        </buildArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- 全局插件配置 -->
+        <!-- 编译、资源、测试插件，所有模块共享基础构建行为，在根 POM 中声明。除此之外的插件，在子模块中声明 -->
+        <plugins>
+            <!-- 1. 编译插件：JDK 21 + 注解处理器 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <!-- 启用注解处理（如 MapStruct、Lombok） -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <!-- 2. 资源插件：处理资源文件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <!-- 使用 @xxx@ 作为占位符（与 Spring Boot 默认 ${} 冲突，通常不启用） -->
+                    <!-- <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters> -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- 声明依赖和插件的远程仓库（如阿里云镜像、私有仓库）-->
+    <!-- 建议：企业项目优先使用私有仓库聚合（如 Nexus 阿里云效），而非直接写多个仓库 -->
+    <!-- 依赖仓库 -->
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>阿里云公共仓库</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- 私有仓库示例 -->
+        <repository>
+            <id>company-repo</id>
+            <url>https://nexus.example.com/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <!-- 插件仓库（通常与依赖仓库一致） -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyunmaven</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- 定义多环境构建配置（如 dev/test/prod、native 构建）-->
+    <profiles>
+        <!-- 开发环境：启用 DevTools -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <!-- Native 构建 Profile -->
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

@@ -1,0 +1,2 @@
+首先，创建一个使用 gradle 作为构建工具的 springboot 项目
+然后，基于根模块新建模块，在新建模块是选择 Java 模块即可，不要再选择 springboot 模块了
