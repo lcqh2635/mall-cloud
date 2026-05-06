@@ -287,26 +287,24 @@
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
 
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>ossrh</id>-->
+<!--            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>ossrh</id>-->
+<!--            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
     <!-- 9. 发布管理（需要发布到私服时添加） -->
     <!-- 定义项目部署配置，用于指定项目的部署仓库，如：Maven 私服、Nexus 私服、阿里云镜像仓 https://packages.aliyun.com/ 库等 -->
     <!-- 自定义 POM 或 starter 部署到云端，需要指定部署的目标仓库，如：阿里云仓库，nexus私服等。还需要配置 Maven 的 settings.xml 文件中的 server 节点 -->
     <!-- 自定义 POM 文件必须部署到网上的仓库，才能在其他项目中被依赖，否则无法被其他项目依赖 -->
     <!-- 下面已将自定义 starter 部署到阿里云效私有仓库为例，残酷地址为 https://packages.aliyun.com/  点击其中的 生产库-release 即可 -->
     <!-- 阿里云效使用文档：https://help.aliyun.com/document_detail/153834.html?spm=a2c4g.153780.0.0.19253eedDnybVd -->
-    <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>
