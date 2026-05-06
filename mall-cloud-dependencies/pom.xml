@@ -4,18 +4,18 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- 2. 完整坐标（无parent必须写全） -->
     <!-- ✅ 不写 <parent>，完全独立 -->
-    <groupId>com.urbane</groupId>
-    <artifactId>urbane-dependencies</artifactId>
+    <groupId>com.mall</groupId>
+    <artifactId>mall-cloud-dependencies</artifactId>
     <version>${revision}</version>
     <!-- 3. 当前模块打包方式 -->
     <packaging>pom</packaging>
     <!-- 4. 当前模块显示的名称：简短，通常与 artifactId 保持一致 -->
-    <name>urbane-dependencies</name>
+    <name>mall-cloud-dependencies</name>
     <!-- 5. 当前模块的详细描述：说明职责和功能 -->
     <description>全局依赖版本管理模块：统一管控全项目所有第三方依赖的版本号，避免各模块间依赖版本冲突</description>
-    <url>https://github.com/urbane/urbane-commerce</url>
+    <url>https://github.com/lcqh2635/mall-cloud</url>
     <!-- 在根 pom.xml 中引入 BOM 之前，需要先单独构建并安装 BOM，只需执行一次（或版本变更时执行）
-        cd urbane-dependencies
+        cd mall-cloud-dependencies
         mvn clean install -Drevision=1.0.0
     -->
 
