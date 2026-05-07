@@ -12,7 +12,6 @@ public class MallCloudBannerProperties {
 
     public static final String PREFIX = "mallcloud.banner";
 
-    // getters and setters
     private boolean enabled = true;
     private String location = "classpath:banner/default-banner.txt";
     private String applicationName;
@@ -20,13 +19,13 @@ public class MallCloudBannerProperties {
     private String author;
     private String description;
     private boolean showInfo = true;
-    private BannerType type = BannerType.TEXT;
+    private BannerType type = BannerType.FIGLET;
 
     @Getter
     @RequiredArgsConstructor
     public enum BannerType {
-        TEXT("text", "Text banner"),
         FIGLET("figlet", "Figlet banner"),
+        TEXT("text", "Text banner"),
         IMAGE("image", "Image banner");
 
         private final String value;

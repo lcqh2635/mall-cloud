@@ -52,7 +52,7 @@ public class FigletBannerPrinter implements Banner {
             out.println("  启动时间    : " + YELLOW + "🕙 " + startTime + RESET);
             out.println("  项目作者    : " + CYAN + "📍 " + author + RESET);
             out.println("  健康检查    : " + CYAN + "🩺 " + healthUrl + RESET);
-            out.println("  Swagger文档 : " + GREEN + "📚 " + swaggerUrl + RESET);
+            out.println("  Spring Doc 文档 : " + GREEN + "📚 " + swaggerUrl + RESET);
             out.println(GREEN + "===============================================" + RESET);
         } catch (Exception e) {
             out.println("⚠️  横幅打印异常: " + e.getMessage());
