@@ -11,8 +11,10 @@
     <name>commons-model</name>
     <description>公共数据模型模块：定义各服务共享的基础实体、枚举、通用分页对象及跨服务传输的公共 DTO/VO</description>
 
-
     <dependencies>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
     </dependencies>
 </project>
