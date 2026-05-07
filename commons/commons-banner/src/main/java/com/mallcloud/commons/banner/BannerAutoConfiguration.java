@@ -1,6 +1,6 @@
 package com.mallcloud.commons.banner;
 
-import com.mallcloud.commons.banner.properties.MallCloudBannerProperties;
+import com.mallcloud.commons.banner.config.MallCloudBannerProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

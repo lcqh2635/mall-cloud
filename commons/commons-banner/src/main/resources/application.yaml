@@ -1,13 +1,49 @@
 spring:
   main:
     banner-mode: off
+  application:
+    name: admin-server
+  output:
+    ansi:
+      # always=强制开启颜色（IDEA 本地开发推荐）
+      # detect=自动检测（生产服务器推荐）
+      # never=强制关闭（CI/CD 推荐）
+      enabled: always
 
 mallcloud:
   banner:
-    enabled: true
-    application-name: "My Awesome App 666"
-    version: "2.1.0"
-    author: "Development Team"
-    description: "This is a sample application using custom banner"
-    show-info: true
-    location: "classpath:banner/my-banner.txt"  # 可选，使用自定义banner文件
+    # ── 基础信息 ──────────────────────────────────────
+    version: 2.1.0
+    author: 龙茶清欢
+    description: 管理服务 - 负责用户权限与后台管理
+    protocol: http           # 生产若走 HTTPS 改为 https
+
+    # ── 显示主题 ──────────────────────────────────────
+    # 可选值：default | minimal | box | colorful
+    #   default  — 标准带分隔线 + Emoji（默认，适合本地开发）
+    #   minimal  — 纯文本单行（适合 CI / 日志采集）
+    #   box      — Unicode 边框（终端体验更佳）
+    #   colorful — 每行不同颜色（视觉最丰富）
+    theme: default
+
+    # ── 字体文件路径（classpath）────────────────────────
+    # 更多字体：https://github.com/xero/figlet-fonts
+    font-path: /fonts/ANSI Shadow.flf
+
+    # ── 各信息行显示开关 ──────────────────────────────
+    show:
+      pid: true            # 进程 PID（方便 kill / 日志关联）
+      cost: true           # 启动耗时（排查慢启动必备）
+      author: true         # 项目作者
+      description: true    # 服务描述
+      context-path: true   # Servlet Context Path（无前缀时可关闭）
+      db-url: false        # 数据库地址（生产环境建议关闭，避免信息泄露）
+
+    # ── 自定义 ANSI 颜色（仅 default 主题生效）──────────
+    # 色号参考：30=黑 31=红 32=绿 33=黄 34=蓝 35=紫 36=青 37=白
+    #           90-97 为对应高亮版本
+    color:
+      title: 96      # ASCII Art 标题 → 亮青色
+      separator: 32  # 分隔线       → 绿色
+      label: 32      # 标签         → 绿色
+      value: 33      # 值           → 黄色

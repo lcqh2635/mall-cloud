@@ -1,4 +1,4 @@
-package com.mallcloud.commons.banner.properties;
+package com.mallcloud.commons.banner.config;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
