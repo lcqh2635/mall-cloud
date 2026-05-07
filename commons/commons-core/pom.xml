@@ -12,6 +12,9 @@
   <description>核心公共模块：提供全局异常处理、统一响应体封装、基础常量定义及各模块通用的核心基础能力</description>
 
   <dependencies>
-
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+    </dependency>
   </dependencies>
 </project>
