@@ -1,0 +1,19 @@
+#spring:
+#  main:
+#    banner-mode: off
+
+#custom:
+#  banner:
+#    enabled: true
+#    application-name: "My Awesome App 666"
+#    version: "2.1.0"
+#    author: "Development Team"
+#    description: "This is a sample application using custom banner"
+#    show-info: true
+#    location: "classpath:banner/my-banner.txt"  # 可选，使用自定义banner文件
+
+
+# 默认已启用，如需关闭可设置为 false
+#my:
+#  banner:
+#    enabled: true

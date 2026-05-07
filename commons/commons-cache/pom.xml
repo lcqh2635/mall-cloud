@@ -12,6 +12,9 @@
     <description>缓存公共模块：封装 Redis 缓存的统一配置、序列化策略、缓存工具类及常用缓存操作的抽象封装</description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>
