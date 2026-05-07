@@ -204,72 +204,15 @@
                 <version>${revision}</version>
             </dependency>
 
-            <!-- 业务服务模块 -->
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>auth-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>cart-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>coupon-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>inventory-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>logistics-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>notification-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>order-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>product-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>promotion-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>recommendation-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>search-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>user-service</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
             <!-- 业务服务接口模块 -->
             <dependency>
                 <groupId>com.mallcloud</groupId>
                 <artifactId>auth-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>auth-biz</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -279,7 +222,57 @@
             </dependency>
             <dependency>
                 <groupId>com.mallcloud</groupId>
+                <artifactId>cart-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>chat-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>chat-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>coupon-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>coupon-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>inventory-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>inventory-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>logistics-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>logistics-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>notification-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>notification-biz</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -289,7 +282,67 @@
             </dependency>
             <dependency>
                 <groupId>com.mallcloud</groupId>
+                <artifactId>order-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>payment-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>payment-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
                 <artifactId>product-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>product-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>promotion-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>promotion-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>recommendation-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>recommendation-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>review-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>review-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>search-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>search-biz</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -297,17 +350,10 @@
                 <artifactId>user-api</artifactId>
                 <version>${revision}</version>
             </dependency>
-
-            <!-- ========== 数据库 ========== -->
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
-                <version>${dynamic-datasource.version}</version>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>user-biz</artifactId>
+                <version>${revision}</version>
             </dependency>
 
             <!-- ========== 缓存 ========== -->
