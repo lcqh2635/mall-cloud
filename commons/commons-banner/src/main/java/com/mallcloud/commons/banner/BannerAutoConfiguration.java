@@ -1,6 +1,6 @@
 package com.mallcloud.commons.banner;
 
-import com.mallcloud.commons.banner.properties.CustomBannerProperties;
+import com.mallcloud.commons.banner.properties.MallCloudBannerProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  *   - 容器中尚无其他 Banner Bean（避免冲突）
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(CustomBannerProperties.class)
+@EnableConfigurationProperties(MallCloudBannerProperties.class)
 @ConditionalOnProperty(
     prefix = "my.banner",
     name = "enabled",

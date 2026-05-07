@@ -4,7 +4,6 @@ import com.mallcloud.commons.banner.printer.FigletBannerPrinter;
 import com.mallcloud.commons.banner.printer.ImageBannerPrinter;
 import com.mallcloud.commons.banner.printer.TextBannerPrinter;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.NullMarked;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.boot.bootstrap.ConfigurableBootstrapContext;
@@ -16,7 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 // 可参考 Spring Boot 官方的示例类 EventPublishingRunListener
-public class CustomSpringApplicationRunListener implements SpringApplicationRunListener, Ordered {
+public class MallCloudSpringApplicationRunListener implements SpringApplicationRunListener, Ordered {
 
     private final SpringApplication application;
     private final String[] args;
@@ -27,15 +26,14 @@ public class CustomSpringApplicationRunListener implements SpringApplicationRunL
      * 必须的构造函数
      * Spring Boot 会通过反射调用这个构造函数
      */
-    public CustomSpringApplicationRunListener(SpringApplication application, String[] args) {
+    public MallCloudSpringApplicationRunListener(SpringApplication application, String[] args) {
         this.application = application;
         this.args = args;
         System.out.println("CustomSpringApplicationRunListener 构造函数被调用");
     }
 
-    @NullMarked
     @Override
-    public void starting(ConfigurableBootstrapContext bootstrapContext) {
+    public void starting(@NonNull ConfigurableBootstrapContext bootstrapContext) {
         startTime = Instant.now();
         System.out.println("🚀 [阶段1 - starting] 应用启动开始");
         System.out.println("   启动时间: " + startTime);
@@ -43,9 +41,8 @@ public class CustomSpringApplicationRunListener implements SpringApplicationRunL
         System.out.println("   命令行参数: " + String.join(", ", args));
     }
 
-    @NullMarked
     @Override
-    public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext, ConfigurableEnvironment environment) {
+    public void environmentPrepared(@NonNull ConfigurableBootstrapContext bootstrapContext, ConfigurableEnvironment environment) {
         System.out.println("🌍 [阶段2 - environmentPrepared] 环境准备完成");
         System.out.println("   激活的配置文件: " + String.join(", ", environment.getActiveProfiles()));
         System.out.println("   默认配置文件: " + String.join(", ", environment.getDefaultProfiles()));
