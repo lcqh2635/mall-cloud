@@ -97,7 +97,6 @@
         <module>code-generator</module>
         <module>commons</module>
         <module>services</module>
-        <module>api</module>
     </modules>
 
     <!-- 3. 定义一系列属性值，用于简化配置中的硬编码字符串 -->

@@ -7,9 +7,14 @@
         <version>${revision}</version>
     </parent>
     <artifactId>product-service</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>product-service</name>
     <description>商品服务：负责商品 SPU/SKU 的管理、商品分类、品牌、属性及上下架等商品全生命周期管理</description>
+
+    <modules>
+        <module>product-api</module>
+        <module>product-biz</module>
+    </modules>
 
     <dependencies>
 
