@@ -41,7 +41,7 @@ public class FigletBannerPrinter implements Banner {
             String swaggerUrl = baseUrl + (isSwaggerV3(environment) ? "/swagger-ui/index.html" : "/swagger-ui.html");
 
             // 打印横幅
-            out.println(GREEN + "===============================================" + RESET);
+            out.printf("%s===============================================%s%n", GREEN, RESET);
             out.println(CYAN + asciiArtTitle + RESET); // ✅ 动态 ASCII Art 标题
             out.println(GREEN + "===============================================" + RESET);
             out.println("  服务端口    : " + YELLOW + "🌐 " + serverPort + RESET);
@@ -65,17 +65,10 @@ public class FigletBannerPrinter implements Banner {
             // 可选的字体文件下载，参考官网 https://github.com/xero/figlet-fonts/tree/master
             // 或者直接去 ASCII 艺术字生成工具推荐：https://patorjk.com/software/taag/#p=testall 去在线挑选
 
-            // figlet 内置字体 "slant"（推荐），也可换 "standard",
-            // return FigletFont.convertOneLine(text); // 默认 slant
-            // return FigletFont.convertOneLine(text, "standard");
-
             // 自定义字体，figlet 工具包默认只提供了两个字体，我不喜欢。可以到 https://github.com/xero/figlet-fonts/tree/master 选择自己喜欢的字体
             InputStream fontStream = getClass().getResourceAsStream("/fonts/ANSI Shadow.flf");
-//             InputStream fontStream = getClass().getResourceAsStream("/fonts/ANSI Regular.flf");
-
-            // 使用内置字体 "slant"， "standard"(默认) 两种可选字体，也可以下载并使用自定义字体
             return FigletUtil.convertOneLine(fontStream, text);
-        } catch (Exception e) {
+        } catch (Exception _) {
             // 降级：如果字体转换失败，返回原始文本
             return "🚀 " + text;
         }
