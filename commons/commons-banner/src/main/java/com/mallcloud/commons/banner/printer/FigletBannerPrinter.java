@@ -96,7 +96,7 @@ public class FigletBannerPrinter implements Banner {
                         .getNetworkInterfaces().nextElement().getInetAddresses().nextElement().getHostAddress()));
             }
             return address.getHostAddress();
-        } catch (Exception e) {
+        } catch (Exception _) {
             return "127.0.0.1";
         }
     }
