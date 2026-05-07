@@ -1,4 +1,4 @@
-package com.mallcloud.commons.api;
+package com.mallcloud;
 
 /**
  * Hello world!

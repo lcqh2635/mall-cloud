@@ -204,6 +204,7 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 业务服务模块 -->
             <dependency>
                 <groupId>com.mallcloud</groupId>
                 <artifactId>auth-service</artifactId>
@@ -265,13 +266,39 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 业务服务接口模块 -->
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>auth-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>cart-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>coupon-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>order-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>product-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mallcloud</groupId>
+                <artifactId>user-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- ========== 数据库 ========== -->
-            <dependency>
-                <groupId>com.mysql</groupId>
-                <artifactId>mysql-connector-j</artifactId>
-                <version>${mysql.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -281,16 +308,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-3-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>p6spy</groupId>
-                <artifactId>p6spy</artifactId>
-                <version>${p6spy.version}</version>
             </dependency>
 
             <!-- ========== 缓存 ========== -->
