@@ -1,13 +1,11 @@
 package com.mallcloud.notification.biz;
 
-/**
- * Hello world!
- *
- */
-public class NotificationApplication
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class NotificationApplication {
+    static void main(String[] args) {
+        SpringApplication.run(NotificationApplication.class, args);
     }
 }

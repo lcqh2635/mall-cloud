@@ -1,11 +1,11 @@
-package com.mallcloud.order.biz;
+package com.mallcloud.auth.biz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OrderApplication {
+public class AuthApplication {
     static void main(String[] args) {
-        SpringApplication.run(OrderApplication.class, args);
+        SpringApplication.run(AuthApplication.class, args);
     }
 }

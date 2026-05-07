@@ -1,4 +1,4 @@
-package com.mallcloud.coupon.api.dto;
+package com.mallcloud.inventory.api.dto;
 
 public record OrderRequest() {
 }

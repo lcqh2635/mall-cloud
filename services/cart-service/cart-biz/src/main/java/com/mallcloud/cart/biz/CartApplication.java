@@ -1,11 +1,13 @@
-package com.mallcloud.chat.biz;
+package com.mallcloud.cart.biz;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AuthApplication {
+public class CartApplication {
     static void main(String[] args) {
-        SpringApplication.run(AuthApplication.class, args);
+        SpringApplication.run(CartApplication.class, args);
     }
 }
+

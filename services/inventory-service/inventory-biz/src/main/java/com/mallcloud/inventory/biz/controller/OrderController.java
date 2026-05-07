@@ -1,4 +1,4 @@
-package com.mallcloud.coupon.biz.controller;
+package com.mallcloud.inventory.biz.controller;
 
 public class OrderController {
 }

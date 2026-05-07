@@ -1,4 +1,4 @@
-package com.mallcloud.coupon.api.enums;
+package com.mallcloud.inventory.api.enums;
 
 /**
  * 用户状态枚举

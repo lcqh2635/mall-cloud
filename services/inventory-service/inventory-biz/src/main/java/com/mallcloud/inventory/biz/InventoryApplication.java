@@ -1,13 +1,11 @@
-package com.mallcloud.service.inventory;
+package com.mallcloud.inventory.biz;
 
-/**
- * Hello world!
- *
- */
-public class InventoryApplication
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class InventoryApplication {
+    static void main(String[] args) {
+        SpringApplication.run(InventoryApplication.class, args);
     }
 }

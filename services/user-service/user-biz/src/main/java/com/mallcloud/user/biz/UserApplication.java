@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class UserApplication {
-    static void main() {
-        SpringApplication.run(UserApplication.class);
+    static void main(String[] args) {
+        SpringApplication.run(UserApplication.class, args);
     }
 }

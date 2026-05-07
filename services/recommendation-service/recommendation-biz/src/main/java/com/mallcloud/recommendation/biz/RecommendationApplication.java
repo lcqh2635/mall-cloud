@@ -1,13 +1,11 @@
 package com.mallcloud.recommendation.biz;
 
-/**
- * Hello world!
- *
- */
-public class RecommendationApplication
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RecommendationApplication {
+    static void main(String[] args) {
+        SpringApplication.run(RecommendationApplication.class, args);
     }
 }

@@ -1,4 +1,4 @@
-package com.mallcloud.coupon.biz.mapper;
+package com.mallcloud.inventory.biz.mapper;
 
 public interface OrderMapper {
 }

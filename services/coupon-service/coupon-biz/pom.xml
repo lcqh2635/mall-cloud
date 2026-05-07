@@ -19,5 +19,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>coupon-api</artifactId>
+        </dependency>
     </dependencies>
 </project>
