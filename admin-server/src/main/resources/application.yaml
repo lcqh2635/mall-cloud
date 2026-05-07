@@ -74,6 +74,10 @@ spring:
       notify:
         mail:
           enabled: false   # 按需开启邮件告
+  # 显式开启颜色：
+  output:
+    ansi:
+      enabled: always   # always=强制开启 / detect=自动检测 / never=关闭
 
 mallcloud:
   banner:

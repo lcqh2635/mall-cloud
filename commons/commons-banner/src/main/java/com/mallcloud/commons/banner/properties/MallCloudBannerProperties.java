@@ -13,6 +13,8 @@ public class MallCloudBannerProperties {
     public static final String PREFIX = "mallcloud.banner";
 
     private boolean enabled = true;
+    // 样式主题：default / minimal / box / colorful
+    private String theme = "default";
     private String location = "classpath:banner/default-banner.txt";
     private String applicationName;
     private String version = "1.0.0";
