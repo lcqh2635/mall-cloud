@@ -15,8 +15,4 @@
         <module>product-api</module>
         <module>product-biz</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>

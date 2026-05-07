@@ -4,18 +4,14 @@
     <parent>
         <groupId>com.mallcloud</groupId>
         <artifactId>search-service</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
-
     <artifactId>search-api</artifactId>
     <packaging>jar</packaging>
-
     <name>search-api</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>
+        搜索服务：负责基于 Elasticsearch 的商品全文检索、条件筛选、搜索词联想及热词统计功能
+    </description>
 
     <dependencies>
         <dependency>

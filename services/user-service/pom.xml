@@ -15,8 +15,4 @@
         <module>user-api</module>
         <module>user-biz</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>

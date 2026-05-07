@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.mallcloud</groupId>
         <artifactId>product-service</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>product-api</artifactId>
     <packaging>jar</packaging>
@@ -13,8 +13,6 @@
         业务微服务聚合模块：统一管理所有业务微服务子模块，包含用户、商品、订单、支付、库存、物流、购物车、
         优惠券、促销、推荐、搜索、评价、通知、聊天及认证等核心业务服务
     </description>
-
-
 
     <dependencies>
         <dependency>

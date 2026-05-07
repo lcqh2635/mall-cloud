@@ -7,11 +7,12 @@
         <version>${revision}</version>
     </parent>
     <artifactId>notification-service</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>notification-service</name>
     <description>消息通知服务：负责站内信、短信、邮件、Push 等多渠道消息的统一发送与通知模板管理</description>
 
-    <dependencies>
-
-    </dependencies>
+    <modules>
+        <module>notification-api</module>
+        <module>notification-biz</module>
+    </modules>
 </project>

@@ -15,8 +15,4 @@
         <module>cart-api</module>
         <module>cart-biz</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>

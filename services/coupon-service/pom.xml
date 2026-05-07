@@ -15,8 +15,4 @@
         <module>coupon-api</module>
         <module>coupon-biz</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>

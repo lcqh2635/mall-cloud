@@ -7,11 +7,12 @@
         <version>${revision}</version>
     </parent>
     <artifactId>payment-service</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>payment-service</name>
     <description>支付服务：负责对接支付宝、微信支付等第三方支付渠道，处理支付、退款及对账等支付全流程</description>
 
-    <dependencies>
-
-    </dependencies>
+    <modules>
+        <module>payment-api</module>
+        <module>payment-biz</module>
+    </modules>
 </project>

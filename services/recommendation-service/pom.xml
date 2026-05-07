@@ -7,11 +7,12 @@
         <version>${revision}</version>
     </parent>
     <artifactId>recommendation-service</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>recommendation-service</name>
     <description>推荐服务：负责基于用户行为与商品特征的个性化商品推荐、猜你喜欢及相关商品推荐功能</description>
 
-    <dependencies>
-
-    </dependencies>
+    <modules>
+        <module>recommendation-api</module>
+        <module>recommendation-biz</module>
+    </modules>
 </project>

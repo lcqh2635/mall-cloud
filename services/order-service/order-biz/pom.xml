@@ -4,20 +4,18 @@
     <parent>
         <groupId>com.mallcloud</groupId>
         <artifactId>order-service</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
-
     <artifactId>order-biz</artifactId>
     <packaging>jar</packaging>
-
     <name>order-biz</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>订单服务：负责订单的创建、支付确认、取消、售后及订单状态流转，是交易核心链路的主服务</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>

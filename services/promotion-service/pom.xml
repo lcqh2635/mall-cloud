@@ -7,11 +7,12 @@
         <version>${revision}</version>
     </parent>
     <artifactId>promotion-service</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>promotion-service</name>
     <description>促销服务：负责满减、秒杀、限时折扣、买赠等营销活动的创建、规则计算及活动生命周期管理</description>
 
-    <dependencies>
-
-    </dependencies>
+    <modules>
+        <module>promotion-api</module>
+        <module>promotion-biz</module>
+    </modules>
 </project>

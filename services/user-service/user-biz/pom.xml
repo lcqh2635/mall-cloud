@@ -4,11 +4,12 @@
     <parent>
         <groupId>com.mallcloud</groupId>
         <artifactId>user-service</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>user-biz</artifactId>
     <packaging>jar</packaging>
     <name>user-biz</name>
+    <description>用户服务：负责用户基本信息管理、收货地址、会员等级、积分及账户安全等用户中心核心功能</description>
 
     <dependencies>
         <dependency>

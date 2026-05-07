@@ -15,8 +15,4 @@
         <module>order-api</module>
         <module>order-biz</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>

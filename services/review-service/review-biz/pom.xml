@@ -4,25 +4,17 @@
     <parent>
         <groupId>com.mallcloud</groupId>
         <artifactId>review-service</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
-
     <artifactId>review-biz</artifactId>
     <packaging>jar</packaging>
-
     <name>review-biz</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <description>评价服务：负责订单商品评价的发布、回复、审核、点赞及评分统计，支持图文混合评价内容</description>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.mallcloud</groupId>
         <artifactId>auth-service</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>auth-api</artifactId>
     <packaging>jar</packaging>

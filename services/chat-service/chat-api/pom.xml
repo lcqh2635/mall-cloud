@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.mallcloud</groupId>
         <artifactId>chat-service</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>chat-api</artifactId>
     <packaging>jar</packaging>
