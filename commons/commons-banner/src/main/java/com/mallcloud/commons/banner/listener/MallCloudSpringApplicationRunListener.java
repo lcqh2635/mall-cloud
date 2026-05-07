@@ -8,14 +8,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.boot.bootstrap.ConfigurableBootstrapContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.time.Duration;
 import java.time.Instant;
 
 // 可参考 Spring Boot 官方的示例类 EventPublishingRunListener
-public class MallCloudSpringApplicationRunListener implements SpringApplicationRunListener, Ordered {
+@Order(1)
+public class MallCloudSpringApplicationRunListener implements SpringApplicationRunListener {
 
     private final SpringApplication application;
     private final String[] args;
@@ -104,11 +105,6 @@ public class MallCloudSpringApplicationRunListener implements SpringApplicationR
         System.out.println("❌ [阶段7 - failed] 应用启动失败");
         System.out.println("   失败原因: " + exception.getMessage());
         System.out.println("   失败时间: " + Instant.now());
-    }
-
-    @Override
-    public int getOrder() {
-        return 0;
     }
 
 }
