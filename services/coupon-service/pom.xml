@@ -7,9 +7,14 @@
         <version>${revision}</version>
     </parent>
     <artifactId>coupon-service</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>coupon-service</name>
     <description>优惠券服务：负责优惠券的创建、发放、领取、核销及有效期管理，支持满减、折扣等多种券类型</description>
+
+    <modules>
+        <module>coupon-api</module>
+        <module>coupon-biz</module>
+    </modules>
 
     <dependencies>
 

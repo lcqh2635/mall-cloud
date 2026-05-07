@@ -7,9 +7,14 @@
         <version>${revision}</version>
     </parent>
     <artifactId>search-service</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>search-service</name>
     <description>搜索服务：负责基于 Elasticsearch 的商品全文检索、条件筛选、搜索词联想及热词统计功能</description>
+
+    <modules>
+        <module>search-api</module>
+        <module>search-biz</module>
+    </modules>
 
     <dependencies>
 
