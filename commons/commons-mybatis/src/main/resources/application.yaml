@@ -1,0 +1,65 @@
+# 详细的配置内容参考 MybatisFlexProperties 类
+# mybatis-flex 配置，参考 https://mybatis-flex.com/zh/base/configuration.html
+mybatis-flex:
+  # MyBatis-Flex 多数据源配置，参考 https://mybatis-flex.com/zh/core/multi-datasource.html
+  # MyBatis-Flex 的读写分离功能是基于【多数据源】功能来实现的 https://mybatis-flex.com/zh/core/read-write-splitting.html
+  datasource:
+    master:
+      type: druid
+      url: jdbc:mysql://127.0.0.1:3306/master-db
+      username: root
+      password: 123456
+    slave1:
+      type: com.your.datasource.type2
+      url: jdbc:mysql://127.0.0.1:3306/slave1
+      username: root
+      password: 123456
+    slave2:
+      type: com.your.datasource.type2
+      url: jdbc:mysql://127.0.0.1:3306/slave2
+      username: root
+      password: 123456
+    other:
+      type: com.your.datasource.type2
+      url: jdbc:mysql://127.0.0.1:3306/other
+      username: root
+      password: 123456
+  # MyBatis-Flex 配置本部分（Configuration）的配置都为 MyBatis 原生支持的配置
+  # 配置参考 https://mybatis-flex.com/zh/base/configuration.html#configuration
+  configuration:
+    # 控制台打印 SQL 日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # TODO 全局配置和局部配置两者只能选择一个，不要同时应用
+  # MyBatis-Flex 全局配置，参考 https://mybatis-flex.com/zh/base/configuration.html#global-config
+  global-config:
+    # 是否控制台打印 MyBatis-Flex 的 LOGO 及版本号
+    print-banner: true
+    # 全局的 ID 生成策略配置，当 @Id 未配置或者配置 KeyType 为 None 时 使用当前全局配置
+    key-config:
+      key-type: generator
+      value: flexId
+    # 逻辑删除，逻辑删除字段，默认为 del_flag
+    logic-delete-column: is_deleted
+    # 逻辑删除，数据存在标记值
+    normal-value-of-logic-delete: 0
+    # 逻辑删除，数据删除标记值
+    deleted-value-of-logic-delete: 1
+    # 乐观锁字段，默认为 version
+    version-column: version
+    # 多租户字段，默认为 tenant_id
+    tenant-column: tenant_id
+  # MyBatis-Flex Seata 分布式事务配置，参考 https://mybatis-flex.com/zh/base/configuration.html#seata-config
+  seata-config:
+    # 是否启用 Seata 代理数据源
+    enable: true
+    # 使用 Seata AT 模式代理数据源，支持 XA 或者 AT
+    seata-mode: XA
+  # MyBatis-Flex Admin 配置，参考 https://mybatis-flex.com/zh/base/configuration.html#admin-config
+  # 可以把当前应用执行的 SQL，发送到 MyBatis-Flex-Admin 进行审计
+  admin-config:
+    # 是否启用 MyBatis-Flex-Admin 连接
+    enable: true
+    # MyBatis-Flex-Admin 连接端点
+    endpoint: http://admin-host:8080/message/collect
+    # MyBatis-Flex-Admin 连接密钥
+    secret-key: secretKey

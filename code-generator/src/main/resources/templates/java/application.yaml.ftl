@@ -1,0 +1,47 @@
+# 服务器配置
+server:
+  port: 8082
+  # servlet 配置
+  servlet:
+    # 请求基础路径，用于处理请求，默认为 /
+    context-path: /urbane
+  # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
+  compression:
+    enabled: true
+    # 执行压缩所需的最小 Content-Length 值，默认为 2048 字节即 2KB，小于该值的响应体将不压缩
+    min-response-size: 10KB
+  # HTTP/2 配置，用于支持 HTTP/2 协议
+  http2:
+    # 是否开启 HTTP/2 支持，默认关闭
+    enabled: true
+
+spring:
+  application:
+    name: @project.artifactId@
+  # 时间日期格式化配置
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/code-generator
+    username: postgres
+    password: <PASSWORD>
+  # 数据库初始化
+  sql:
+    init:
+      platform: postgresql
+      schema-locations: data/schema-postgresql.sql
+      data-locations: data/data-postgresql.sql
+      username: postgres
+      password: <PASSWORD>
+      encoding: UTF-8
+  # 开启虚拟线程功能
+  threads:
+    virtual:
+      enabled: true
+  # 虚拟线程的一个副作用是它们是守护线程。如果其所有线程都是守护线程，则 JVM 将退出。
+  # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
+  main:
+    keep-alive: true
+
