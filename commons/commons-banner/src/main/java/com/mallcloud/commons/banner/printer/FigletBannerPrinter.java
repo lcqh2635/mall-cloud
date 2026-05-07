@@ -23,7 +23,7 @@ public class FigletBannerPrinter implements Banner {
     public void printBanner(@NonNull Environment environment, Class<?> sourceClass, @NonNull PrintStream out) {
         try {
             // 获取服务名（动态！）
-            String appName = environment.getProperty("spring.application.name", "Unknown-Service").toUpperCase();
+            String appName = environment.getProperty("spring.application.name", "Unknown-Service");
 
             // ✅ 动态生成 ASCII Art 标题
             String asciiArtTitle = generateAsciiArt(appName);
