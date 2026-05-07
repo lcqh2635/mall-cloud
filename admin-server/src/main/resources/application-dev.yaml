@@ -1,23 +1,8 @@
-spring:
-  cloud:
-    nacos:
-      # 开发环境直接写本地地址
-      server-addr: localhost:8848
-      username: nacos
-      password: nacos
-      discovery:
-        # 开发环境命名空间 ID（在 Nacos 控制台创建后填入）
-        namespace: dev-namespace-id
-        group: DEFAULT_GROUP
-      config:
-        namespace: dev-namespace-id
-        group: DEFAULT_GROUP
-
 # 开发环境日志级别：详细
 logging:
   level:
     root: INFO
-    com.mallcloud: DEBUG
+    com.mallcloud: INFO
     # 打印 SQL 语句
     com.mallcloud.**.mapper: DEBUG
 

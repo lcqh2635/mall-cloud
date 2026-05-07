@@ -1,73 +1,85 @@
-# 服务器配置
-server:
-  port: 7777
+# ================================================================
+# user-service 主配置文件
+# 说明：只保留启动必须的基础配置，其余配置托管到 Nacos 配置中心
+# 敏感信息全部通过环境变量注入，不写任何明文密码
+# ================================================================
 
+server:
+  # 服务端口
+  port: 7777
+  # servlet 配置
+  servlet:
+    # 请求基础路径，用于处理请求，默认为 /
+    context-path: /admin-server
+  # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
+  compression:
+    enabled: true
+    # 执行压缩所需的最小 Content-Length 值，默认为 2048 字节即 2KB，小于该值的响应体将不压缩
+    min-response-size: 10KB
+  # HTTP/2 配置，用于支持 HTTP/2 协议
+  http2:
+    # 是否开启 HTTP/2 支持，默认关闭
+    enabled: true
+  # Tomcat 配置
+  tomcat:
+    # 最大连接数
+    max-connections: 8192
+    # 最大线程数
+    threads:
+      max: 200
+      min-spare: 10
+    # 连接超时时间（毫秒）
+    connection-timeout: 5000
+
+# 配置配置应用的常规、非敏感、不变动的属性
 spring:
+  # ==================== 应用基础信息 ====================
+  application:
+    # 服务名称：注册到 Nacos 的唯一标识，务必与 Nacos 配置文件名保持一致
+    name: admin-server
+  # ==================== 环境激活 ====================
+  # 默认激活开发环境，生产通过启动参数覆盖
+  profiles:
+    # 默认激活开发环境，生产环境通过启动参数覆盖：--spring.profiles.active=prod
+    active: dev
+  # ==================== Jackson 序列化配置 ====================
+  Jackson:
+    # 日期时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区
+    time-zone: Asia/Shanghai
+    # 序列化配置
+    serialization:
+      write-self-references-as-null: true
+    deserialization:
+      # 反序列化时忽略未知字段
+      fail-on-unknown-properties: false
+  # 开启虚拟线程功能
+  threads:
+    virtual:
+      enabled: true
+  # 虚拟线程的一个副作用是它们是守护线程。如果其所有线程都是守护线程，则 JVM 将退出。
+  # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
+  main:
+    keep-alive: true
+    banner-mode: off
   # 配置 admin 服务端地址和认证信息
   boot:
     admin:
       ui:
-        title: Urbane Commerce 服务监控
+        title: Mall Cloud 服务监控
       instance-auth:
         default-user-name: admin
         default-password: 479368
       notify:
         mail:
-          enabled: false   # 按需开启邮件告警
-  cloud:
-    # ==================== 负载均衡配置 ====================
-    loadbalancer:
-      nacos:
-        # 开启基于 Nacos 权重和元数据的负载均衡
-        enabled: true
-    nacos:
-      # ==================== Nacos 服务器连接 ====================
-      # 支持集群模式：server-addr: 192.168.1.1:8848,192.168.1.2:8848
-      server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
-      # Nacos 认证信息，通过环境变量注入，不写明文
-      username: ${NACOS_USERNAME:nacos}
-      password: ${NACOS_PASSWORD:nacos}
-      # ==================== 注册中心配置 ====================
-      discovery:
-        # 命名空间：用于环境隔离（dev/test/prod 各一个命名空间）
-        namespace: ${NACOS_DISCOVERY_NAMESPACE:}
-        # 服务分组：同一命名空间下进一步隔离
-        group: ${NACOS_DISCOVERY_GROUP:DEFAULT_GROUP}
-        # 开启服务注册
-        register-enabled: true
-        # 心跳间隔（毫秒）：每 5 秒发送一次心跳
-        heart-beat-interval: 5000
-        # 心跳超时（毫秒）：15 秒未收到心跳则标记为不健康
-        heart-beat-timeout: 15000
-        # 服务元数据：可用于灰度发布、版本路由
-        metadata:
-          version: ${spring.application.version:1.0.0}
-          env: ${spring.profiles.active:dev}
-      # ==================== 配置中心配置 ====================
-      config:
-        # 命名空间：与注册中心可以相同，也可以独立
-        namespace: ${NACOS_CONFIG_NAMESPACE:}
-        # 配置分组
-        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
-  # ==================== 配置导入 ====================
-  config:
-    import:
-      # ---------- 服务专属配置（每个服务必须引入）----------
-      # 服务主配置，如：urbane-user.yaml
-      - optional:nacos:${spring.application.name}.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      # 服务环境配置，如：urbane-user-dev.yaml
-      - optional:nacos:${spring.application.name}-${spring.profiles.active:dev}.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+          enabled: false   # 按需开启邮件告
 
-      # ---------- 公共基础配置（所有服务共享）----------
-      # 数据库连接池公共配置
-      - optional:nacos:common-datasource.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # Redis 公共配置
-      - optional:nacos:common-redis.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # MyBatis-Plus 公共配置
-      - optional:nacos:common-mybatis.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # Spring Security + JWT 公共配置
-      - optional:nacos:common-security.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # 接口文档公共配置（Knife4j）
-      - optional:nacos:common-openapi.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # 对象存储公共配置（OSS/MinIO）
-      - optional:nacos:common-oss.yaml?group=COMMON_GROUP&refreshEnabled=true
+mallcloud:
+  banner:
+    enabled: true
+    application-name: "My Awesome App 666"
+    version: "2.1.0"
+    author: "龙茶清欢"
+    description: "This is a sample application using custom banner"
+    show-info: true

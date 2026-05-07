@@ -31,28 +31,30 @@ public class FigletBannerPrinter implements Banner {
             // 其他信息
             String serverPort = environment.getProperty("server.port", "8080");
             String profiles = String.join(",", environment.getActiveProfiles());
-            String version = environment.getProperty("info.app.version", "1.0.0");
+            String version = environment.getProperty("mallcloud.banner.version", "1.0.0");
             String springBootVersion = SpringBootVersion.getVersion();
             String startTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            String author = environment.getProperty("custom.banner.author", "unknown");
+            String author = environment.getProperty("mallcloud.banner.author", "unknown");
             String hostAddress = getHostAddress();
             String baseUrl = "https://" + hostAddress + ":" + serverPort;
             String healthUrl = baseUrl + "/actuator/health";
             String swaggerUrl = baseUrl + (isSwaggerV3(environment) ? "/swagger-ui/index.html" : "/swagger-ui.html");
+            String description = environment.getProperty("mallcloud.banner.description", "unknown");
 
             // 打印横幅
             out.printf("%s===============================================%s%n", GREEN, RESET);
             out.println(CYAN + asciiArtTitle + RESET); // ✅ 动态 ASCII Art 标题
             out.println(GREEN + "===============================================" + RESET);
-            out.println("  服务端口    : " + YELLOW + "🌐 " + serverPort + RESET);
-            out.println("  服务IP      : " + CYAN + "📍 " + hostAddress + RESET);
-            out.println("  激活环境    : " + GREEN + "🧪 " + (profiles.isEmpty() ? "default" : profiles) + RESET);
-            out.println("  服务版本    : " + YELLOW + "🏷️  " + version + RESET);
-            out.println("  Spring Boot : " + GREEN + "🌱 " + springBootVersion + RESET);
-            out.println("  启动时间    : " + YELLOW + "🕙 " + startTime + RESET);
-            out.println("  项目作者    : " + CYAN + "📍 " + author + RESET);
-            out.println("  健康检查    : " + CYAN + "🩺 " + healthUrl + RESET);
-            out.println("  Spring Doc 文档 : " + GREEN + "📚 " + swaggerUrl + RESET);
+            out.println("  启动时间         : " + YELLOW + "🕙 " + startTime + RESET);
+            out.println("  服务IP          : " + CYAN + "📍 " + hostAddress + RESET);
+            out.println("  服务端口         : " + YELLOW + "🌐 " + serverPort + RESET);
+            out.println("  激活环境         : " + GREEN + "🧪 " + (profiles.isEmpty() ? "default" : profiles) + RESET);
+            out.println("  项目作者         : " + CYAN + "📍 " + author + RESET);
+            out.println("  项目介绍         : " + CYAN + "📍 " + description + RESET);
+            out.println("  服务版本         : " + YELLOW + "🏷️  " + version + RESET);
+            out.println("  Spring Boot     : " + GREEN + "🌱 " + springBootVersion + RESET);
+            out.println("  健康检查         : " + CYAN + "🩺 " + healthUrl + RESET);
+            out.println("  Spring Doc     : " + GREEN + "📚 " + swaggerUrl + RESET);
             out.println(GREEN + "===============================================" + RESET);
         } catch (Exception e) {
             out.println("⚠️  横幅打印异常: " + e.getMessage());

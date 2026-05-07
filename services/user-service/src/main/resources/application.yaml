@@ -10,7 +10,7 @@ server:
   # servlet 配置
   servlet:
     # 请求基础路径，用于处理请求，默认为 /
-    context-path: @project.artifactId@
+    context-path: /user
   # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
   compression:
     enabled: true

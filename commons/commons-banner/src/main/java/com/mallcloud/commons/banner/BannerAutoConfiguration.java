@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(MallCloudBannerProperties.class)
 @ConditionalOnProperty(
-    prefix = "my.banner",
+    prefix = "mallcloud.banner",
     name = "enabled",
     havingValue = "true",
     matchIfMissing = true
