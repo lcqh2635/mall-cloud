@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = MallCloudBannerProperties.PREFIX)
 public class MallCloudBannerProperties {
 
-    public static final String PREFIX = "mall-cloud.banner";
+    public static final String PREFIX = "mallcloud.banner";
 
     // getters and setters
     private boolean enabled = true;

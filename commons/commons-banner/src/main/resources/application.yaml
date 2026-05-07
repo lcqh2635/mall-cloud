@@ -2,7 +2,7 @@ spring:
   main:
     banner-mode: off
 
-mall-cloud:
+mallcloud:
   banner:
     enabled: true
     application-name: "My Awesome App 666"
