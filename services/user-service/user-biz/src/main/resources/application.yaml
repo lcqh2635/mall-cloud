@@ -36,7 +36,7 @@ spring:
   # ==================== 应用基础信息 ====================
   application:
     # 服务名称：注册到 Nacos 的唯一标识，务必与 Nacos 配置文件名保持一致
-    name: @project.artifactId@
+    name: user-biz
   # ==================== 环境激活 ====================
   # 默认激活开发环境，生产通过启动参数覆盖
   profiles:
@@ -62,93 +62,3 @@ spring:
   # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
-  # ==================== Spring Cloud Nacos 配置 ====================
-  cloud:
-    # -------------------- 负载均衡配置 --------------------
-    loadbalancer:
-      nacos:
-        # 开启基于 Nacos 权重和元数据的负载均衡策略
-        enabled: true
-    nacos:
-      # -------------------- Nacos 服务器连接 --------------------
-      # 集群模式示例：192.168.1.1:8848,192.168.1.2:8848,192.168.1.3:8848
-      server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
-      # Nacos 控制台登录用户名（通过环境变量注入）
-      username: ${NACOS_USERNAME:nacos}
-      # Nacos 控制台登录密码（通过环境变量注入）
-      password: ${NACOS_PASSWORD:nacos}
-      # -------------------- 注册中心配置 --------------------
-      discovery:
-        # 命名空间 ID：用于环境隔离（在 Nacos 控制台创建命名空间后填入 ID）
-        # 默认为空表示使用 public 命名空间
-        namespace: ${NACOS_DISCOVERY_NAMESPACE:}
-        # 服务分组：同一命名空间下进一步隔离，默认使用 DEFAULT_GROUP
-        group: ${NACOS_DISCOVERY_GROUP:DEFAULT_GROUP}
-        # 是否开启服务注册，false 时服务不会注册到 Nacos（用于本地调试）
-        register-enabled: true
-        # 心跳间隔（毫秒）：每 5 秒向 Nacos 发送一次心跳
-        heart-beat-interval: 5000
-        # 心跳超时（毫秒）：超过 15 秒未收到心跳则标记为不健康
-        heart-beat-timeout: 15000
-        # 服务下线超时（毫秒）：超过 30 秒则从注册列表移除
-        ip-delete-timeout: 30000
-        # 服务元数据：可用于灰度发布、版本路由等高级功能
-        metadata:
-          # 服务版本号
-          version: ${spring.application.version:1.0.0}
-          # 当前激活环境
-          env: ${spring.profiles.active:dev}
-      # -------------------- 配置中心配置 --------------------
-      config:
-        # 命名空间 ID：与注册中心保持一致，用于配置隔离
-        namespace: ${NACOS_CONFIG_NAMESPACE:}
-        # 配置分组
-        group: ${NACOS_CONFIG_GROUP:DEFAULT_GROUP}
-  # ==================== 配置导入（替代 bootstrap.yaml）====================
-  config:
-    import:
-      # -------------------- 服务专属配置 --------------------
-      # 服务主配置文件：urbane-user.yaml（数据库连接、业务参数等）
-      - optional:nacos:${spring.application.name}.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      # 服务环境配置文件：urbane-user-dev.yaml / urbane-user-prod.yaml 等
-      - optional:nacos:${spring.application.name}-${spring.profiles.active:dev}.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      # -------------------- 公共共享配置（所有服务共享）--------------------
-      # 数据库连接池公共配置（HikariCP 参数等）
-      - optional:nacos:common-datasource.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # Redis 连接池公共配置
-      - optional:nacos:common-redis.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # MyBatis-Plus 公共配置（分页、逻辑删除、字段填充等）
-      - optional:nacos:common-mybatis.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # Spring Security + JWT 公共配置（Token 参数、白名单等）
-      - optional:nacos:common-security.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # 接口文档公共配置（Knife4j / SpringDoc）
-      - optional:nacos:common-openapi.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # 对象存储公共配置（OSS/MinIO）
-      - optional:nacos:common-oss.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # -------------------- 按需引入（用户服务不需要，在对应服务中单独引入）--------------------
-      # 消息队列配置（订单服务、通知服务等引入）
-      # - optional:nacos:common-rocketmq.yaml?group=COMMON_GROUP&refreshEnabled=true
-      # 搜索引擎配置（搜索服务引入）
-      # - optional:nacos:common-elasticsearch.yaml?group=COMMON_GROUP&refreshEnabled=true
-
-# ==================== 日志基础配置 ====================
-logging:
-  config: classpath:logback-spring.xml
-  level:
-    # 根日志级别（各环境在对应 yaml 中覆盖）
-    root: INFO
-    com.mallcloud: INFO
-
-# ==================== Actuator 监控端点 ====================
-management:
-  endpoints:
-    web:
-      exposure:
-        # 默认暴露所有端点（生产环境在 application-prod.yaml 中收窄）
-        include: "*"
-      # 监控端点基础路径
-      base-path: /actuator
-  endpoint:
-    health:
-      # 显示详细健康信息
-      show-details: always

@@ -19,7 +19,6 @@
         <dependency>
             <groupId>com.mallcloud</groupId>
             <artifactId>user-api</artifactId>
-            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
