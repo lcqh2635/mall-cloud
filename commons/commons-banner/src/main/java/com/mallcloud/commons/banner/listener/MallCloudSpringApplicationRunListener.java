@@ -47,12 +47,12 @@ public class MallCloudSpringApplicationRunListener implements SpringApplicationR
         System.out.println("   激活的配置文件: " + String.join(", ", environment.getActiveProfiles()));
         System.out.println("   默认配置文件: " + String.join(", ", environment.getDefaultProfiles()));
         System.out.println("   应用名称: " + environment.getProperty("spring.application.name", "未设置"));
-        switch (environment.getProperty("custom.banner.type", "figlet")) {
-            case "text":
-                new TextBannerPrinter().printBanner(environment, application.getMainApplicationClass(), System.out);
-                break;
+        switch (environment.getProperty("mallcloud.banner.type", "figlet")) {
             case "figlet":
                 new FigletBannerPrinter().printBanner(environment, application.getMainApplicationClass(), System.out);
+                break;
+            case "text":
+                new TextBannerPrinter().printBanner(environment, application.getMainApplicationClass(), System.out);
                 break;
             case "image":
                 new ImageBannerPrinter().printBanner(environment, application.getMainApplicationClass(), System.out);
