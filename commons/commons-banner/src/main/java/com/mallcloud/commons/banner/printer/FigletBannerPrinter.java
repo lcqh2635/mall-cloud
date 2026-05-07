@@ -49,6 +49,7 @@ public class FigletBannerPrinter implements Banner {
             out.println("  服务IP          : " + CYAN + "📍 " + hostAddress + RESET);
             out.println("  服务端口         : " + YELLOW + "🌐 " + serverPort + RESET);
             out.println("  激活环境         : " + GREEN + "🧪 " + (profiles.isEmpty() ? "default" : profiles) + RESET);
+            out.println("  项目名称         : " + CYAN + "📍 " + appName + RESET);
             out.println("  项目作者         : " + CYAN + "📍 " + author + RESET);
             out.println("  项目介绍         : " + CYAN + "📍 " + description + RESET);
             out.println("  服务版本         : " + YELLOW + "🏷️  " + version + RESET);
