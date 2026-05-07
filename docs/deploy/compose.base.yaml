@@ -1,0 +1,126 @@
+version: "3.9"
+
+# =========================
+# 网络配置（所有服务统一通信）
+# =========================
+networks:
+  mall-net:
+    driver: bridge
+
+# =========================
+# 数据卷（持久化数据）
+# =========================
+volumes:
+  pg_data:
+  redis_data:
+  nacos_data:
+  nacos_logs:
+
+services:
+
+  # =========================
+  # PostgreSQL（Nacos / Seata / 业务数据库）
+  # =========================
+  postgres:
+    image: postgres:17
+    container_name: mall-postgres
+    restart: always
+
+    # 环境变量
+    environment:
+      POSTGRES_USER: mall
+      POSTGRES_PASSWORD: mall123
+      POSTGRES_DB: mall_cloud
+      TZ: Asia/Shanghai
+
+    # 数据持久化（:Z = Podman + SELinux 必须）
+    volumes:
+      - pg_data:/var/lib/postgresql/data:Z
+
+    ports:
+      - "5432:5432"
+
+    networks:
+      - mall-net
+
+    # 健康检查
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mall"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # =========================
+  # Redis（缓存 / 分布式锁）
+  # =========================
+  redis:
+    image: redis:7.4
+    container_name: mall-redis
+    restart: always
+
+    command: redis-server --appendonly yes
+
+    volumes:
+      - redis_data:/data:Z
+
+    ports:
+      - "6379:6379"
+
+    networks:
+      - mall-net
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # =========================
+  # Nacos（注册中心 + 配置中心）
+  # 使用 PostgreSQL 持久化
+  # =========================
+  nacos:
+    image: nacos/nacos-server:v2.4.3
+    container_name: mall-nacos
+    restart: always
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+      # ====== 模式 ======
+      MODE: standalone
+
+      # ====== 数据库类型 ======
+      SPRING_DATASOURCE_PLATFORM: postgresql
+
+      # ====== PostgreSQL 配置 ======
+      POSTGRES_SERVICE_HOST: postgres
+      POSTGRES_SERVICE_PORT: 5432
+      POSTGRES_SERVICE_DB_NAME: nacos_config
+      POSTGRES_SERVICE_USER: mall
+      POSTGRES_SERVICE_PASSWORD: mall123
+
+      # ====== JVM 调优 ======
+      JVM_XMS: 512m
+      JVM_XMX: 512m
+
+      # ====== 时区 ======
+      TZ: Asia/Shanghai
+
+    volumes:
+      - nacos_data:/home/nacos/data:Z
+      - nacos_logs:/home/nacos/logs:Z
+
+    ports:
+      - "8848:8848"
+
+    networks:
+      - mall-net
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8848/nacos"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
