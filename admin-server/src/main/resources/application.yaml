@@ -92,7 +92,7 @@ mallcloud:
     #   default  — 标准带分隔线 + Emoji（默认，适合本地开发）
     #   box      — Unicode 边框（终端体验更佳）
     #   colorful — 每行不同颜色（视觉最丰富）
-    theme: colorful
+    theme: box
 
     # ── 字体文件路径（classpath）────────────────────────
     # 更多字体：https://github.com/xero/figlet-fonts

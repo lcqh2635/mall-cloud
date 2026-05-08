@@ -195,17 +195,6 @@ public class FigletUtil {
     }
 
     /**
-     * 使用默认字体(Standard.flf)转换单行文本
-     *
-     * @param message 要转换的文本
-     * @return 转换后的艺术字体字符串
-     * @throws IOException 当读取字体文件或转换过程中出错时抛出
-     */
-    public static String convertOneLine(String message) throws IOException {
-        return convertOneLine(FigletUtil.class.getClassLoader().getResourceAsStream("/fonts/Standard.flf"), message);
-    }
-
-    /**
      * 使用指定字体流转换单行文本
      *
      * @param fontFileStream 字体文件输入流
@@ -216,17 +205,4 @@ public class FigletUtil {
     public static String convertOneLine(InputStream fontFileStream, String message) throws IOException {
         return (new FigletUtil(fontFileStream)).convert(message);
     }
-
-    /**
-     * 使用指定字体文件转换单行文本
-     *
-     * @param fontFile 字体文件
-     * @param message  要转换的文本
-     * @return 转换后的艺术字体字符串
-     * @throws IOException 当读取字体文件或转换过程中出错时抛出
-     */
-    public static String convertOneLine(File fontFile, String message) throws IOException {
-        return convertOneLine(new FileInputStream(fontFile), message);
-    }
-
 }
