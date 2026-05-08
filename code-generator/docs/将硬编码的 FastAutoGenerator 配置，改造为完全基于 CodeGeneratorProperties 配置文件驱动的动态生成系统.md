@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 代码生成器配置属性（完全由 application.yaml 驱动）
+ * 代码生成器配置属性（完全由 application-example.yaml 驱动）
  * 所有配置项均支持前端动态修改，无硬编码
  *
  * @author your-name
@@ -302,12 +302,12 @@ public class GeneratorConfig {
 
     /**
      * 代码生成器 Bean：完全由配置文件驱动
-     * 通过前端修改 application.yaml 或通过 API 重载配置后，重启服务即可生效
+     * 通过前端修改 application-example.yaml 或通过 API 重载配置后，重启服务即可生效
      */
     @Bean
     public void codeGenerator() {
         if (!properties.isEnabled()) {
-            System.out.println("❌ 代码生成器已禁用，请在 application.yaml 中设置 code-generator.enabled: true");
+            System.out.println("❌ 代码生成器已禁用，请在 application-example.yaml 中设置 code-generator.enabled: true");
             return;
         }
 
@@ -445,7 +445,7 @@ public class GeneratorConfig {
                 // 7. 执行生成
                 .execute();
 
-        System.out.println("✅ 代码生成器执行完成，配置来源：application.yaml");
+        System.out.println("✅ 代码生成器执行完成，配置来源：application-example.yaml");
     }
 }
 ```
@@ -626,7 +626,7 @@ public class CodeGenController {
     @PostMapping("/generate")
     public ResponseEntity<Map<String, Object>> generate(@RequestBody Map<String, Object> config) {
         // 1. 将前端传来的 YAML 配置反序列化为 CodeGeneratorProperties
-        // 2. 保存到 application.yaml（可选：写入文件）
+        // 2. 保存到 application-example.yaml（可选：写入文件）
         // 3. 调用 generator.codeGenerator()（已注册为 @Bean，可直接调用）
         // 4. 返回生成结果
 
@@ -637,7 +637,7 @@ public class CodeGenController {
             CodeGeneratorProperties newProps = mapper.convertValue(config, CodeGeneratorProperties.class);
 
             // 2. 保存到文件（可选）
-            savePropertiesToFile(newProps); // 保存为 application.yaml
+            savePropertiesToFile(newProps); // 保存为 application-example.yaml
 
             // 3. 手动触发生成（注意：@Bean 生成器是懒加载，需手动调用）
             // 推荐：封装一个 generate() 方法，不依赖 @Bean
