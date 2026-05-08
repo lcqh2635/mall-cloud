@@ -1,0 +1,3 @@
+com.mallcloud.commons.job.config.XxlJobConfig
+com.mallcloud.commons.job.handler.XxlJobHandler
+com.mallcloud.commons.job.properties.XxlJobProperties

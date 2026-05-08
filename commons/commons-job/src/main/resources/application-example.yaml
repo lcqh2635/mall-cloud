@@ -1,0 +1,10 @@
+xxl-job:
+  admin:
+    address: http://localhost:8080/xxl-job-admin
+  executor:
+    appname: xxl-job-executor
+    address:
+    ip:
+    port: 9999
+    logPath: /data/applogs/xxl-job/jobhandler
+    logRetentionDays: 30
