@@ -1,10 +1,12 @@
 package com.mallcloud.user.biz.controller;
 
 import com.mallcloud.user.api.client.UserClient;
+import com.mallcloud.user.api.constant.UserApiPath;
 import com.mallcloud.user.api.dto.UserCreateRequest;
 import com.mallcloud.user.api.dto.UserResponse;
 import com.mallcloud.user.api.enums.UserStatus;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户控制器
@@ -12,13 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
  * 直接实现 UserApi 接口
  */
 @RestController
+@RequestMapping(UserApiPath.USER)
+@RequiredArgsConstructor
 public class UserController implements UserClient {
 
     /**
      * 根据 ID 查询用户
      */
     @Override
-    public UserResponse getById(Long id) {
+    @GetMapping(UserApiPath.GET_BY_ID)
+    public UserResponse getById(@PathVariable Long id) {
 
         // 模拟数据库查询
         UserResponse response = new UserResponse();
@@ -35,7 +40,8 @@ public class UserController implements UserClient {
      * 创建用户
      */
     @Override
-    public UserResponse create(UserCreateRequest request) {
+    @RequestMapping(UserApiPath.CREATE)
+    public UserResponse create(@RequestBody UserCreateRequest request) {
 
         // 模拟创建用户
         UserResponse response = new UserResponse();

@@ -10,7 +10,7 @@ public interface AuthApiPath {
     /**
      * 用户模块根路径
      */
-    String USER = "/users";
+    String Auth = "/auth";
 
     /**
      * 根据ID查询用户
