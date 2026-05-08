@@ -1,4 +1,4 @@
-package com.mallcloud.commons.banner.listener;
+package com.mallcloud.commons.banner.autoconfigure;
 
 import com.mallcloud.commons.banner.BannerAutoConfiguration;
 import com.mallcloud.commons.banner.printer.FigletBannerPrinter;
