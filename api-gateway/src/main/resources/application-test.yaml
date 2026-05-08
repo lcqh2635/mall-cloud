@@ -31,6 +31,12 @@ spring:
                 # 预检请求（OPTIONS）缓存时间（单位：秒）
                 # 预检请求缓存 1 小时，减少预检请求次数
                 max-age: 3600
+          # Spring Framework API 版本策略的配置属性
+          version:
+            default-version: 1
+          # 负载均衡（自动注册 Nacos 服务）
+          loadbalancer:
+            use404: true
           # 服务发现（自动注册 Nacos 服务）
           discovery:
             locator:
