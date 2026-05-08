@@ -77,6 +77,17 @@ spring:
       - optional:nacos:common-config.yaml
       - optional:nacos:application.yaml?group=DEFAULT_GROUP&refreshable=true
 
+
+jwt:
+  secret-key: ${JWT_SECRET:change-me-in-production}  # 生产环境务必通过环境变量设置！
+  # 可选：Token 过期时间（用于生成时的参考）
+  expiration: 7200  # 2 小时
+  # 可选：刷新令牌有效期
+  refresh-expiration: 604800  # 7 天
+
+
+
+
 # 配置 actuator 对外指标
 management:
   endpoints:

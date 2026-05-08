@@ -25,5 +25,11 @@
             <groupId>com.mallcloud</groupId>
             <artifactId>commons-mybatis</artifactId>
         </dependency>
+
+        <!-- https://doc.hutool.cn/pages/jwt -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-jwt</artifactId>
+        </dependency>
     </dependencies>
 </project>

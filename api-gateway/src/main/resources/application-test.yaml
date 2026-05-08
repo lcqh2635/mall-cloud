@@ -37,11 +37,6 @@ spring:
           # 负载均衡（自动注册 Nacos 服务）
           loadbalancer:
             use404: true
-          # 服务发现（自动注册 Nacos 服务）
-          discovery:
-            locator:
-              enabled: true # 启用服务发现（自动注册 Nacos 服务）
-              lower-case-service-id: true  # 服务名转小写，匹配 lb://user-service
           # ========================
           # ✅ 路由配置（核心！使用 YAML 定义）
           # ========================
@@ -65,8 +60,13 @@ spring:
                 - Path=/auth/**
               # 👇 关键：跳过全局过滤器（JWT 认证）—— 通过 filter 名称实现
               # 注意：我们不在这里做认证，而是让 JwtAuthenticationFilter 跳过此路径
+              # 方案B：在 JwtAuthenticationFilter 中跳过 /auth/** 路径（更优雅）
+              # 网关层保持透传，由全局过滤器控制逻辑
               filters:
-                - RemoveRequestHeader=Authorization  # 清除原始 Token，避免污染下游
+                # 只对非登录接口清除原始 Token，避免污染下游
+                - name: RemoveRequestHeader
+                  args:
+                    name: Authorization
             # 4. 购物车服务：/cart/** → 转发到 cart-service
             - id: cart-service
               uri: lb://cart-service
@@ -142,13 +142,6 @@ spring:
                 - name: RequestLog
                   args:
                     logging-format: "[Gateway] User Service Request: ${request.method} ${request.uri}"
-            # 18. 健康检查与监控端点：允许公开访问
-            - id: actuator
-              uri: http://localhost:${server.port}  # 指向本网关自身
-              predicates:
-                - Path=/actuator/**
-              filters:
-                - StripPrefix=1  # 去掉 /actuator 前缀，转发到本地端点
           # ========================
           # ✅ 全局默认过滤器（适用于所有路由）
           # ========================
@@ -157,6 +150,18 @@ spring:
             - name: RequestLog
               args:
                 logging-format: "[Gateway] Request: ${request.method} ${request.uri} | Status: ${response.status}"
+            #
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                key-resolver: "#{@userKeyResolver}"  # 自定义 Key 解析器
+            # 熔断降级（需引入 resilience4j）
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY,SERVICE_UNAVAILABLE
+                methods: GET
           # 启用网关度量
           metrics:
             enabled: true
