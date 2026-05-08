@@ -1,0 +1,29 @@
+# 配置配置应用的常规、非敏感、不变动的属性
+spring:
+  # Redis 配置
+  data:
+    redis:
+      # Redis 服务器的 IP 地址
+      host: 192.168.56.10
+      # Redis 服务器的端口号，默认为 6379
+      port: 6379
+      # 默认使用的数据库索引，默认为 0
+      database: 0
+      # Redis 服务器的密码，如果没有设置密码，则设置为 null
+      password: 479368
+      # 命令执行的超时时间（毫秒）
+      timeout: 10000
+      # Lettuce 是 Redis 的异步客户端，它提供了高性能的非阻塞 I/O 操作。默认使用 Lettuce 作为 Redis 客户端
+  # 缓存配置, 使用 Redis 作为缓存。启用缓存配置还需要加上 @EnableCaching 注解
+  cache:
+    type: redis
+    # Redis 缓存策略
+    redis:
+      # 允许缓存 null 值。解决缓存穿透问题
+      cache-null-values: true
+      # 缓存过期时间，默认情况下，缓存永不过期。单位：秒
+      time-to-live: 3600s
+      # 缓存写入 Redis 时是否使用 prefix 作为 key 前缀
+      use-key-prefix: true
+      # 缓存 key 的前缀 prefix
+      key-prefix: "redis:cache:"
