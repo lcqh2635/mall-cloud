@@ -33,7 +33,7 @@ public interface UserClient {
      * @return 用户信息
      */
     @GetExchange(UserApiPath.GET_BY_ID)
-    UserResponse getById(@PathVariable Long id);
+    UserResponse getById(@PathVariable("id") Long id);
 
     /**
      * 创建用户
