@@ -8,9 +8,9 @@ server:
   # 服务端口
   port: 8014
   # servlet 配置
-#  servlet:
-#    # 请求基础路径，用于处理请求，默认为 /
-#    context-path: /user
+  servlet:
+    # 请求基础路径，用于处理请求，默认为 /
+    context-path: /service
   # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
   compression:
     enabled: true
@@ -36,7 +36,7 @@ spring:
   # ==================== 应用基础信息 ====================
   application:
     # 服务名称：注册到 Nacos 的唯一标识，务必与 Nacos 配置文件名保持一致
-    name: user-biz
+    name: user-service
   # ==================== 环境激活 ====================
   # 默认激活开发环境，生产通过启动参数覆盖
   profiles:

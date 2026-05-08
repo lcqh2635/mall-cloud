@@ -4,7 +4,7 @@ server:
   # servlet 配置
   servlet:
     # 请求基础路径，用于处理请求，默认为 /
-    context-path: /inventory
+    context-path: /service
   # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
   compression:
     enabled: true
@@ -19,7 +19,7 @@ server:
 spring:
   # 应用名称
   application:
-    name: inventory-biz
+    name: inventory-service
   # 默认激活开发环境，生产通过启动参数覆盖
   profiles:
     active: dev
