@@ -49,7 +49,7 @@ public class ColorfulBannerTheme implements BannerTheme {
         out.println(line("启动时间", timeVal, COLOR_TIME, ansi));
 
         if (s.isPid()) {
-            out.println(line("进程 PID", "🔢 " + ctx.getPid(), COLOR_TIME, ansi));
+            out.println(line("进程编号", "🔢 " + ctx.getPid(), COLOR_TIME, ansi));
         }
 
         // ---------- 网络信息（亮青） ----------

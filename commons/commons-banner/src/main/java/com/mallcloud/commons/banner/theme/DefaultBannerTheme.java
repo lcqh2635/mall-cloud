@@ -46,7 +46,7 @@ public class DefaultBannerTheme implements BannerTheme {
 
         // ---------- PID ----------
         if (s.isPid()) {
-            out.println(line("进程 PID", "🔢 " + ctx.getPid(), c, ansi));
+            out.println(line("进程编号", "🔢 " + ctx.getPid(), c, ansi));
         }
 
         // ---------- 网络信息 ----------

@@ -55,7 +55,7 @@ public class BoxBannerTheme implements BannerTheme {
         rows.add(new String[]{"启动时间", timeVal});
 
         if (s.isPid()) {
-            rows.add(new String[]{"进程 PID", ctx.getPid()});
+            rows.add(new String[]{"进程编号", ctx.getPid()});
         }
 
         rows.add(new String[]{"主机地址", ctx.getHostAddress()});
