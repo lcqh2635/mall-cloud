@@ -1,16 +1,16 @@
-package com.mallcloud.coupon.api.constant;
+package com.mallcloud.order.api.constant;
 
 /**
  * 用户服务 API 路径常量
  * <p>
  * 统一管理用户服务所有接口路径
  */
-public interface UserApiPath {
+public interface OrderApiPath {
 
     /**
      * 用户模块根路径
      */
-    String USER = "/users";
+    String ORDER = "/users";
 
     /**
      * 根据ID查询用户

@@ -1,7 +1,7 @@
 package com.mallcloud.order.biz.controller;
 
-
 import com.mallcloud.order.api.client.OrderClient;
+import com.mallcloud.order.api.constant.OrderApiPath;
 import com.mallcloud.order.api.dto.OrderResponse;
 import com.mallcloud.order.biz.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 虽然实现了 OrderClient 接口，但我们建议在实现类上显式标注 @RequestMapping，增加可读性并方便插件识别
  */
 @RestController
-@RequestMapping("/orders")
+@RequestMapping(OrderApiPath.ORDER)
 @RequiredArgsConstructor
 public class OrderController implements OrderClient {
 
@@ -30,6 +30,7 @@ public class OrderController implements OrderClient {
     @GetMapping("/{id}")
     public OrderResponse getOrderById(@PathVariable("id") Long id) {
         // 调用内部业务逻辑，并将结果映射为 DTO
-        return orderService.findOrderById(id);
+        // return orderService.getOrderById(id);
+        return null;
     }
 }

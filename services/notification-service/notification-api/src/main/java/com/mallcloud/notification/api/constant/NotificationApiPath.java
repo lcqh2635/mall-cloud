@@ -1,11 +1,11 @@
-package com.mallcloud.order.api.constant;
+package com.mallcloud.notification.api.constant;
 
 /**
  * 用户服务 API 路径常量
  * <p>
  * 统一管理用户服务所有接口路径
  */
-public interface UserApiPath {
+public interface NotificationApiPath {
 
     /**
      * 用户模块根路径

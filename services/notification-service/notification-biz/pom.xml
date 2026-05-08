@@ -19,5 +19,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>notification-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

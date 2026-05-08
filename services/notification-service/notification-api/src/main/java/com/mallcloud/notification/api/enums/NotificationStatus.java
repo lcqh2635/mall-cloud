@@ -1,9 +1,9 @@
-package com.mallcloud.order.api.enums;
+package com.mallcloud.coupon.api.enums;
 
 /**
  * 用户状态枚举
  */
-public enum UserStatus {
+public enum NotificationStatus {
 
     /**
      * 正常

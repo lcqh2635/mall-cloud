@@ -1,4 +1,4 @@
 package com.mallcloud.coupon.api.dto;
 
-public record OrderResponse() {
+public record NotificationResponse() {
 }
