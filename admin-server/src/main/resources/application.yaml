@@ -88,11 +88,11 @@ mallcloud:
     protocol: http           # 生产若走 HTTPS 改为 https
 
     # ── 显示主题 ──────────────────────────────────────
-    # 可选值：default | minimal | box | colorful
+    # 可选值：default | box | colorful
     #   default  — 标准带分隔线 + Emoji（默认，适合本地开发）
     #   box      — Unicode 边框（终端体验更佳）
     #   colorful — 每行不同颜色（视觉最丰富）
-    theme: default
+    theme: colorful
 
     # ── 字体文件路径（classpath）────────────────────────
     # 更多字体：https://github.com/xero/figlet-fonts
