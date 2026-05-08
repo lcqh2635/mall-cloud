@@ -1,0 +1,125 @@
+services:
+  # --- 数据库：PostgreSQL (Nacos & Seata 存储) ---
+  postgres:
+    image: docker.io/library/postgres:16-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: nacos_config
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data:Z # :Z 选项用于 Fedora SELinux 授权
+    networks:
+      - cloud-net
+
+  # --- 缓存：Redis ---
+  redis:
+    image: docker.io/library/redis:7-alpine
+    container_name: redis
+    command: redis-server --requirepass password123
+    ports:
+      - "6379:6379"
+    networks:
+      - cloud-net
+
+  # --- 注册中心 & 配置中心：Nacos ---
+  # 注意：Nacos 官方镜像默认基于 MySQL，此处演示连接到外部 DB 的逻辑
+  nacos:
+    image: nacos/nacos-server:latest
+    container_name: nacos
+    privileged: true # 解决 Rootless Podman 的某些权限限制
+    environment:
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql # 提示：生产环境若用PG需替换适配包
+      - DB_NUM=1
+      - DB_URL_0=jdbc:postgresql://postgres:5432/nacos_config
+      - DB_USER=root
+      - DB_PWD=password123
+    ports:
+      - "8848:8848"
+      - "9848:9848" # gRPC 端口
+    depends_on:
+      - postgres
+    networks:
+      - cloud-net
+
+  # --- 分布式事务：Seata Server ---
+  seata:
+    image: seata/seata-server:latest
+    container_name: seata
+    environment:
+      - SEATA_CONFIG_NAME=file:/root/seata-config/registry.conf
+      - STORE_MODE=db
+      - DB_TYPE=postgresql
+      - DB_URL=jdbc:postgresql://postgres:5432/seata_db
+      - DB_USER=root
+      - DB_PASSWORD=password123
+    ports:
+      - "8091:8091"
+    depends_on:
+      - postgres
+    networks:
+      - cloud-net
+
+  # --- 流量治理：Sentinel Dashboard ---
+  sentinel:
+    image: bladex/sentinel-dashboard:latest
+    container_name: sentinel
+    ports:
+      - "8858:8858" # 控制台端口
+    networks:
+      - cloud-net
+
+  # --- 消息队列：RocketMQ (简单单机版) ---
+  rmqnamesrv:
+    image: apache/rocketmq:latest
+    container_name: rmqnamesrv
+    command: sh mqnamesrv
+    ports:
+      - "9876:9876"
+    networks:
+      - cloud-net
+
+  rmqbroker:
+    image: apache/rocketmq:latest
+    container_name: rmqbroker
+    command: sh mqbroker -n rmqnamesrv:9876
+    depends_on:
+      - rmqnamesrv
+    ports:
+      - "10909:10909"
+      - "10911:10911"
+    networks:
+      - cloud-net
+
+  # --- 全文检索：ElasticSearch ---
+  elasticsearch:
+    image: docker.io/library/elasticsearch:8.12.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false # 开发环境禁用安全校验，方便调试
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    networks:
+      - cloud-net
+
+  # --- 可视化：Kibana ---
+  kibana:
+    image: docker.io/library/kibana:8.12.0
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - cloud-net
+
+networks:
+  mall-cloud-net:
+    driver: bridge
