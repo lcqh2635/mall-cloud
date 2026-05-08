@@ -1,4 +1,4 @@
-package com.mallcloud.chat.api.constant;
+package com.mallcloud.auth.api.constant;
 
 /**
  * 用户服务 API 路径常量

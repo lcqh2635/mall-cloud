@@ -1,4 +1,4 @@
-package com.mallcloud.chat.api.enums;
+package com.mallcloud.auth.api.enums;
 
 /**
  * 用户状态枚举

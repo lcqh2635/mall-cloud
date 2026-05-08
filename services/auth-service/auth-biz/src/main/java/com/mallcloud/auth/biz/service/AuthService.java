@@ -1,4 +1,4 @@
 package com.mallcloud.auth.biz.service;
 
-public class OrderService {
+public interface AuthService {
 }
