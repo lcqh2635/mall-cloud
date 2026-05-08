@@ -62,7 +62,7 @@ spring:
   # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
-    banner-mode: off
+    # banner-mode: off
   # 配置 admin 服务端地址和认证信息
   boot:
     admin:

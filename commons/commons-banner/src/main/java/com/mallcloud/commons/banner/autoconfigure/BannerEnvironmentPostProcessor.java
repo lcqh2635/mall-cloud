@@ -1,7 +1,7 @@
 package com.mallcloud.commons.banner.autoconfigure;
 
 import com.mallcloud.commons.banner.BannerAutoConfiguration;
-import com.mallcloud.commons.banner.printer.FigletBannerPrinter;
+import com.mallcloud.commons.banner.theme.FigletBannerPrinter;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.EnvironmentPostProcessor;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +12,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 /**
  * Banner 注入器 —— EnvironmentPostProcessor 实现（推荐方案）
  *
- * <p>相比 {@link BannerApplicationContextInitializer}，此方案更可靠：
+ * <p>相比 {@link 'ApplicationContextInitializer'}，此方案更可靠：
  * <ul>
  *   <li>{@link EnvironmentPostProcessor} 在 Environment 准备完毕后、
  *       ApplicationContext 创建之前被调用，此时可直接拿到 {@link SpringApplication} 引用，
