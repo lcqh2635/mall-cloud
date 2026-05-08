@@ -198,7 +198,7 @@ order:
 ## 三、完整 config.import 配置
 
 ```yaml
-# application.yaml
+# application-example.yaml
 spring:
   config:
     import:

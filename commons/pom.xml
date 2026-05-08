@@ -28,8 +28,4 @@
         <module>commons-security</module>
         <module>commons-utils</module>
     </modules>
-
-    <dependencies>
-
-    </dependencies>
 </project>

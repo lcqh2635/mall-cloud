@@ -22,7 +22,7 @@ config:
 
 ```yaml
 # ⚠️ 不是每个服务都需要 RocketMQ 和 Elasticsearch
-# 但你写在了公共 application.yaml 里，所有服务都会尝试加载
+# 但你写在了公共 application-example.yaml 里，所有服务都会尝试加载
 - optional:nacos:common-rocketmq.yaml?group=COMMON_GROUP&refreshEnabled=true
 - optional:nacos:common-elasticsearch.yaml?group=COMMON_GROUP&refreshEnabled=true
 ```
@@ -126,7 +126,7 @@ spring:
 ### 需要 RocketMQ 的服务单独引入
 
 ```yaml
-# services/order-service/src/main/resources/application.yaml
+# services/order-service/src/main/resources/application-example.yaml
 # 订单服务需要消息队列，单独引入
 spring:
   config:
@@ -138,7 +138,7 @@ spring:
 ### 需要 Elasticsearch 的服务单独引入
 
 ```yaml
-# services/search-service/src/main/resources/application.yaml
+# services/search-service/src/main/resources/application-example.yaml
 # 搜索服务需要 ES，单独引入
 spring:
   config:

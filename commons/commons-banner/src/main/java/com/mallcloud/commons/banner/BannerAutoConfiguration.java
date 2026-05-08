@@ -31,7 +31,7 @@ public class BannerAutoConfiguration {
      * 此 Bean 将被 Spring Boot 自动发现并用于替换默认 Banner
      * Spring Boot 在启动时会查找类型为 Banner 的 Bean，若存在则使用它替代默认实现
      *
-     * @param properties 从 application.yaml 中注入的配置属性对象
+     * @param properties 从 application-example.yaml 中注入的配置属性对象
      * @return CustomBanner 实例
      */
 //    @Bean
