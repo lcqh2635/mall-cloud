@@ -24,5 +24,9 @@
             <groupId>com.mallcloud</groupId>
             <artifactId>coupon-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>commons-mybatis</artifactId>
+        </dependency>
     </dependencies>
 </project>

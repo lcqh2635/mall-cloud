@@ -19,7 +19,10 @@
         <dependency>
             <groupId>com.mallcloud</groupId>
             <artifactId>logistics-api</artifactId>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>commons-mybatis</artifactId>
         </dependency>
     </dependencies>
 </project>

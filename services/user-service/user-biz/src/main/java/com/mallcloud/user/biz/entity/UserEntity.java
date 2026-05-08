@@ -1,10 +1,7 @@
 package com.mallcloud.user.biz.entity;
 
 import com.mallcloud.commons.mybatis.entity.BaseEntity;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.ColumnMask;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.*;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import com.mybatisflex.core.mask.Masks;
 
@@ -12,6 +9,11 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * MyBatis-Flex 常用的注解参考示例
+ * 在 MyBatis-Flex 中，@Table 主要是用于给 Entity 实体类添加标识，用于描述 实体类 和 数据库表 的关系，以及对实体类进行的一些 功能辅助
+ */
+@Table(value = "tb_article", comment = "文章表")
 public class UserEntity extends BaseEntity implements Serializable {
 
     @Serial

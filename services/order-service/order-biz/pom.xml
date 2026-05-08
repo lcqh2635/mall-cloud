@@ -21,6 +21,10 @@
             <artifactId>order-api</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>commons-mybatis</artifactId>
+        </dependency>
 
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->

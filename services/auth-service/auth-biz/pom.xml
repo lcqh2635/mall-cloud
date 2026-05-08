@@ -21,5 +21,9 @@
             <groupId>com.mallcloud</groupId>
             <artifactId>auth-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>commons-mybatis</artifactId>
+        </dependency>
     </dependencies>
 </project>

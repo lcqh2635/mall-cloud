@@ -16,5 +16,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>review-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mallcloud</groupId>
+            <artifactId>commons-mybatis</artifactId>
+        </dependency>
     </dependencies>
 </project>
