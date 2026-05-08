@@ -16,7 +16,6 @@ import java.io.PrintStream;
  *
  * @author mallcloud
  * @see DefaultBannerTheme
- * @see MinimalBannerTheme
  * @see BoxBannerTheme
  * @see ColorfulBannerTheme
  */
