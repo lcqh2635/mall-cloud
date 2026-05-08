@@ -49,11 +49,7 @@ public class BoxBannerTheme implements BannerTheme {
     private static final int BOX_WIDTH = 62;
 
     @Override
-    public void render(PrintStream out,
-                       BannerContext ctx,
-                       BannerProperties props,
-                       String asciiTitle,
-                       AnsiHelper ansi) {
+    public void render(PrintStream out, BannerContext ctx, BannerProperties props, String asciiTitle, AnsiHelper ansi) {
 
         BannerProperties.ColorConfig c = props.getColor();
         BannerProperties.ShowConfig  s = props.getShow();

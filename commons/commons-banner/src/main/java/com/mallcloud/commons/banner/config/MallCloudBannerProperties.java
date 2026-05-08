@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Setter
 @Getter
-@ConfigurationProperties(prefix = MallCloudBannerProperties.PREFIX)
+//@ConfigurationProperties(prefix = MallCloudBannerProperties.PREFIX)
 public class MallCloudBannerProperties {
 
     public static final String PREFIX = "mallcloud.banner";

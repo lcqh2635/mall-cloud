@@ -1,6 +1,5 @@
 package com.mallcloud.commons.banner.autoconfigure;
 
-import com.mallcloud.commons.banner.BannerAutoConfiguration;
 import com.mallcloud.commons.banner.theme.FigletBannerPrinter;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.EnvironmentPostProcessor;

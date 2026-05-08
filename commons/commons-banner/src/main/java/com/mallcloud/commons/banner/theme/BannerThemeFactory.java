@@ -32,7 +32,7 @@ public final class BannerThemeFactory {
 
     // 静态块：注册所有内置主题
     static {
-        register(DEFAULT_THEME,  new DefaultBannerTheme());
+        register(DEFAULT_THEME,        new DefaultBannerTheme());
         register("minimal",      new MinimalBannerTheme());
         register("box",          new BoxBannerTheme());
         register("colorful",     new ColorfulBannerTheme());

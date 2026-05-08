@@ -1,7 +1,12 @@
 package com.mallcloud.commons.banner.theme;
 
+import com.mallcloud.commons.banner.config.MallCloudBannerProperties;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.stereotype.Component;
 
 /**
  * Banner 配置属性类
@@ -34,11 +39,15 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  *
  * @author mallcloud
  */
-@ConfigurationProperties(prefix = "mallcloud.banner")
+@Setter
+@Getter
+@Component
+@ConfigurationProperties(prefix = BannerProperties.PREFIX)
 public class BannerProperties {
 
-    // ===================== 基础信息 =====================
+    public static final String PREFIX = "mallcloud.banner";
 
+    // ===================== 基础信息 =====================
     /** 业务版本号，默认 1.0.0 */
     private String version = "1.0.0";
 
@@ -72,7 +81,6 @@ public class BannerProperties {
     private String theme = "default";
 
     // ===================== 嵌套配置 =====================
-
     /** 控制各信息行是否显示 */
     @NestedConfigurationProperty
     private ShowConfig show = new ShowConfig();
@@ -82,10 +90,11 @@ public class BannerProperties {
     private ColorConfig color = new ColorConfig();
 
     // ===================== 内部类：显示控制 =====================
-
     /**
      * 控制 Banner 各信息行的显示开关
      */
+    @Setter
+    @Getter
     public static class ShowConfig {
 
         /** 是否显示进程 PID，默认开启 */
@@ -111,30 +120,9 @@ public class BannerProperties {
          * 注意：开启时会自动脱敏密码部分，但生产环境仍需谨慎
          */
         private boolean dbUrl = false;
-
-        // ---------- Getter / Setter ----------
-
-        public boolean isPid() { return pid; }
-        public void setPid(boolean pid) { this.pid = pid; }
-
-        public boolean isCost() { return cost; }
-        public void setCost(boolean cost) { this.cost = cost; }
-
-        public boolean isAuthor() { return author; }
-        public void setAuthor(boolean author) { this.author = author; }
-
-        public boolean isDescription() { return description; }
-        public void setDescription(boolean description) { this.description = description; }
-
-        public boolean isContextPath() { return contextPath; }
-        public void setContextPath(boolean contextPath) { this.contextPath = contextPath; }
-
-        public boolean isDbUrl() { return dbUrl; }
-        public void setDbUrl(boolean dbUrl) { this.dbUrl = dbUrl; }
     }
 
     // ===================== 内部类：颜色配置 =====================
-
     /**
      * 自定义 ANSI 颜色配置
      *
@@ -144,6 +132,8 @@ public class BannerProperties {
      * 90-97 为对应的高亮版本
      * </pre>
      */
+    @Setter
+    @Getter
     public static class ColorConfig {
 
         /** ASCII Art 标题颜色，默认青色(36) */
@@ -157,45 +147,5 @@ public class BannerProperties {
 
         /** 值颜色，默认黄色(33) */
         private int value = 33;
-
-        // ---------- Getter / Setter ----------
-
-        public int getTitle() { return title; }
-        public void setTitle(int title) { this.title = title; }
-
-        public int getSeparator() { return separator; }
-        public void setSeparator(int separator) { this.separator = separator; }
-
-        public int getLabel() { return label; }
-        public void setLabel(int label) { this.label = label; }
-
-        public int getValue() { return value; }
-        public void setValue(int value) { this.value = value; }
     }
-
-    // ===================== 顶层 Getter / Setter =====================
-
-    public String getVersion() { return version; }
-    public void setVersion(String version) { this.version = version; }
-
-    public String getAuthor() { return author; }
-    public void setAuthor(String author) { this.author = author; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public String getProtocol() { return protocol; }
-    public void setProtocol(String protocol) { this.protocol = protocol; }
-
-    public String getFontPath() { return fontPath; }
-    public void setFontPath(String fontPath) { this.fontPath = fontPath; }
-
-    public String getTheme() { return theme; }
-    public void setTheme(String theme) { this.theme = theme; }
-
-    public ShowConfig getShow() { return show; }
-    public void setShow(ShowConfig show) { this.show = show; }
-
-    public ColorConfig getColor() { return color; }
-    public void setColor(ColorConfig color) { this.color = color; }
 }
