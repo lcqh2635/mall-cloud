@@ -1,0 +1,169 @@
+# 配置配置应用的常规、非敏感、不变动的属性
+spring:
+  # Spring Cloud Gateway 配置
+  cloud:
+    gateway:
+      # 以上路由我们用 Java DSL 实现了，这里可留空或作为备用
+      server:
+        webflux:
+          # CORS 跨域配置，CORS 是网关的责任，不是业务服务的负担
+          global-cors:
+            cors-configurations:
+              '[/**]': # 对所有路径生效
+                # 允许的请求来源（Origin）
+                # 注意：生产环境不要使用 "*"，应明确指定可信域名
+                allowed-origin-patterns:
+                  - "*"
+                allowed-methods:
+                  -  GET
+                  -  POST
+                  -  PUT
+                  -  DELETE
+                  -  PATCH
+                # 允许的请求头（Header）常见的如 Content-Type, Authorization, X-Requested-With 等
+                # * 允许所有请求头（生产环境建议明确列出）
+                allowed-headers: "*"
+                # 暴露给前端的响应头（可选）
+                exposed-headers:
+                  - "Authorization"
+                # 允许携带 Cookie（如果前端需要发送认证信息如 JWT Token）
+                allow-credentials: true
+                # 预检请求（OPTIONS）缓存时间（单位：秒）
+                # 预检请求缓存 1 小时，减少预检请求次数
+                max-age: 3600
+          # 服务发现（自动注册 Nacos 服务）
+          discovery:
+            locator:
+              enabled: true # 启用服务发现（自动注册 Nacos 服务）
+              lower-case-service-id: true  # 服务名转小写，匹配 lb://user-service
+          # ========================
+          # ✅ 路由配置（核心！使用 YAML 定义）
+          # ========================
+          routes:
+            # 1. 管理服务：/admin/** → 转发到 admin-server
+            - id: admin-server
+              uri: lb://admin-server
+              # 匹配 /admin/**
+              predicates:
+                - Path=/admin/**
+            # 2. 代码生成服务：/code/** → 转发到 code-generator
+            - id: code-generator
+              uri: lb://code-generator
+              # 匹配 /code/**
+              predicates:
+                - Path=/code/**
+            # 3. 认证服务：/auth/** → 跳过 JWT 认证（重要！）
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+                - Path=/auth/**
+              # 👇 关键：跳过全局过滤器（JWT 认证）—— 通过 filter 名称实现
+              # 注意：我们不在这里做认证，而是让 JwtAuthenticationFilter 跳过此路径
+              filters:
+                - RemoveRequestHeader=Authorization  # 清除原始 Token，避免污染下游
+            # 4. 购物车服务：/cart/** → 转发到 cart-service
+            - id: cart-service
+              uri: lb://cart-service
+              predicates:
+                - Path=/cart/**
+            # 5. 聊天服务：/chat/** → 转发到 chat-service
+            - id: chat-service
+              uri: lb://chat-service
+              predicates:
+                - Path=/chat/**
+            # 6. 优惠券服务：/coupon/** → 转发到 coupon-service
+            - id: coupon-service
+              uri: lb://coupon-service
+              predicates:
+                - Path=/coupon/**
+            # 7. 库存服务：/inventory/** → 转发到 inventory-service
+            - id: inventory-service
+              uri: lb://inventory-service
+              predicates:
+                - Path=/inventory/**
+            # 8. 物流服务：/logistics/** → 转发到 logistics-service
+            - id: logistics-service
+              uri: lb://logistics-service
+              predicates:
+                - Path=/logistics/**
+            # 9. 通知服务：/notification/** → 转发到 notification-service
+            - id: notification-service
+              uri: lb://notification-service
+              predicates:
+                - Path=/notification/**
+            # 10. 订单服务：/order/** → 转发到 order-service
+            - id: order-service
+              uri: lb://order-service
+              predicates:
+                - Path=/order/**
+            # 11. 支付网关：/payment/** → 转发到 payment-gateway
+            - id: payment-service
+              uri: lb://payment-service
+              predicates:
+                - Path=/payment/**
+            # 12. 商品服务：/product/** → 转发到 product-service
+            - id: product-service
+              uri: lb://product-service
+              predicates:
+                - Path=/product/**
+            # 13. 促销服务：/promotion/** → 转发到 promotion-service
+            - id: promotion-service
+              uri: lb://promotion-service
+              predicates:
+                - Path=/promotion/**
+            # 14. 推荐服务：/recommendation/** → 转发到 recommendation-service
+            - id: recommendation-service
+              uri: lb://recommendation-service
+              predicates:
+                - Path=/recommendation/**
+            # 15. 评论服务：/review/** → 转发到 review-service
+            - id: review-service
+              uri: lb://review-service
+              predicates:
+                - Path=/review/**
+            # 16. 搜索服务：/search/** → 转发到 search-service
+            - id: search-service
+              uri: lb://search-service
+              predicates:
+                - Path=/search/**
+            # 17. 用户服务：/user/** → 转发到 user-service
+            - id: user-service
+              uri: lb://user-service
+              predicates:
+                - Path=/user/**
+              filters:
+                # 可选：添加请求头日志（调试用）
+                - name: RequestLog
+                  args:
+                    logging-format: "[Gateway] User Service Request: ${request.method} ${request.uri}"
+            # 18. 健康检查与监控端点：允许公开访问
+            - id: actuator
+              uri: http://localhost:${server.port}  # 指向本网关自身
+              predicates:
+                - Path=/actuator/**
+              filters:
+                - StripPrefix=1  # 去掉 /actuator 前缀，转发到本地端点
+          # ========================
+          # ✅ 全局默认过滤器（适用于所有路由）
+          # ========================
+          default-filters:
+            # 日志记录（生产环境可关闭或降级）
+            - name: RequestLog
+              args:
+                logging-format: "[Gateway] Request: ${request.method} ${request.uri} | Status: ${response.status}"
+          # 启用网关度量
+          metrics:
+            enabled: true
+
+# 日志级别（方便调试）
+logging:
+  level:
+    io.urbane.gateway: DEBUG
+    org.springframework.cloud.gateway: INFO
+
+# 可选：启用健康检查端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 生产环境建议只暴露 health/info

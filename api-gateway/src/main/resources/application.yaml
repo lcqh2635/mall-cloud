@@ -4,7 +4,7 @@ server:
   # servlet 配置
   servlet:
     # 请求基础路径，用于处理请求，默认为 /
-    context-path: @project.artifactId@
+    context-path: /api
   # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
   compression:
     enabled: true
@@ -19,7 +19,7 @@ server:
 spring:
   # 应用名称
   application:
-    name: @project.artifactId@
+    name: api-gateway
   # 默认激活开发环境，生产通过启动参数覆盖
   profiles:
     active: dev
@@ -35,14 +35,7 @@ spring:
   # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
-  # 配置 admin 服务端地址和认证信息
-  boot:
-    admin:
-      client:
-        # 指向 Admin Server 地址
-        url: http://localhost:9090
-        instance:
-          prefer-ip: true   # 显示 IP 而非主机名
+
   # Nacos 配置中心配置（基础连接信息）
   cloud:
     # 负载均衡配置

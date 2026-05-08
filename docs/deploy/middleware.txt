@@ -1,0 +1,14 @@
+PostgreSQL / MySQL / MariaDB
+Redis / Valkey
+
+Nacos
+Seata
+Sentinel
+RocketMQ / Kafka / RabbitMQ
+ElasticSearch + Logstash + Kibana
+MinIO
+Zipkin / SkyWalking
+Prometheus + Grafana
+
+XXL-JOB
+Flowable
