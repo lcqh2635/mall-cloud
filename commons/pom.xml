@@ -21,7 +21,6 @@
         <module>commons-core</module>
         <module>commons-job</module>
         <module>commons-logging</module>
-        <module>commons-model</module>
         <module>commons-mybatis</module>
         <module>commons-openapi</module>
         <module>commons-oss</module>
