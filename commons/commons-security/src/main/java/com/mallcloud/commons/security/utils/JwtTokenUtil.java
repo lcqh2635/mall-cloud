@@ -4,7 +4,7 @@ import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.signers.JWTSigner;
 import cn.hutool.jwt.signers.JWTSignerUtil;
-import com.mallcloud.commons.security.exception.ExpiredTokenException;
+import com.mallcloud.commons.security.exception.TokenExpiredException;
 import com.mallcloud.commons.security.properties.JwtProperties;
 import lombok.RequiredArgsConstructor;
 
@@ -33,7 +33,7 @@ public class JwtTokenUtil {
         // 2. 校验时间
         // validate(5) 表示允许 5 秒时间误差
         if (!jwt.validate(5)) {
-            throw new ExpiredTokenException("Token 已过期");
+            throw new TokenExpiredException("Token 已过期");
         }
 
         return jwt;

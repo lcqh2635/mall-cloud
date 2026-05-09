@@ -1,4 +1,4 @@
-package com.mallcloud.commons.security.exception;// package com.mallcloud.commons.exception;
+package com.mallcloud.commons.security.exception;
 
 import lombok.Getter;
 
@@ -12,24 +12,23 @@ import lombok.Getter;
  * &#064;date  2026-05-09
  */
 @Getter
-public class ExpiredTokenException extends SecurityException {
+public class TokenExpiredException extends SecurityException {
 
     /** Token 过期时间（可选，用于日志或响应） */
     private final Long expiredAt;
 
-    public ExpiredTokenException(String message) {
+    public TokenExpiredException(String message) {
         super(message);
         this.expiredAt = null;
     }
 
-    public ExpiredTokenException(String message, Long expiredAt) {
+    public TokenExpiredException(String message, Long expiredAt) {
         super(message);
         this.expiredAt = expiredAt;
     }
 
-    public ExpiredTokenException(String message, Throwable cause) {
+    public TokenExpiredException(String message, Throwable cause) {
         super(message, cause);
         this.expiredAt = null;
     }
-
 }
