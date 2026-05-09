@@ -1,0 +1,53 @@
+jwt:
+  # 基础配置
+  enabled: true
+  # JWT 签发者（issuer）
+  issuer: mall-cloud
+  # JWT 接收方（audience）
+  audience: mall-cloud-client
+
+  # Token 配置
+  # AccessToken 有效期（秒）
+  access-token-expire: 7200
+  # RefreshToken 有效期（秒）
+  refresh-token-expire: 604800
+  # Token 前缀
+  token-prefix: Bearer
+  # Header 名称
+  header-name: Authorization
+  # 是否允许刷新 Token
+  enable-refresh-token: true
+
+  # 签名配置
+  # 签名算法
+  algorithm: HS256
+  # HMAC 密钥
+  secret-key: your-super-secret-key
+  # RSA 公钥（可选）
+  public-key: ""
+  # RSA 私钥（可选）
+  private-key: ""
+
+  # 安全配置
+  # 时钟偏移容忍（秒）
+  clock-skew: 5
+  # 是否校验 Token 黑名单
+  enable-blacklist: true
+  # Redis 黑名单 Key 前缀
+  blacklist-prefix: "jwt:blacklist:"
+  # 是否允许多端登录
+  allow-multi-login: true
+
+  # 网关透传 Header
+  user-id-header: X-User-Id
+  username-header: X-Username
+  trace-id-header: X-Trace-Id
+
+  # 白名单配置
+  ignore-urls:
+    - /auth/login
+    - /auth/register
+    - /auth/refresh
+    - /swagger-ui/**
+    - /v3/api-docs/**
+    - /actuator/**
