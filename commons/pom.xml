@@ -15,7 +15,6 @@
     </description>
 
     <modules>
-        <module>commons-api</module>
         <module>commons-banner</module>
         <module>commons-cache</module>
         <module>commons-core</module>

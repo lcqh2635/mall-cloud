@@ -146,11 +146,6 @@
             <!-- 自定义公共模块 -->
             <dependency>
                 <groupId>com.mallcloud</groupId>
-                <artifactId>commons-api</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
                 <artifactId>commons-banner</artifactId>
                 <version>${revision}</version>
             </dependency>
