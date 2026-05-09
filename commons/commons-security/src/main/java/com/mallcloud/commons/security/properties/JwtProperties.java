@@ -1,4 +1,4 @@
-package com.mallcloud.api.gateway.config;
+package com.mallcloud.commons.security.properties;
 
 import lombok.Getter;
 import lombok.Setter;

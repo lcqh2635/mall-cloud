@@ -44,7 +44,7 @@ import java.util.UUID;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE) // 最高优先级，确保在其他过滤器之前执行
 @RequiredArgsConstructor
-public class JwtTokenFilter implements GlobalFilter {
+public class JwtAuthenticationFilter implements GlobalFilter {
 
     // 白名单建议改成配置化
     /**
