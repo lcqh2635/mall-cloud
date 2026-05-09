@@ -1,16 +1,16 @@
-package com.mallcloud.product.api.constant;
+package com.mallcloud.search.api.constant;
 
 /**
  * 用户服务 API 路径常量
  * <p>
  * 统一管理用户服务所有接口路径
  */
-public interface UserApiPath {
+public interface ReviewApiPath {
 
     /**
      * 用户模块根路径
      */
-    String USER = "/users";
+    String REVIEW = "/users";
 
     /**
      * 根据ID查询用户

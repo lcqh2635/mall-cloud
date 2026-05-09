@@ -1,4 +1,4 @@
 package com.mallcloud.product.api.dto;
 
-public record OrderRequest() {
+public record ProductRequest() {
 }

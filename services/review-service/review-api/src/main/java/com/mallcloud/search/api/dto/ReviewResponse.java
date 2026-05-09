@@ -1,6 +1,6 @@
 package com.mallcloud.search.api.dto;
 
-import com.mallcloud.search.api.enums.UserStatus;
+import com.mallcloud.search.api.enums.ReviewStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class UserResponse {
+public class ReviewResponse {
 
     /**
      * 用户ID
@@ -29,5 +29,5 @@ public class UserResponse {
     /**
      * 用户状态
      */
-    private UserStatus status;
+    private ReviewStatus status;
 }

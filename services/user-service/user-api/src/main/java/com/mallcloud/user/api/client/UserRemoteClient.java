@@ -1,14 +1,13 @@
 package com.mallcloud.user.api.client;
 
 import com.mallcloud.user.api.constant.UserApiPath;
-import com.mallcloud.user.api.dto.UserCreateRequest;
+import com.mallcloud.user.api.dto.UserRequest;
 import com.mallcloud.user.api.dto.UserResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import org.springframework.web.service.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 /**
  * 用户服务远程调用 HTTP 客户端接口
@@ -50,7 +49,7 @@ public interface UserRemoteClient {
      * @return 用户信息
      */
     @PostExchange(UserApiPath.CREATE)
-    UserResponse create(@RequestBody UserCreateRequest request);
+    UserResponse create(@RequestBody UserRequest request);
 
 }
 

@@ -1,4 +1,4 @@
 package com.mallcloud.product.api.exception;
 
-public class OrderNotFoundException {
+public class ProductNotFoundException {
 }

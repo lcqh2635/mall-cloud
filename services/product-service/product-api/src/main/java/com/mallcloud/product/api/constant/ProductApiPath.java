@@ -1,11 +1,11 @@
-package com.mallcloud.search.api.constant;
+package com.mallcloud.product.api.constant;
 
 /**
  * 用户服务 API 路径常量
  * <p>
  * 统一管理用户服务所有接口路径
  */
-public interface UserApiPath {
+public interface ProductApiPath {
 
     /**
      * 用户模块根路径

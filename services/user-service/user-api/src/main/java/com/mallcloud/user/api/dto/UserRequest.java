@@ -1,4 +1,4 @@
-package com.mallcloud.search.api.dto;
+package com.mallcloud.user.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -7,14 +7,14 @@ import lombok.Setter;
 
 /**
  * 用户创建请求 DTO
- *
+ * <p>
  * 注意：
  * DTO 仅用于服务间数据传输
  * 不要放业务逻辑
  */
 @Getter
 @Setter
-public class UserCreateRequest {
+public class UserRequest {
 
     /**
      * 用户名

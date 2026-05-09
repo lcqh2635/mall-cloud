@@ -1,4 +1,4 @@
-package com.mallcloud.user.biz.entity;
+package com.mallcloud.product.biz.entity;
 
 import com.mallcloud.commons.mybatis.entity.BaseEntity;
 import com.mybatisflex.annotation.*;
@@ -16,8 +16,8 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@Table(value = "t_article", comment = "文章表")
-public class UserEntity extends BaseEntity implements Serializable {
+@Table(value = "t_product", comment = "文章表")
+public class ProductEntity extends BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -72,3 +72,4 @@ public class UserEntity extends BaseEntity implements Serializable {
     @Column(isLarge = true)
     private String content;
 }
+

@@ -2,7 +2,7 @@ package com.mallcloud.user.biz.controller;
 
 import com.mallcloud.user.api.client.UserRemoteClient;
 import com.mallcloud.user.api.constant.UserApiPath;
-import com.mallcloud.user.api.dto.UserCreateRequest;
+import com.mallcloud.user.api.dto.UserRequest;
 import com.mallcloud.user.api.dto.UserResponse;
 import com.mallcloud.user.api.enums.UserStatus;
 import com.mallcloud.user.biz.service.UserService;
@@ -43,7 +43,7 @@ public class UserController implements UserRemoteClient {
      */
     @RequestMapping(UserApiPath.CREATE)
     @Override
-    public UserResponse create(@RequestBody UserCreateRequest request) {
+    public UserResponse create(@RequestBody UserRequest request) {
 
         // 模拟创建用户
         UserResponse response = new UserResponse();

@@ -1,5 +1,8 @@
 package com.mallcloud.commons.mybatis.entity;
 
+import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -32,6 +35,10 @@ public class BaseEntity implements Serializable {
      * 使用雪花算法（分布式唯一ID），避免自增主键暴露业务量或分库分表问题
      * IdType.ASSIGN_ID：MP 3.3.0+ 默认策略，整合雪花算法，Long/Integer/String 均支持
      */
+    // id 为自增主键
+    // 在 Entity 类中，MyBatis-Flex 是使用 @Id 注解来标识主键
+    // 参考 https://mybatis-flex.com/zh/core/id.html#%E5%A4%9A%E4%B8%BB%E9%94%AE%E3%80%81%E5%A4%8D%E5%90%88%E4%B8%BB%E9%94%AE
+    @Id(keyType = KeyType.Auto)
     private Long id;
 
     /**
@@ -40,7 +47,8 @@ public class BaseEntity implements Serializable {
      * 删除操作会转为 UPDATE SET deleted = 1
      * 全局配置可设置默认值，这里显式标注便于阅读
      */
-    private Integer deleted = 0; // 默认未删除
+    @Column(isLogicDelete = true)
+    private Boolean isDeleted;
 
     /**
      * 乐观锁版本号
@@ -48,13 +56,16 @@ public class BaseEntity implements Serializable {
      * 更新成功后版本号 +1
      * 需配合插件：OptimisticLockerInnerInterceptor
      */
+    @Column(version = true)
     private Integer version = 1; // 默认版本为1
+
 
     /**
      * 创建时间
      * 自动填充：插入时赋值
      * FieldFill.INSERT：仅插入时填充
      */
+    @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
 
     /**
@@ -68,6 +79,7 @@ public class BaseEntity implements Serializable {
      * 自动填充：插入和更新时都赋值
      * FieldFill.INSERT_UPDATE：插入和更新时填充
      */
+    @Column(onUpdateValue = "now()", onInsertValue = "now()")
     private LocalDateTime updateTime;
 
     /**
