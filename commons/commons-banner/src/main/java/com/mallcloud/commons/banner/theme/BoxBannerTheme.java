@@ -37,15 +37,15 @@ public class BoxBannerTheme implements BannerTheme {
         if (s.isCost() && ctx.getStartupCost() != null) {
             timeVal += "  (耗时 " + ctx.getStartupCost() + ")";
         }
-        box.row("启动时间", timeVal);
+        box.row("🌐 启动时间", timeVal);
 
         if (s.isPid()) {
-            box.row("进程编号", ctx.getPid());
+            box.row("🔢 进程编号", ctx.getPid());
         }
 
         // ---------- 网络信息 ----------
-        box.row("主机地址", ctx.getHostAddress());
-        box.row("服务端口", ctx.getServerPort());
+        box.row("🌐 主机地址", ctx.getHostAddress());
+        box.row("🚀 服务端口", ctx.getServerPort());
 
         if (s.isContextPath() && ctx.getContextPath() != null && !ctx.getContextPath().isEmpty()) {
             box.row("访问路径", ctx.getContextPath());

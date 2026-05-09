@@ -153,6 +153,6 @@ public class ColorfulBannerTheme implements BannerTheme {
         // 但为了让分隔符 │ 只出现一次且位置准确，将标签和值拼为完整着色行传入
         String coloredLine = ansi.colorize(label + "  │  " + value, colorCode);
         // label 传空字符串，BoxRenderer 不会再插入额外的 │ 和左边距标签
-        box.row("", coloredLine);
+        box.row("6", coloredLine);
     }
 }
