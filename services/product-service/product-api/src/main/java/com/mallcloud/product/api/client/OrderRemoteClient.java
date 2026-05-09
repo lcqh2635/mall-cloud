@@ -1,4 +1,4 @@
 package com.mallcloud.product.api.client;
 
-public interface OrderClient {
+public interface OrderRemoteClient {
 }

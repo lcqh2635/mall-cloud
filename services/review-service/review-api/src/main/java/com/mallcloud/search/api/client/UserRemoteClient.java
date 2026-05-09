@@ -1,4 +1,4 @@
-package com.mallcloud.user.api.client;
+package com.mallcloud.search.api.client;
 
 import com.mallcloud.user.api.constant.UserApiPath;
 import com.mallcloud.user.api.dto.UserCreateRequest;
@@ -22,7 +22,7 @@ import org.springframework.web.service.annotation.PostExchange;
  * 4. 服务提供方直接实现该接口
  */
 @HttpExchange(UserApiPath.USER)
-public interface UserClient {
+public interface UserRemoteClient {
 
     /**
      * 根据 ID 查询用户
@@ -33,7 +33,7 @@ public interface UserClient {
      * @return 用户信息
      */
     @GetExchange(UserApiPath.GET_BY_ID)
-    UserResponse getById(@PathVariable("id") Long id);
+    UserResponse getById(@PathVariable Long id);
 
     /**
      * 创建用户

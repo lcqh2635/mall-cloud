@@ -22,7 +22,7 @@ import org.springframework.web.service.annotation.PostExchange;
  * 4. 服务提供方直接实现该接口
  */
 @HttpExchange(UserApiPath.USER)
-public interface UserClient {
+public interface UserRemoteClient {
 
     /**
      * 根据 ID 查询用户

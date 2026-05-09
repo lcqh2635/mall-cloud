@@ -1,12 +1,12 @@
-package com.mallcloud.auth.biz.controller;
+package com.mallcloud.coupon.biz.controller;
 
-import com.mallcloud.auth.api.client.AuthClient;
+import com.mallcloud.coupon.api.client.CouponRemoteClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/coupons")
 @RequiredArgsConstructor
-public class AuthController implements AuthClient {
+public class CouponRemoteController implements CouponRemoteClient {
 }

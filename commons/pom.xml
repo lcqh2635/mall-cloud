@@ -26,6 +26,5 @@
         <module>commons-openapi</module>
         <module>commons-oss</module>
         <module>commons-security</module>
-        <module>commons-utils</module>
     </modules>
 </project>

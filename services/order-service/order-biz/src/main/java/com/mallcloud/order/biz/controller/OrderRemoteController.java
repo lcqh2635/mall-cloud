@@ -1,6 +1,6 @@
 package com.mallcloud.order.biz.controller;
 
-import com.mallcloud.order.api.client.OrderClient;
+import com.mallcloud.order.api.client.OrderRemoteClient;
 import com.mallcloud.order.api.constant.OrderApiPath;
 import com.mallcloud.order.api.dto.OrderResponse;
 import com.mallcloud.order.biz.service.OrderService;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(OrderApiPath.ORDER)
 @RequiredArgsConstructor
-public class OrderController implements OrderClient {
+public class OrderRemoteController implements OrderRemoteClient {
 
     private final OrderService orderService;
 

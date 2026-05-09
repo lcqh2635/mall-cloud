@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * HttpExchange 是 Spring 原生支持的，相比 OpenFeign 更轻量，更易适配虚拟线程
  */
 @HttpExchange("/orders")
-public interface OrderClient {
+public interface OrderRemoteClient {
 
     /**
      * 根据 ID 查询订单详情

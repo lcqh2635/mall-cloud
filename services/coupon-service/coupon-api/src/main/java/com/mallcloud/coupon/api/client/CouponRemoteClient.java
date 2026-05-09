@@ -1,4 +1,4 @@
 package com.mallcloud.coupon.api.client;
 
-public interface CouponClient {
+public interface CouponRemoteClient {
 }

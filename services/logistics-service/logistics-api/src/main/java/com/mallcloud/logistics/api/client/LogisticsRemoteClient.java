@@ -1,4 +1,4 @@
 package com.mallcloud.logistics.api.client;
 
-public interface LogisticsClient {
+public interface LogisticsRemoteClient {
 }

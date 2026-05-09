@@ -199,11 +199,6 @@
                 <artifactId>commons-security</artifactId>
                 <version>${revision}</version>
             </dependency>
-            <dependency>
-                <groupId>com.mallcloud</groupId>
-                <artifactId>commons-utils</artifactId>
-                <version>${revision}</version>
-            </dependency>
 
             <!-- 业务服务接口模块 -->
             <dependency>

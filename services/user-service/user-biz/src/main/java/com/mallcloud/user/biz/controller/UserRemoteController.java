@@ -1,6 +1,6 @@
 package com.mallcloud.user.biz.controller;
 
-import com.mallcloud.user.api.client.UserClient;
+import com.mallcloud.user.api.client.UserRemoteClient;
 import com.mallcloud.user.api.constant.UserApiPath;
 import com.mallcloud.user.api.dto.UserCreateRequest;
 import com.mallcloud.user.api.dto.UserResponse;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(UserApiPath.USER)
 @RequiredArgsConstructor
-public class UserController implements UserClient {
+public class UserRemoteController implements UserRemoteClient {
 
     private final UserService userService;
 
