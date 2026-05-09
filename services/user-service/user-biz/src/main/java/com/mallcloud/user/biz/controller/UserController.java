@@ -17,17 +17,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(UserApiPath.USER)
 @RequiredArgsConstructor
-public class UserRemoteController implements UserRemoteClient {
+public class UserController implements UserRemoteClient {
 
     private final UserService userService;
 
     /**
      * 根据 ID 查询用户
      */
-    @Override
     @GetMapping(UserApiPath.GET_BY_ID)
-    public UserResponse getById(@PathVariable("id") Long id) {
-
+    @Override
+    public UserResponse getUserById(@PathVariable Long id) {
         // 模拟数据库查询
         UserResponse response = new UserResponse();
 
@@ -42,8 +41,8 @@ public class UserRemoteController implements UserRemoteClient {
     /**
      * 创建用户
      */
-    @Override
     @RequestMapping(UserApiPath.CREATE)
+    @Override
     public UserResponse create(@RequestBody UserCreateRequest request) {
 
         // 模拟创建用户

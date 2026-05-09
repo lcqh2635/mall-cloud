@@ -1,6 +1,6 @@
 package com.mallcloud.search.api.dto;
 
-import com.mallcloud.user.api.enums.UserStatus;
+import com.mallcloud.search.api.enums.UserStatus;
 import lombok.Getter;
 import lombok.Setter;
 

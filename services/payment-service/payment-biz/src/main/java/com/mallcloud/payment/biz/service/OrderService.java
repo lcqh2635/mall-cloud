@@ -1,4 +1,4 @@
-package com.mallcloud.order.biz.service;
+package com.mallcloud.payment.biz.service;
 
-public class OrderService {
+public interface OrderService {
 }

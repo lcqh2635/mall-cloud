@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(OrderApiPath.ORDER)
 @RequiredArgsConstructor
-public class OrderRemoteController implements OrderRemoteClient {
+public class OrderController implements OrderRemoteClient {
 
     private final OrderService orderService;
 

@@ -1,4 +1,10 @@
-package com.mallcloud.order.biz.controller;
+package com.mallcloud.payment.biz.controller;
 
-public class OrderController {
+import com.mallcloud.order.api.client.OrderRemoteClient;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+public class OrderController implements OrderRemoteClient {
 }

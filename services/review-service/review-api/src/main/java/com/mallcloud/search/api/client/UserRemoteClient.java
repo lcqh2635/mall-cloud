@@ -1,8 +1,8 @@
 package com.mallcloud.search.api.client;
 
-import com.mallcloud.user.api.constant.UserApiPath;
-import com.mallcloud.user.api.dto.UserCreateRequest;
-import com.mallcloud.user.api.dto.UserResponse;
+import com.mallcloud.search.api.constant.UserApiPath;
+import com.mallcloud.search.api.dto.UserCreateRequest;
+import com.mallcloud.search.api.dto.UserResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 

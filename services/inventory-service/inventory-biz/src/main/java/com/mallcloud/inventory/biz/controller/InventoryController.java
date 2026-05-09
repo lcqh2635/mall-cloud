@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/inventory")
 @RequiredArgsConstructor
-public class InventoryRemoteController implements InventoryRemoteClient {
+public class InventoryController implements InventoryRemoteClient {
 }

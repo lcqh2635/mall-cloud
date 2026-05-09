@@ -29,17 +29,6 @@ public interface UserRemoteClient {
     // 既然我们已经定义了 HTTP 服务接口，就需要创建一个代理来实现该接口并在我们调用其内的接口方法时，会自动执行 exchange。
 
     /**
-     * 根据 ID 查询用户
-     * <p>
-     * GET /users/{id}
-     *
-     * @param id 用户ID
-     * @return 用户信息
-     */
-    @GetExchange(UserApiPath.GET_BY_ID)
-    UserResponse getById(@PathVariable("id") Long id);
-
-    /**
      * 根据ID获取单个用户。
      * 使用 @GetExchange 注解，并在URL中通过 {id} 定义路径变量。
      * 使用 @PathVariable 注解将方法参数 id 绑定到URL路径变量 {id}。

@@ -1,4 +1,4 @@
-package com.mallcloud.order.api.exception;
+package com.mallcloud.payment.api.exception;
 
 public class OrderNotFoundException {
 }

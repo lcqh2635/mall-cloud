@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/logistics")
 @RequiredArgsConstructor
-public class LogisticsRemoteController implements LogisticsRemoteClient {
+public class LogisticsController implements LogisticsRemoteClient {
 }

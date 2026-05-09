@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(NotificationApiPath.USER)
 @RequiredArgsConstructor
-public class NotificationRemoteController implements NotificationRemoteClient {
+public class NotificationController implements NotificationRemoteClient {
 }

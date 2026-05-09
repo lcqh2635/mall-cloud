@@ -1,4 +1,4 @@
-package com.mallcloud.coupon.api.dto;
+package com.mallcloud.notification.api.dto;
 
 public record NotificationRequest() {
 }

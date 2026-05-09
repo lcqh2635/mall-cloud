@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/coupons")
 @RequiredArgsConstructor
-public class CouponRemoteController implements CouponRemoteClient {
+public class CouponController implements CouponRemoteClient {
 }

@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthRemoteController implements AuthRemoteClient {
+public class AuthController implements AuthRemoteClient {
 }

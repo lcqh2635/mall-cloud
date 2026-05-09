@@ -1,4 +1,4 @@
-package com.mallcloud.product.api.enums;
+package com.mallcloud.recommendation.api.enums;
 
 /**
  * 用户状态枚举

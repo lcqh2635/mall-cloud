@@ -1,4 +1,4 @@
-package com.mallcloud.product.api.constant;
+package com.mallcloud.recommendation.api.constant;
 
 /**
  * 用户服务 API 路径常量

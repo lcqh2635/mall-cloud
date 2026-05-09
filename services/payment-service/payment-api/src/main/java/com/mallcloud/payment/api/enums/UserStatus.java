@@ -1,4 +1,4 @@
-package com.mallcloud.order.api.enums;
+package com.mallcloud.payment.api.enums;
 
 /**
  * 用户状态枚举
