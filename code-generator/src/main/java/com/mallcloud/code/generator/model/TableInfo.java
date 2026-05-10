@@ -1,0 +1,475 @@
+package com.mallcloud.code.generator.model;
+
+import com.mybatisflex.codegen.config.*;
+import com.mybatisflex.codegen.entity.Column;
+import com.mybatisflex.core.util.StringUtil;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.math.BigInteger;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Setter
+@Getter
+public class TableInfo {
+    /**
+     * 表名。
+     */
+    private String name;
+
+    /**
+     * schema（模式）。
+     */
+
+    private String schema;
+
+    /**
+     * 表注释。
+     */
+    private String comment;
+
+    /**
+     * 主键。
+     */
+    private Set<String> primaryKeys;
+
+    /**
+     * 所包含的列。
+     */
+    private List<ColumnInfo> columns = new ArrayList<>();
+
+    /**
+     * 表配置。
+     */
+    private TableConfig tableConfig;
+
+    private EntityConfig entityConfig;
+
+    /**
+     * 全局配置。
+     */
+    private GlobalConfig globalConfig;
+
+    public String getComment() {
+        if (StringUtil.hasText(comment)) {
+            return globalConfig.getJavadocConfig().formatTableComment(comment);
+        }
+        return null;
+    }
+
+    /**
+     * 默认主键。
+     */
+    private Column defaultPrimaryKey;
+
+    public Column getPrimaryKey() {
+        if (defaultPrimaryKey == null) {
+            throw new NullPointerException("PrimaryKey can't be null");
+        }
+        return defaultPrimaryKey;
+    }
+
+    public Set<String> getPrimaryKeys() {
+        return primaryKeys;
+    }
+
+    public void setPrimaryKeys(Set<String> primaryKeys) {
+        this.primaryKeys = primaryKeys;
+    }
+
+    public void addPrimaryKey(String primaryKey) {
+        if (primaryKeys == null) {
+            primaryKeys = new LinkedHashSet<>();
+        }
+        primaryKeys.add(primaryKey);
+    }
+
+    public List<Column> getColumns() {
+        return columns;
+    }
+
+    public List<Column> getSortedColumns() {
+        ArrayList<Column> arrayList = new ArrayList<>(columns);
+        // 生成字段排序
+        arrayList.sort(Comparator.comparingInt((Column c) -> c.getProperty().length())
+                .thenComparing(Column::getProperty));
+        return arrayList;
+    }
+
+    public void setColumns(List<Column> columns) {
+        this.columns = columns;
+    }
+
+
+    public boolean containsColumn(String columnName) {
+        if (columns == null || columns.isEmpty() || StringUtil.noText(columnName)) {
+            return false;
+        }
+        for (Column column : columns) {
+            if (columnName.equals(column.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containsColumn(String... columnNames) {
+        for (String columnName : columnNames) {
+            if (!containsColumn(columnName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean containsAnyColumn(String... columnNames) {
+        for (String columnName : columnNames) {
+            if (containsColumn(columnName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    List<String> superColumns = null;
+
+    public void addColumn(Column column) {
+        if (superColumns == null) {
+            superColumns = new ArrayList<>();
+            Class<?> superClass = entityConfig.getSuperClass(this);
+            // 获取所有 private字段
+            if (superClass != null) {
+                Field[] fields = superClass.getDeclaredFields();
+                for (Field field : fields) {
+                    int modifiers = field.getModifiers();
+                    if (Modifier.isPrivate(modifiers)) {
+                        superColumns.add(field.getName());
+                    }
+                }
+            }
+        }
+
+        // 主键
+        if (primaryKeys != null && primaryKeys.contains(column.getName())) {
+            column.setPrimaryKey(true);
+            if (column.getAutoIncrement() == null && (column.getPropertyType().equals(Integer.class.getName()) || column.getPropertyType().equals(BigInteger.class.getName()))) {
+                column.setAutoIncrement(true);
+            }
+            if (defaultPrimaryKey == null) {
+                defaultPrimaryKey = column;
+            }
+        }
+
+        if (superColumns.contains(column.getProperty())) {
+            return;
+        }
+
+        if (column.getAutoIncrement() == null) {
+            column.setAutoIncrement(false);
+        }
+
+        column.setColumnConfig(globalConfig.getStrategyConfig().getColumnConfig(name, column.getName()));
+        column.setEntityConfig(globalConfig.getEntityConfig());
+
+        columns.add(column);
+    }
+
+    // ===== 构建实体类文件 =====
+
+    /**
+     * 构建 import 导包。
+     */
+    public List<String> buildImports(boolean isBase) {
+        Set<String> imports = new HashSet<>();
+
+        // base 类不需要添加 Table 的导入，没有 @Table 注解
+        if (!isBase) {
+            imports.add("com.mybatisflex.annotation.Table");
+        }
+
+        EntityConfig entityConfig = globalConfig.getEntityConfig();
+
+        // 未开启基类生成，或者是基类的情况下，添加 Column 类型的导入
+        if (!entityConfig.isWithBaseClassEnable() || (entityConfig.isWithBaseClassEnable() && isBase)) {
+            for (Column column : columns) {
+                imports.addAll(column.getImportClasses());
+            }
+
+            Class<?> superClass = entityConfig.getSuperClass(this);
+            if (superClass != null) {
+                imports.add(superClass.getName());
+            }
+
+            if (entityConfig.getImplInterfaces() != null) {
+                for (Class<?> entityInterface : entityConfig.getImplInterfaces()) {
+                    imports.add(entityInterface.getName());
+                }
+            }
+        }
+
+
+        if (!entityConfig.isWithBaseClassEnable() || (entityConfig.isWithBaseClassEnable() && !isBase)) {
+            if (tableConfig != null) {
+                if (tableConfig.getInsertListenerClass() != null) {
+                    imports.add(tableConfig.getInsertListenerClass().getName());
+                }
+                if (tableConfig.getUpdateListenerClass() != null) {
+                    imports.add(tableConfig.getUpdateListenerClass().getName());
+                }
+                if (tableConfig.getSetListenerClass() != null) {
+                    imports.add(tableConfig.getSetListenerClass().getName());
+                }
+            }
+        }
+
+        return imports.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+    }
+
+    /**
+     * 构建 @Table(...) 注解。
+     */
+    public String buildTableAnnotation() {
+        StringBuilder tableAnnotation = new StringBuilder();
+
+        tableAnnotation.append("@Table(value = \"").append(name).append("\"");
+
+        String globalSchema;
+
+        if (tableConfig == null) {
+            // 未配置 tableConfig 以策略中的 schema 为主
+            globalSchema = schema;
+        } else if (StringUtil.noText(tableConfig.getSchema())) {
+            // 配置 tableConfig 但未指定 schema 还是以策略中的 schema 为主
+            globalSchema = schema;
+        } else {
+            // 以用户设置的 tableConfig 中的 schema 为主
+            globalSchema = null;
+        }
+
+        if (StringUtil.hasText(globalSchema)) {
+            tableAnnotation.append(", schema = \"").append(globalSchema).append("\"");
+        }
+
+        // 添加 dataSource 配置，因为代码生成器是一个数据源生成的，所以这些实体类应该都是一个数据源。
+        String dataSource = globalConfig.getEntityDataSource();
+        if (StringUtil.hasText(dataSource)) {
+            tableAnnotation.append(", dataSource = \"").append(dataSource).append("\"");
+        }
+
+
+        if (tableConfig != null) {
+            if (StringUtil.hasText(tableConfig.getSchema())) {
+                tableAnnotation.append(", schema = \"").append(tableConfig.getSchema()).append("\"");
+            }
+            if (tableConfig.getCamelToUnderline() != null) {
+                tableAnnotation.append(", camelToUnderline = ").append(tableConfig.getCamelToUnderline());
+            }
+            if (tableConfig.getInsertListenerClass() != null) {
+                tableAnnotation.append(", onInsert = ").append(tableConfig.getInsertListenerClass().getSimpleName()).append(".class");
+            }
+            if (tableConfig.getUpdateListenerClass() != null) {
+                tableAnnotation.append(", onUpdate = ").append(tableConfig.getUpdateListenerClass().getSimpleName()).append(".class");
+            }
+            if (tableConfig.getSetListenerClass() != null) {
+                tableAnnotation.append(", onSet = ").append(tableConfig.getSetListenerClass().getSimpleName()).append(".class");
+            }
+            if (Boolean.FALSE.equals(tableConfig.getMapperGenerateEnable())) {
+                tableAnnotation.append(", mapperGenerateEnable = false");
+            }
+        }
+
+
+        if (entityConfig != null && entityConfig.isColumnCommentEnable() && StringUtil.hasText(comment)) {
+            tableAnnotation.append(", comment = \"")
+                    .append(this.comment.replace("\n", "").replace("\"", "\\\"").trim())
+                    .append("\"");
+        }
+
+        // @Table(value = "sys_user") -> @Table("sys_user")
+        int index = tableAnnotation.indexOf(",");
+        if (index == -1) {
+            int start = tableAnnotation.indexOf("value");
+            if (start != -1) {
+                tableAnnotation.delete(start, start + 8);
+            }
+        }
+
+        return tableAnnotation.append(")\n").toString();
+    }
+
+    /**
+     * 构建 extends 继承。
+     */
+    public String buildExtends(boolean isBase) {
+        EntityConfig entityConfig = globalConfig.getEntityConfig();
+        Class<?> superClass = entityConfig.getSuperClass(this);
+        if (superClass != null) {
+            return " extends " + superClass.getSimpleName() + (entityConfig.isSuperClassGenericity(this) ? ("<" + buildEntityClassName() + (isBase ? entityConfig.getWithBaseClassSuffix() : "") + ">") : "");
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * 构建 implements 实现。
+     */
+    public String buildImplements() {
+        Class<?>[] entityInterfaces = globalConfig.getEntityConfig().getImplInterfaces();
+        if (entityInterfaces != null && entityInterfaces.length > 0) {
+            return " implements " + StringUtil.join(", ", Arrays.stream(entityInterfaces)
+                    .map(Class::getSimpleName).collect(Collectors.toList()));
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * 构建 kt 继承
+     */
+    public String buildKtExtends(boolean isBase) {
+        EntityConfig entityConfig = globalConfig.getEntityConfig();
+        Class<?> superClass = entityConfig.getSuperClass(this);
+        List<String> s = new ArrayList<>();
+        if (superClass != null) {
+            String name = superClass.getSimpleName();
+            if (entityConfig.isSuperClassGenericity(this)) {
+                name += "<" + buildEntityClassName() + (isBase ? entityConfig.getWithBaseClassSuffix() : "") + ">";
+            }
+            name += "()";
+            s.add(name);
+        }
+        Class<?>[] entityInterfaces = globalConfig.getEntityConfig().getImplInterfaces();
+        if (entityInterfaces != null && entityInterfaces.length > 0) {
+            for (Class<?> inter : entityInterfaces) {
+                s.add(inter.getSimpleName());
+            }
+        }
+        if (s.isEmpty()) {
+            return "";
+        }
+        return " :" + String.join(",", s);
+    }
+
+    // ===== 构建相关类名 =====
+
+    /**
+     * 获取生成 Java 文件名。
+     */
+    public String getEntityJavaFileName() {
+        String entityJavaFileName = name;
+        // 处理表名前缀
+        String tablePrefix = globalConfig.getStrategyConfig().getTablePrefix();
+        if (tablePrefix != null) {
+            String[] tablePrefixes = tablePrefix.split(",");
+            for (String prefix : tablePrefixes) {
+                String trimPrefix = prefix.trim();
+                if (!trimPrefix.isEmpty() && name.startsWith(trimPrefix)) {
+                    entityJavaFileName = entityJavaFileName.substring(trimPrefix.length());
+                    break;
+                }
+            }
+        }
+        // 处理表名后缀
+        String tableSuffix = globalConfig.getStrategyConfig().getTableSuffix();
+        if (tableSuffix != null) {
+            String[] tableSuffixes = tableSuffix.split(",");
+            for (String suffix : tableSuffixes) {
+                String trimSuffix = suffix.trim();
+                if (!trimSuffix.isEmpty() && name.endsWith(trimSuffix)) {
+                    entityJavaFileName = entityJavaFileName.substring(0, entityJavaFileName.length() - trimSuffix.length());
+                    break;
+                }
+            }
+        }
+        return StringUtil.firstCharToUpperCase(StringUtil.underlineToCamel(entityJavaFileName));
+    }
+
+    /**
+     * 构建 entity 的 Class 名称。
+     */
+    public String buildEntityClassName() {
+        String entityJavaFileName = getEntityJavaFileName();
+        EntityConfig entityConfig = globalConfig.getEntityConfig();
+        return entityConfig.getClassPrefix()
+                + entityJavaFileName
+                + entityConfig.getClassSuffix();
+    }
+
+    /**
+     * 构建 tableDef 的 Class 名称。
+     */
+    public String buildTableDefClassName() {
+        String tableDefJavaFileName = getEntityJavaFileName();
+        TableDefConfig tableDefConfig = globalConfig.getTableDefConfig();
+        return tableDefConfig.getClassPrefix()
+                + tableDefJavaFileName
+                + tableDefConfig.getClassSuffix();
+    }
+
+    /**
+     * 构建 mapper 的 Class 名称。
+     */
+    public String buildMapperClassName() {
+        String entityJavaFileName = getEntityJavaFileName();
+        MapperConfig mapperConfig = globalConfig.getMapperConfig();
+        return mapperConfig.getClassPrefix()
+                + entityJavaFileName
+                + mapperConfig.getClassSuffix();
+    }
+
+    /**
+     * 构建 service 的 Class 名称。
+     */
+    public String buildServiceClassName() {
+        String entityJavaFileName = getEntityJavaFileName();
+        ServiceConfig serviceConfig = globalConfig.getServiceConfig();
+        return serviceConfig.getClassPrefix()
+                + entityJavaFileName
+                + serviceConfig.getClassSuffix();
+    }
+
+    /**
+     * 构建 serviceImpl 的 Class 名称。
+     */
+    public String buildServiceImplClassName() {
+        String entityJavaFileName = getEntityJavaFileName();
+        ServiceImplConfig serviceImplConfig = globalConfig.getServiceImplConfig();
+        return serviceImplConfig.getClassPrefix()
+                + entityJavaFileName
+                + serviceImplConfig.getClassSuffix();
+    }
+
+    /**
+     * 构建 controller 的 Class 名称。
+     */
+    public String buildControllerClassName() {
+        String entityJavaFileName = getEntityJavaFileName();
+        ControllerConfig controllerConfig = globalConfig.getControllerConfig();
+        return controllerConfig.getClassPrefix()
+                + entityJavaFileName
+                + controllerConfig.getClassSuffix();
+    }
+
+    /**
+     * 构建访问路径的前缀
+     */
+    public String buildControllerRequestMappingPrefix() {
+        String mappingPrefix = globalConfig.getControllerConfig().getRequestMappingPrefix();
+        return mappingPrefix == null ? "" : mappingPrefix.trim();
+    }
+
+    /**
+     * 构建 MapperXml 的文件名称。
+     */
+    public String buildMapperXmlFileName() {
+        String tableDefJavaFileName = getEntityJavaFileName();
+        MapperXmlConfig mapperXmlConfig = globalConfig.getMapperXmlConfig();
+        return mapperXmlConfig.getFilePrefix()
+                + tableDefJavaFileName
+                + mapperXmlConfig.getFileSuffix();
+    }
+
+}

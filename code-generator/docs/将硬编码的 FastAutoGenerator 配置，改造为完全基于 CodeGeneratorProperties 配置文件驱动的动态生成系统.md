@@ -1,8 +1,11 @@
-你的配置目前是**硬编码在 Java 代码中**的，虽然功能完整，但完全**无法通过前端界面或配置文件动态修改**，这与你“构建可视化代码生成平台”的目标背道而驰。
+你的配置目前是**硬编码在 Java 代码中**的，虽然功能完整，但完全**无法通过前端界面或配置文件动态修改**
+，这与你“构建可视化代码生成平台”的目标背道而驰。
 
 ---
 
-## ✅ 目标明确：**将硬编码的 `FastAutoGenerator` 配置，改造为完全基于 `CodeGeneratorProperties` 配置文件驱动的动态生成系统**
+## ✅ 目标明确：**将硬编码的 `FastAutoGenerator` 配置，改造为完全基于 `CodeGeneratorProperties` 配置文件驱动的动态生成系统
+
+**
 
 > 🎯 **核心思想**：  
 > **所有配置项（数据库、包结构、策略、模板路径、自定义文件）都从 `application.yaml` 读取**，  
@@ -12,12 +15,12 @@
 
 ## ✅ 改造方案总览（四步走）
 
-| 步骤 | 说明 |
-|------|------|
-| ✅ 1. **彻底移除硬编码** | 删除所有 `.addInclude("t_user")`、`.template("/xxx")` 等硬编码语句 |
-| ✅ 2. **用 `CodeGeneratorProperties` 替代** | 所有配置项通过 `properties.getXXX()` 获取 |
-| ✅ 3. **支持动态模板路径** | 使用 `customFile` + `filePath` + `templatePath` 从配置读取 |
-| ✅ 4. **支持前端动态配置** | 前端可编辑 YAML，通过 API 保存 → 重启生成器或热加载 |
+| 步骤                                      | 说明                                                      |
+|-----------------------------------------|---------------------------------------------------------|
+| ✅ 1. **彻底移除硬编码**                        | 删除所有 `.addInclude("t_user")`、`.template("/xxx")` 等硬编码语句 |
+| ✅ 2. **用 `CodeGeneratorProperties` 替代** | 所有配置项通过 `properties.getXXX()` 获取                        |
+| ✅ 3. **支持动态模板路径**                       | 使用 `customFile` + `filePath` + `templatePath` 从配置读取     |
+| ✅ 4. **支持前端动态配置**                       | 前端可编辑 YAML，通过 API 保存 → 重启生成器或热加载                        |
 
 ---
 
@@ -132,19 +135,19 @@ public class CodeGeneratorProperties {
 
         // Controller 策略
         private Boolean enableRestStyle = true;
-        private String controllerTemplate = "/templates/java/controller.java"; // 自定义模板路径
+        private String controllerTemplate = "/templates/backend/java/controller.java"; // 自定义模板路径
         private String controllerFormatFileName = "%sController";
 
         // Service 策略
         private Boolean serviceEnableFileOverride = false;
-        private String serviceTemplate = "/templates/java/service.java";
-        private String serviceImplTemplate = "/templates/java/serviceImpl.java";
+        private String serviceTemplate = "/templates/backend/java/service.java";
+        private String serviceImplTemplate = "/templates/backend/java/serviceImpl.java";
         private String serviceFormatFileName = "%sService";
         private String serviceImplFormatFileName = "%sServiceImp";
 
         // Mapper 策略
         private Boolean mapperEnableFileOverride = false;
-        private String mapperTemplate = "/templates/java/mapper.java";
+        private String mapperTemplate = "/templates/backend/java/mapper.java";
         private String mapperXmlTemplate = "/templates/xml/mapper.xml";
         private String mapperFormatFileName = "%sMapper";
         private String mapperXmlFormatFileName = "%sMapper";
@@ -165,7 +168,7 @@ public class CodeGeneratorProperties {
                 "api.ts", new CustomFile(
                         "api",
                         ".ts",
-                        "templates/ts/api.ts.ftl",
+                        "templates/frontend/ts/api.ts.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName().toLowerCase()
                 ),
@@ -173,7 +176,7 @@ public class CodeGeneratorProperties {
                 "types.ts", new CustomFile(
                         "types",
                         ".ts",
-                        "templates/ts/types.ts.ftl",
+                        "templates/frontend/ts/types.ts.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName().toLowerCase()
                 ),
@@ -181,7 +184,7 @@ public class CodeGeneratorProperties {
                 "Table.vue", new CustomFile(
                         "views",
                         "Table.vue",
-                        "templates/vue/table.vue.ftl",
+                        "templates/frontend/vue/table.vue.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName() + "List"
                 ),
@@ -189,7 +192,7 @@ public class CodeGeneratorProperties {
                 "Form.vue", new CustomFile(
                         "views",
                         "Form.vue",
-                        "templates/vue/form.vue.ftl",
+                        "templates/frontend/vue/form.vue.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName() + "Form"
                 ),
@@ -197,7 +200,7 @@ public class CodeGeneratorProperties {
                 "DTO.java", new CustomFile(
                         "model.dto",
                         "DTO.java",
-                        "templates/java/dto.java.ftl",
+                        "templates/backend/java/dto.java.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName() + "DTO"
                 ),
@@ -205,7 +208,7 @@ public class CodeGeneratorProperties {
                 "VO.java", new CustomFile(
                         "model.vo",
                         "VO.java",
-                        "templates/java/vo.java.ftl",
+                        "templates/backend/java/vo.java.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName() + "VO"
                 ),
@@ -213,7 +216,7 @@ public class CodeGeneratorProperties {
                 "BaseEntity.java", new CustomFile(
                         "model.entity.base",
                         "BaseEntity.java",
-                        "templates/java/base-entity.java.ftl",
+                        "templates/backend/java/base-entity.java.ftl",
                         true,
                         tableInfo -> ""
                 )
@@ -604,18 +607,19 @@ code-generator:
 
 ### ✅ 前端 UI 功能建议：
 
-| 功能 | 说明 |
-|------|------|
-| ✅ **数据库连接管理** | 输入 URL、账号、密码，点击“测试连接” |
-| ✅ **表名勾选器** | 从数据库读取表列表，多选（生成 `include` 列表） |
-| ✅ **模板编辑器** | 在线编辑 `.ftl` 模板内容（保存到数据库或文件） |
-| ✅ **配置预览** | 实时预览生成的 `application.yaml` 内容 |
-| ✅ **一键生成** | 发送 POST 请求到 `/api/codegen/generate` |
-| ✅ **历史记录** | 记录每次生成的配置、时间、用户 |
+| 功能            | 说明                                  |
+|---------------|-------------------------------------|
+| ✅ **数据库连接管理** | 输入 URL、账号、密码，点击“测试连接”               |
+| ✅ **表名勾选器**   | 从数据库读取表列表，多选（生成 `include` 列表）       |
+| ✅ **模板编辑器**   | 在线编辑 `.ftl` 模板内容（保存到数据库或文件）         |
+| ✅ **配置预览**    | 实时预览生成的 `application.yaml` 内容       |
+| ✅ **一键生成**    | 发送 POST 请求到 `/api/codegen/generate` |
+| ✅ **历史记录**    | 记录每次生成的配置、时间、用户                     |
 
 ### ✅ 后端 API 示例（`CodeGenController.java`）
 
 ```java
+
 @RestController
 @RequestMapping("/api/codegen")
 public class CodeGenController {
@@ -651,20 +655,21 @@ public class CodeGenController {
 }
 ```
 
-> ✅ **关键**：不要依赖 `@Bean codeGenerator()` 自动执行，而是封装一个 `CodeGeneratorService.generate(CodeGeneratorProperties props)` 方法，供 API 调用。
+> ✅ **关键**：不要依赖 `@Bean codeGenerator()` 自动执行，而是封装一个
+`CodeGeneratorService.generate(CodeGeneratorProperties props)` 方法，供 API 调用。
 
 ---
 
 ## ✅ 最终效果
 
-| 项目 | 改造前 | 改造后 |
-|------|--------|--------|
-| 配置方式 | Java 硬编码 | ✅ `application.yaml` 动态配置 |
-| 表名 | 固定 `"t_user"` | ✅ 前端勾选，动态传入 |
-| 模板路径 | 固定 `/templates/java/controller.java` | ✅ 前端可修改为 `/templates/v3/controller.java` |
-| 前端输出路径 | 固定 `./project/frontend/src` | ✅ 前端可修改为 `/opt/frontend` |
-| 生成触发 | 必须重启应用 | ✅ 通过 API `/api/codegen/generate` 触发 |
-| 团队协作 | 每人改代码 | ✅ 全员共享 YAML 配置，Git 管理 |
+| 项目     | 改造前                                  | 改造后                                      |
+|--------|--------------------------------------|------------------------------------------|
+| 配置方式   | Java 硬编码                             | ✅ `application.yaml` 动态配置                |
+| 表名     | 固定 `"t_user"`                        | ✅ 前端勾选，动态传入                              |
+| 模板路径   | 固定 `/templates/java/controller.java` | ✅ 前端可修改为 `/templates/v3/controller.java` |
+| 前端输出路径 | 固定 `./project/frontend/src`          | ✅ 前端可修改为 `/opt/frontend`                 |
+| 生成触发   | 必须重启应用                               | ✅ 通过 API `/api/codegen/generate` 触发      |
+| 团队协作   | 每人改代码                                | ✅ 全员共享 YAML 配置，Git 管理                    |
 
 ---
 

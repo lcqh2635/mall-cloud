@@ -9,3 +9,4 @@ public class CodeGeneratorApplication {
         SpringApplication.run(CodeGeneratorApplication.class, args);
     }
 }
+// https://mybatis-flex.com/zh/others/codegen.html
