@@ -67,7 +67,7 @@ package com.mallcloud.commons.cache.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.mallcloud.commons.cache.MultiLevelCache;
+import com.mallcloud.commons.cache.service.MultiLevelCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RTopic;

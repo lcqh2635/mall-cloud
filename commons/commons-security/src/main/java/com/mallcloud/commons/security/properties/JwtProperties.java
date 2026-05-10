@@ -32,7 +32,7 @@ import java.util.List;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties(prefix = "jwt")
+@ConfigurationProperties(prefix = "mallcloud.jwt")
 public class JwtProperties {
 
     // =========================================================
