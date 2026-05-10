@@ -48,7 +48,8 @@ public class CodeGeneratorConfig {
                 .setSince("yyyy-MM-dd HH:mm:ss");
         // 包配置
         globalConfig.getPackageConfig()
-                .setSourceDir("D:\\files\\java")
+                // 文件输出目录，默认如下
+                .setSourceDir(System.getProperty("user.dir") + "/src/main/java")
                 .setBasePackage("com.mallcloud");
         // 策略配置
         // 设置表前缀和只生成哪些表，setGenerateTable 未配置时，生成所有表
@@ -77,6 +78,7 @@ public class CodeGeneratorConfig {
 
         // entity 配置，并启用 Lombok
         globalConfig.getEntityConfig()
+                .setOverwriteEnable(true)
                 .setWithLombok(true)
                 .setJdkVersion(25)
                 .setClassSuffix("Entity")
@@ -88,32 +90,34 @@ public class CodeGeneratorConfig {
         });
         // Mapper 生成配置
         globalConfig.getMapperConfig()
-                .setClassPrefix("My")
+                .setOverwriteEnable(true)
                 .setClassSuffix("Mapper")
+                .setMapperAnnotation(true)
                 .setSuperClass(BaseMapper.class);
         // MapperXml 生成配置
         globalConfig.getMapperXmlConfig()
-                .setFilePrefix("My")
+                .setOverwriteEnable(true)
                 .setFileSuffix("Mapper");
         // Service 生成配置
         globalConfig.getServiceConfig()
-                .setClassPrefix("My")
+                .setOverwriteEnable(true)
                 .setClassSuffix("Service")
                 .setSuperClass(IService.class);
         // ServiceImpl 生成配置
         globalConfig.getServiceImplConfig()
-                .setClassPrefix("My")
+                .setOverwriteEnable(true)
+                .setCacheExample(true)
                 .setClassSuffix("ServiceImpl")
                 .setSuperClass(ServiceImpl.class);
         // Controller 生成配置
         globalConfig.getControllerConfig()
-                .setClassPrefix("My")
+                .setOverwriteEnable(true)
+                .setRestStyle(true)
                 .setClassSuffix("Controller");
         // TableDef 生成配置
         globalConfig.getTableDefConfig()
-                .setClassPrefix("My")
+                .setOverwriteEnable(true)
                 .setClassSuffix("Def");
-
 
         // 可以单独配置某个列
         ColumnConfig columnConfig = new ColumnConfig();

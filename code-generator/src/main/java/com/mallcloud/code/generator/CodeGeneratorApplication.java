@@ -10,3 +10,4 @@ public class CodeGeneratorApplication {
     }
 }
 // https://mybatis-flex.com/zh/others/codegen.html
+// https://gitee.com/makunet/maku-generator
