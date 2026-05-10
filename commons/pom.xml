@@ -19,7 +19,7 @@
         <module>commons-cache</module>
         <module>commons-core</module>
         <module>commons-job</module>
-        <module>commons-logging</module>
+        <module>commons-log</module>
         <module>commons-mybatis</module>
         <module>commons-openapi</module>
         <module>commons-oss</module>

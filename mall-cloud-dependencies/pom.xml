@@ -166,7 +166,7 @@
             </dependency>
             <dependency>
                 <groupId>com.mallcloud</groupId>
-                <artifactId>commons-logging</artifactId>
+                <artifactId>commons-log</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
