@@ -14,6 +14,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 
 // https://mybatis-flex.com/zh/others/codegen.html
+// https://developer.aliyun.com/article/1460051
 @RequiredArgsConstructor
 public class CodeGeneratorConfig {
 
@@ -43,16 +44,27 @@ public class CodeGeneratorConfig {
 
         // 代码注释配置
         globalConfig.getJavadocConfig()
-                .setAuthor("Fan")
-                .setSince("2023-01-01");
+                .setAuthor("龙茶清欢")
+                .setSince("yyyy-MM-dd HH:mm:ss");
         // 包配置
         globalConfig.getPackageConfig()
-                .setBasePackage("com.test");
+                .setSourceDir("D:\\files\\java")
+                .setBasePackage("com.mallcloud");
         // 策略配置
         // 设置表前缀和只生成哪些表，setGenerateTable 未配置时，生成所有表
         globalConfig.getStrategyConfig()
-                .setTablePrefix("tb_")
-                .setGenerateTable("tb_account", "tb_account_session");
+                // 生成哪个 schema 下的表
+                .setGenerateSchema("mall-cloud")
+                // 数据库表前缀
+                .setTablePrefix("t_")
+                // 生成哪些表
+                .setGenerateTable("t_user", "t_account")
+                // 逻辑删除字段
+                .setLogicDeleteColumn("is_deleted")
+                // 乐观锁的字段名称
+                .setVersionColumn("version")
+                // 需要忽略的列，父类 BaseEntity 定义的字段
+                .setIgnoreColumns("create_time", "update_time");
         // 模板配置
         globalConfig.getTemplateConfig()
                 .setTemplate(new EnjoyTemplate())
@@ -67,7 +79,6 @@ public class CodeGeneratorConfig {
         globalConfig.getEntityConfig()
                 .setWithLombok(true)
                 .setJdkVersion(25)
-                .setClassPrefix("My")
                 .setClassSuffix("Entity")
                 .setSuperClass(BaseEntity.class);
         globalConfig.setEntitySuperClassFactory(table -> {
