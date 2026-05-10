@@ -337,11 +337,11 @@ spring:
       # 数据库的结构 （DDL） 脚本的位置。默认读取 Resource 资源路径
       schema-locations:
         - db/schema/schema.sql
-        - db/schema/schema-mysql.sql
+        - db/schema/mysql-schema.sql
       # 数据库的初始化数据 （DML） 脚本的位置。默认读取 Resource 资源路径
       data-locations:
         - db/data/data.sql
-        - db/data/data-mysql.sql
+        - db/data/mysql-data.sql
       # 确定是否应执行初始化时要应用的模式。可选值：always（总是初始化数据库），never（从不初始化数据库），EMBEDDED（仅初始化嵌入式数据库，默认，嵌入式）
       mode: always
   # Spring Security 配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.security
