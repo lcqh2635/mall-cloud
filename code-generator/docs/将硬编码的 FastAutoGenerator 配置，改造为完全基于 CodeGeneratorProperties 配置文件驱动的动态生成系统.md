@@ -200,7 +200,7 @@ public class CodeGeneratorProperties {
                 "DTO.java", new CustomFile(
                         "model.dto",
                         "DTO.java",
-                        "templates/backend/java/dto.java.ftl",
+                        "templates/backend/java/api/dto.java.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName() + "DTO"
                 ),
@@ -208,7 +208,7 @@ public class CodeGeneratorProperties {
                 "VO.java", new CustomFile(
                         "model.vo",
                         "VO.java",
-                        "templates/backend/java/vo.java.ftl",
+                        "templates/backend/java/api/vo.java.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName() + "VO"
                 ),
@@ -216,7 +216,7 @@ public class CodeGeneratorProperties {
                 "BaseEntity.java", new CustomFile(
                         "model.entity.base",
                         "BaseEntity.java",
-                        "templates/backend/java/base-entity.java.ftl",
+                        "templates/backend/java/biz/base-entity.java.ftl",
                         true,
                         tableInfo -> ""
                 )
