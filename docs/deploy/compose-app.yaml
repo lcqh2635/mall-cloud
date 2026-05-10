@@ -1,0 +1,56 @@
+version: "3.9"
+
+# 网络配置（所有服务统一通信）
+networks:
+  mall-cloud-net:
+    driver: bridge
+
+# 数据卷（持久化数据）
+volumes:
+  postgres_data:
+  redis_data:
+
+services:
+
+  # PostgreSQL
+  postgres:
+    image: postgres:17
+    container_name: mall-postgres
+    restart: always
+    # 环境变量
+    environment:
+      POSTGRES_USER: mall
+      POSTGRES_PASSWORD: mall123
+      POSTGRES_DB: mall_cloud
+      TZ: Asia/Shanghai
+    # 数据持久化（:Z = Podman + SELinux 必须）
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:Z
+    ports:
+      - "5432:5432"
+    networks:
+      - mall-cloud-net
+    # 健康检查
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U mall" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis（缓存 / 分布式锁）
+  redis:
+    image: redis:7.4
+    container_name: mall-redis
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data:Z
+    ports:
+      - "6379:6379"
+    networks:
+      - mall-cloud-net
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
