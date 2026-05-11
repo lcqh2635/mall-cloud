@@ -1,0 +1,563 @@
+# 服务器配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.server
+server:
+  # 服务器 HTTP 端口
+  port: 8082
+  # servlet 配置
+  servlet:
+    # 定义整个应用程序的上下文路径，即所有请求的公共前缀。这意味着任何到达你应用的HTTP请求都会带有这个路径作为其一部分。
+    context-path: /
+  # 开启 SSL 支持, 用于 HTTPS 通信，默认关闭
+  ssl:
+    enabled: false
+    key-store: classpath:certs/keystore.jks
+    key-store-password: password
+    key-store-type: JKS
+    key-alias: tomcat
+    # 证书文件路径，用于 HTTPS 通信，默认为空
+    # certificate: classpath:certs/server.crt
+  # gzip 压缩，用于减少响应体网络传输量，默认关闭。压缩会有一定的CPU性能损耗。
+  compression:
+    enabled: true
+    # 执行压缩所需的最小 Content-Length 值，默认为 2048 字节即 2KB，小于该值的响应体将不压缩
+    min-response-size: 10KB
+    # 压缩支持的 MIME 类型，默认为8种常见的 MIME 类型，表示所有类型都支持压缩
+    mime-types:
+      - text/html
+      - text/css
+      - text/javascript
+      - text/xml
+      - text/plain
+      - application/json
+      - application/xml
+      - application/javascript
+  # HTTP/2 配置，用于支持 HTTP/2 协议
+  http2:
+    # 是否开启 HTTP/2 支持，默认关闭
+    enabled: true
+  # undertow 配置，用于调整、优化 Undertow 服务器的性能
+  # undertow 配置参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#application-properties.server.server.undertow.accesslog.dir
+  undertow:
+    # 每个缓冲区的大小。默认值派生自 JVM 可用的最大内存量。
+    buffer-size: 1024
+    # 是否在 Java 堆之外分配缓冲区。默认值派生自 JVM 可用的最大内存量。
+    direct-buffers: true
+    # Undertow 使用两组线程：I/O 线程和业务线程。I/O 线程处理网络 I/O，建议将其设置为 CPU 核心数的 2 倍。
+    threads:
+      # 要为 worker 创建的 I/O 线程数。默认值派生自可用处理器的数量。适合 8 核心 CPU
+      io: 8
+      # 工作线程数。默认值是 I/O 线程数的 8 倍。业务线程数影响应用处理请求的能力，可以根据需求增加。
+      worker: 256
+
+spring:
+  # 核心属性，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.core
+  application:
+    # 应用程序名称。
+    name: @project.artifactId@
+  banner:
+    # 横幅的编码。默认 UTF-8
+    charset: UTF-8
+    # 横幅文本资源位置。
+    location: classpath:banner.txt
+  # 配置文件选择
+  profiles:
+    # 如果没有任何配置文件处于活动状态，则要启用的配置文件的名称。
+    default: default
+    # 要激活的配置文件。
+    active: dev
+  # 是否使用虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  # 虚拟线程的一个副作用是它们是守护线程。如果其所有线程都是守护线程，则 JVM 将退出。
+  # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
+  main:
+    keep-alive: true
+  # 缓存属性，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.cache
+  cache:
+    # 缓存类型。默认情况下，根据环境自动检测。
+    type: redis
+    redis:
+      # 是否缓存空值。默认值是 true。
+      cache-null-values: true
+      # 是否启用缓存统计。默认值是 false。
+      enable-statistics: false
+      # 写入 Redis 时是否使用键前缀。默认值是 true。
+      use-key-prefix: true
+      # 缓存键的前缀。默认值是空字符串。
+      key-prefix: "redis:cache"
+      # 缓存条目过期时间。默认情况下，缓存条目永不过期。
+      time-to-live: 3600s
+  # Json 相关配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.json
+  Jackson:
+    # 用于格式化的区域设置。
+    locale: zh_CN
+    # 格式化日期时使用的时区。例如，“America/Los_Angeles”或“GMT+8”。
+    time-zone: GMT+8
+    # 日期格式字符串或完整限定的日期格式类名。例如，'yyyy-MM-dd HH:mm:ss'。
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 默认只包含非空字段
+    default-property-inclusion: non_null
+    # 序列化配置
+    serialization:
+      # 不将日期序列化为时间戳，默认为 true
+      write-dates-as-timestamps: false
+  # 邮件配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.mail
+  mail:
+    # 默认 MimeMessage 编码。默认 UTF-8
+    default-encoding: UTF-8
+    # SMTP 服务器主机。例如，“smtp.example.com”。
+    host: smtp.qq.com
+    # SMTP 服务器端口。
+    port: 465
+    # SMTP 服务器的登录用户名。
+    username: 123456789@qq.com
+    # SMTP 服务器的登录密码。
+    password: password
+    # SMTP 服务器使用的协议。默认 smtp
+    protocol: smtp
+    # 是否在启动时测试邮件服务器是否可用。默认 false
+    test-connection: true
+    # 其他 JavaMail 会话属性。
+    properties:
+      mail:
+        smtp:
+  # 国际化配置。配置参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html
+  # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#application-properties.core.spring.messages.basename
+  messages:
+    basename: messages,messages_zh_CN
+    encoding: UTF-8
+    cache-duration: 3600
+    fallback-to-system-locale: true
+  # 事务属性配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.transaction
+  transaction:
+    # 默认事务超时时间，单位秒
+    default-timeout: 30
+    # 是否在事务提交失败时回滚
+    rollback-on-commit-failure: true
+  # Web 配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.web
+  mvc:
+    format:
+      date: dd/MM/yyyy
+      time: HH:mm:ss
+      date-time: dd/MM/yyyy HH:mm:ss
+    servlet:
+      # 专门为Spring MVC管理的Servlet映射设置路径前缀。这主要影响由Spring MVC处理的请求，而不会影响其他类型的请求（如静态资源或错误页面）。
+      path: /
+  servlet:
+    multipart:
+      max-file-size: 5MB
+  # integration 集成外部中间件配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.integration
+  rabbitmq:
+    # 客户端应连接到的 RabbitMQ 服务器地址，多个地址以逗号分隔。设置后，主机和端口将被忽略。
+    addresses: localhost:5672
+    # 登录到 RabbitMQ 服务器的用户名。默认 guest
+    username: guest
+    # 登录到 RabbitMQ 服务器的密码。默认 guest
+    password: guest
+    # 连接到代理时使用的虚拟主机。默认 /
+    virtual-host: /
+    # 连接超时时间。将其设置为零以无限期等待。
+    connection-timeout:
+  # Docker Compose 配置属性，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.docker-compose
+  # 需要提前添加 spring-boot-docker-compose 依赖，这个模块简化了使用 Docker Compose 配置和启动 Spring Boot 应用程序的过程。
+  # 它允许你通过 Spring Boot 的命令行工具（如 Maven 或 Gradle 插件）直接管理和控制 Docker Compose 文件。这包括启动、停止以及管理与应用程序相关的服务容器。
+  # Spring Boot 默认在应用程序启动时调用 docker compose up 命令，而在应用程序关闭时调用 docker compose stop 命令。如果您想要使用不同的生命周期管理，您可以使用 spring.docker.compose.lifecycle-management 属性。
+  # 此外，您还可以使用 spring.docker.compose.start.command 属性来改变是使用 docker compose up 还是 docker compose start 命令。spring.docker.compose.stop.command 属性允许您配置是使用 docker compose down 还是 docker compose stop 命令。
+  docker:
+    compose:
+      # 是否启用 docker compose 支持。默认 true
+      enabled: true
+      # 特定 docker compose 配置文件的路径。，默认为 classpath:docker-compose.yaml
+      file: classpath:docker-compose.yaml
+      # 启动 docker 容器的机器的主机名或 IP。
+      host: 192.168.56.10
+      # Docker compose 生命周期管理。
+      lifecycle-management: start-and-stop
+      # 用于启动 docker compose 的配置
+      start:
+        # 用于启动 docker compose 的命令。默认 docker compose start 现在是 docker compose up
+        command: up
+        # 启动 docker compose 的输出的日志级别。默认 info
+        log-level: info
+      # 用于停止 docker compose 的配置
+      stop:
+        # 用于停止 docker compose 的命令。默认 docker compose stop 现在是 docker compose down
+        command: down
+        # 停止 docker compose 的超时时间。默认 10s
+        timeout: 30s
+      # 应处于活动状态的 Docker compose 配置文件。
+      profiles:
+        active: dev
+      readiness:
+        # 就绪检查的超时。默认 2m
+        timeout: 2m
+        # 就绪检查的等待时间。默认 always
+        wait: always
+        tcp:
+          # 连接超时。默认 200ms
+          connect-timeout: 2s
+  # 开发工具属性，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.devtools
+  # 要启用热重启功能，需要提前添加 spring-boot-devtools 依赖。
+  devtools:
+    restart:
+      # 是否启用自动重启功能。默认 true
+      enabled: true
+      # 应该从触发完全重启中排除的模式。
+      exclude:
+        - static/**
+        - templates/**
+        - public/**
+      # 轮询类路径更改之间等待的时间量。默认 1s
+      poll-interval: 1s
+      # 在触发重启之前所需的任何类路径更改的静默时间量。默认 400ms
+      quiet-period: 400ms
+      # 触发重启的文件。默认 .spring-boot-restart
+      trigger-file: .spring-boot-restart
+  # 数据库属性配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.data
+  data:
+    # Redis 数据库属性配置
+    redis:
+      # Redis 服务器的连接地址。
+      # 如果设置了 url，则 host、port、password 和 database 将被忽略。
+      # 如果同时设置了 url 和 host，则 url 将优先
+      # url: redis://localhost:6379
+      # Redis 服务器的主机名或 IP 地址。默认 localhost
+      host: localhost
+      # Redis 服务器的端口。默认 6379
+      port: 6379
+      # Redis 服务器的登录密码。
+      password: 123456
+      # Redis 服务器的数据库索引。默认 0
+      database: 0
+      # Redis 服务器的读取超时时间。默认 3000ms
+      timeout: 3000
+      # 连接超时时间。默认 10000ms
+      connect-timeout: 10000
+      # Redis 客户端类型
+      client-type: lettuce
+      # Lettuce 连接池配置
+      lettuce:
+        pool:
+          # 是否启用连接池。如果 "commons-pool2" 可用，则自动启用。
+          enabled: true
+          # 池在任何给定时间可以分配的最大连接数。使用负值表示无限制。默认 8
+          max-active: 8
+          # 池中空闲连接的最大数量。使用负值表示无限制。默认 8
+          max-idle: 8
+          # 在池中维持的空闲连接的最小数量的目标。此设置仅在它和驱逐运行之间的时间都为正时才有效。
+          min-idle: 0
+          # 当池耗尽时，连接分配阻塞的最大时间量，之后将抛出异常。使用负值表示无限期阻塞。默认 -1
+          max-wait: 10000
+      # Redis Sentinel 哨兵模式配置
+      sentinel:
+        # 用于向哨兵(Sentinel)进行身份验证的登录用户名。
+        username: demo
+        # 用于向哨兵(Sentinel)进行身份验证的密码。
+        password: 123456
+        # Redis 服务器的名称。
+        master: master
+        # Redis Sentinel 节点的配置
+        nodes:
+          - 127.0.0.1:26379
+          - 127.0.0.1:26380
+    # MongoDB 数据库属性配置
+    mongodb:
+      # MongoDB 服务器的连接地址。
+      # 如果设置了 uri，则 host、port、username、password 和 database 将被忽略。
+      # 如果同时设置了 uri 和 host，则 uri 将优先
+      # uri: mongodb://localhost:27017/test
+      # Mongo 服务器主机。不能与 URI 一起设置。
+      host: localhost
+      # Mongo 服务器端口。不能与 URI 一起设置。
+      port: 27017
+      # 数据库名称。覆盖 URI 中的数据库。
+      database: test
+      # Mongo 服务器的登录密码。不能与 URI 一起设置。
+      password: 123456
+      # 是否启用自动索引创建。
+      auto-index-creation: true
+  # Elasticsearch 数据库属性配置
+  elasticsearch:
+    # 要使用的 Elasticsearch 实例的服务器的连接地址，逗号分隔列表。
+    uris: http://localhost:9200
+    # 用于 Elasticsearch 身份验证的用户名。
+    username: root
+    # 用于 Elasticsearch 身份验证的密码。
+    password: 123456
+    # 与 Elasticsearch 通信时使用的连接超时。默认 1s
+    connection-timeout: 1s
+    # 与 Elasticsearch 通信时使用的套接字超时。默认 30s
+    socket-timeout: 30s
+    # 与 Elasticsearch 通信时使用的套接字保持活动。默认 false
+    socket-keep-alive: false
+    # 添加到发送到 Elasticsearch 的每个请求的路径的前缀。
+    path-prefix: /_cat
+  # 数据源配置
+  datasource:
+    # JDBC 驱动程序的完全限定名称。默认情况下根据 URL 自动检测。
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接 URL。
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    # 数据库用户名。
+    username: root
+    # 数据库密码。
+    password: 123456
+    # 要使用的连接池实现的完全限定名称。默认情况下，它会从类路径中自动检测。
+    type: com.zaxxer.hikari.HikariDataSource
+    # Hikari 数据源连接池配置
+    hikari:
+      # 连接池最大连接数。默认值 10
+      maximum-pool-size: 10
+      # 连接池最小连接数。默认值 10
+      minimum-idle: 10
+      # 连接池最大等待时间。默认值 30000ms
+      connection-timeout: 30000
+      # 连接池最大空闲时间。默认值 600000ms
+      idle-timeout: 600000
+      # 连接池最大生命周期时间。默认值 1800000ms
+      max-lifetime: 1800000
+      # 连接池空闲连接检查时间间隔。默认值 600000ms
+      leak-detection-threshold: 600000
+      # 连接池空闲连接检查时间间隔。默认值 600000ms
+      validation-timeout: 10000
+  # SQL 脚本自动初始化执行配置
+  # 数据库迁移配置 ，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.data-migration
+  sql:
+    init:
+      # 数据库平台
+      platform: mysql
+      # 数据库的编码格式
+      encoding: UTF-8
+      # 数据库的用户名
+      username: root
+      # 数据库的密码
+      password: 123456
+      # 数据库执行的SQL如果出错。是否继续执行。默认值 false
+      continue-on-error: true
+      # 数据库的结构 （DDL） 脚本的位置。默认读取 Resource 资源路径
+      schema-locations:
+        - db/schema/schema.sql
+        - db/schema/mysql-schema.sql
+      # 数据库的初始化数据 （DML） 脚本的位置。默认读取 Resource 资源路径
+      data-locations:
+        - db/data/data.sql
+        - db/data/mysql-data.sql
+      # 确定是否应执行初始化时要应用的模式。可选值：always（总是初始化数据库），never（从不初始化数据库），EMBEDDED（仅初始化嵌入式数据库，默认，嵌入式）
+      mode: always
+  # Spring Security 配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.security
+  security:
+    # 基于内存的用户配置
+    user:
+      name: user
+      password: password
+      roles: USER
+    # 本微服务项目作为客户端，其登录页面集成如下第三方登录。需要到第三方登录平台申请。
+    oauth2:
+      # 配置参考 OAuth2ClientProperties 类
+      # OAuth2 客户端的配置信息，配置参考官方文档： https://docs.springjava.cn/spring-security/reference/servlet/oauth2/client/index.html
+      client:
+        # 配置第三方登录的客户端信息。CommonOAuth2Provider 类为许多知名提供商预定义了一组默认客户端属性：Google、GitHub、Facebook 和 Okta。 只有这四个。除此之外的需要自己手动配置 provider 信息
+        registration:
+          github:
+            # 第三方识符。默认提供可（google、github、facebook、okta）除此之外的需要自己手动配置 provider 信息。因此 github 无需手动配置 provider 信息
+            # 客户标识符。
+            client-id: Ov23lida53HnDVt6eiWe
+            # 客户密钥。
+            client-secret: d557bc555c9a952fc020373ea6fd85de5b7d233f
+          # 唯一标识客户注册的 ID。注册地址为 https://gitee.com/oauth/applications
+          # Gitee 官方说明文档 https://gitee.com/api/v5/oauth_doc#/
+          gitee:
+            # 第三方识符。默认提供可（google、github、facebook、okta）除此之外的需要自己手动配置 provider 信息。 此处的 provider 需要下方的
+            # provider: gitee
+            # 客户标识符。
+            client-id: 6c3d8f41b941500911678fa2db22216db19c2089152d1a4dcbfbc431039209b4
+            # 客户密钥。
+            client-secret: f7ba66f884e45e7f21b2eeebf2f5d4311f30d5883def258f587a5e715e4cd3d7
+            # 客户端在授权请求流程中请求的范围，如 openid、电子邮件或个人资料。该范围必须和注册勾选的一致或小于
+            scope: user_info
+            # 客户认证方法。是一个枚举类型，包括 client_secret_post 和 private_key_jwt 等
+            client-authentication-method: client_secret_post
+            # 授权类型。是一个枚举类型，包括 authorization_code、client_credentials、password 以及扩展授权类型 jwt-bearer 等
+            authorization-grant-type: authorization_code
+            # 授权回调地址，必须与第三方登录的回调地址一致。重定向地址格式参考 https://docs.springjava.cn/spring-security/reference/servlet/oauth2/login/core.html#oauth2login-sample-redirect-uri
+            # Spring Security OAuth2 提供的占位符机制，用于动态生成回调 UR
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: Gitee
+        # 第三方登录的配置信息
+        provider:
+          gitee:
+            # 授权端点 (Authorization Endpoint)：这是 OAuth2 授权服务器提供的一个 URL，用于发起授权请求。
+            # 当用户尝试通过某个 OAuth2 提供商登录时，应用程序会重定向用户到这个 URL，并附带必要的参数（如客户端 ID、重定向 URI、作用域等），以开始授权过程。
+            authorization-uri: https://gitee.com/oauth/authorize
+            # 令牌端点 (Token Endpoint) 是授权服务器提供的一个 URL，用于交换授权码为访问令牌。
+            # 一旦用户授权成功，应用程序会向此端点发送 POST 请求，包括授权码和其他必要的凭证，以获取访问令牌。
+            token-uri: https://gitee.com/oauth/token
+            # 用户信息端点 (User Info Endpoint) 是一个 URL，授权服务器通过它提供用户的个人信息。
+            # 应用程序可以使用访问令牌来调用此端点，从而获取有关已认证用户的数据（如用户名、电子邮件等）。
+            user-info-uri: https://gitee.com/api/v5/user
+            # 用户信息端点使用的认证方法。
+            user-info-authentication-method: form
+            # 指定从用户信息响应中提取哪个字段作为用户的唯一标识符或用户名。这通常是一个字符串值，例如 sub（主体）、id 或 login。
+            user-name-attribute: login
+            #
+            jwk-set-uri: https://gitee.com/oauth/token
+            #
+            issuer-uri: https://gitee.com/oauth/token
+      # Oauth2 认证授权服务器配置，参考 Oauth2AuthorizationServerProperties 类
+      authorization-server:
+        # 客户端注册信息，可以有多个客户端。
+        # 当一个开发者想要让他们的应用程序集成 OAuth2 登录功能时，他们通常需要向 OAuth2 授权服务器（如Google、GitHub、Gitee、你自己搭建的服务等）提交一份申请，填写类似以下客户端注册信息。
+        client:
+          custom-client:
+            registration:
+              # 这是分配给每个客户端应用程序的唯一标识符。它用于识别发起请求的应用程序。自己生成、分配
+              client-id: 6c3d8f41b94150091
+              # 这是一个秘密密钥，用于验证客户端的身份。在某些授权模式下（如授权码模式），客户端需要使用这个密钥来交换访问令牌。自己生成、分配
+              client-secret: f7ba66f884e45e7f21b2eeebf2f
+              # 定义了客户端请求可申请的权限范围，例如读取用户资料、发布状态更新等。
+              scopes:
+                - user_info
+                - email
+                - public
+              # 客户端可以使用的客户端身份验证方法。参考 ClientAuthenticationMethod 类
+              client-authentication-methods:
+                - client_secret_post
+                - private_key_jwt
+                - client_secret_basic
+              # 指定客户端可以使用的授权类型，如授权码模式（authorization_code）、隐式模式（implicit）、密码模式（password）、客户端凭证模式（client_credentials）等。参考 AuthorizationGrantType 类
+              authorization-grant-types:
+                - authorization_code
+                - refresh_token
+                - client_credentials
+                - password
+                - jwt-bearer
+                - implicit
+              # 这是授权服务器在完成认证后将用户重定向到的URL。它确保用户被安全地送回到发起请求的应用程序中，并附带必要的认证信息。
+              redirect-uris:
+                - "{baseUrl}/login/oauth2/code/{registrationId}"
+              # 重定向客户端可用于注销的 URI。
+              post-logout-redirect-uris:
+                - "{baseUrl}/logout/oauth2/code/{registrationId}"
+              # 客户端的名称，用于在用户界面中显示。
+              client-name: Custom Client
+        # 认证服务器的端点配置，一般来说，使用默认的预设配置即可。参考 Oauth2AuthorizationServerEndpointsProperties 类
+        endpoint:
+          # 定义认证服务器的 OAuth 2.0 授权端点。供 Oauth2 客户端获取授权码使用。
+          authorization-uri: /oauth2/authorize
+          # 定义认证服务器的 OAuth 2.0 令牌端点。供 Oauth2 客户端通过授权码换取访问令牌使用。
+          token-uri: /oauth2/token
+          # 定义认证服务器的 OAuth 2.0 令牌撤销端点。
+          token-revocation-uri: /oauth2/revoke
+          # 定义认证服务器的 OAuth 2.0 令牌内省端点。
+          token-introspection-uri: /oauth2/introspect
+          # 定义认证服务器的 JWK 集端点。
+          jwk-set-uri: /oauth2/token
+          # 定义认证服务器的 OAuth 2.0 设备授权端点。
+          device-authorization-uri: /oauth2/device_authorization
+          # 定义认证服务器的 OAuth 2.0 设备验证端点。
+          device-verification-uri: /oauth2/device_verification
+          # 定义认证服务器的 OIDC 客户端注册端点。
+          oidc:
+            #  定义认证服务器的 OIDC 客户端注册端点。
+            client-registration-uri: /connect/register
+            # 定义认证服务器的 OIDC 用户信息端点。
+            user-info-uri: /userinfo
+            # 定义认证服务器的 OIDC 注销端点。
+            logout-uri: /connect/logout
+        # 认证服务器的颁发者标识符的 URL。
+        issuer: https://gitee.com/oauth/token
+      # Oauth2 资源服务器配置，参考 OAuth2ResourceServerProperties 类
+      resource-server:
+        # 配置 Oauth2 认证授权服务器的 JWT 令牌验证。
+        jwt:
+          # Oauth2 认证授权服务器的颁发者 URI
+          # 指定授权服务器的颁发者URI，通常指向OpenID Connect发现文档（例如 https://your-authorization-server.com/.well-known/openid-configuration）。
+          # 这个URI用于获取关于授权服务器的信息，如JWK集（JSON Web Key Set）的URL，以便下载公钥来验证JWT签名。
+          issuer-uri: https://your-authorization-server.com/issuer
+          # 用于验证 JWT 令牌的 JSON Web 密钥 URI。
+          # 直接指定JWK集的URL。如果你不想依赖于 issuer-uri 提供的发现文档来查找JWK集，可以使用此选项明确指定。这在某些情况下可能更高效，因为它减少了请求次数。
+          jwk-set-uri: https://gitee.com/oauth/token
+          # 验证 JWT 令牌的算法。默认为 RS256。
+          jws-algorithms: RS256
+          # 验证 JWT 令牌的 audience。
+          # 指定受保护资源的预期观众（Audience）。JWT中通常包含一个或多个观众标识符（aud 声明），资源服务器会检查这些值是否匹配配置中的观众列表。如果不匹配，则认为该令牌无效。
+          audiences:
+            - 6c3d8f41b94150091
+        # 如果你使用的是不透明令牌（Opaque Token），则需要配置一个 OAuth2TokenIntrospector 来调用授权服务器的 introspection 端点来验证令牌的有效性。
+        opaque-token:
+          client-id: your-client-id
+          client-secret: your-client-secret
+          introspection-uri: https://your-authorization-server.com/oauth2/introspect
+# Actuator 属性配合i，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.actuator
+
+management:
+  server:
+    # 管理端点 HTTP 端口（默认情况下使用与应用程序相同的端口）。默认 8080
+    port: ${server.port:8080}
+    # 管理端点基本路径
+    base-path: /actuator
+  endpoints:
+    web:
+      exposure:
+        # 应包含的端点ID或所有端点的'*'。默认 health
+        include: "*"
+  endpoint:
+    prometheus:
+      # 是否启用prometheus端点。默认 true
+      enabled: true
+    health:
+      show-details: always
+  # 配置 Prometheus 监控
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  # 这个应用所有上报的 metrics 都会带上 application 这个标签的值，用于区分不同应用
+  metrics:
+    tags:
+      application: ${spring.application.name}
+# 然后可以通过访问 http://localhost:8080/actuator 获取应用指标信息
+# 然后可以通过访问 http://localhost:8080/actuator/prometheus 获取Prometheus格式的指标数据
+
+# mybatis-plus 配置
+mybatis-plus:
+  # 指定 Mapper 对应的 XML 文件扫描位置
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 全局配置
+  global-config:
+    # 关闭 mybatis-plus 横幅打印
+    banner: false
+    # 逻辑删除配置
+    db-config:
+      # 表名前缀
+      table_prefix: t_
+      # 表主键生成策略，ASSIGN_ID 自动分配 ID，适用于 Long、Integer、String 类型的主键。默认使用雪花算法通过 IdentifierGenerator 的 nextId 实现
+      id-type: ASSIGN_ID
+      # 全局逻辑删除的实体字段名
+      logic-delete-field: deleted
+      # 逻辑已删除值(默认为 1) 也可设置为 true
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0) 也可设置为 false
+      logic-not-delete-value: 0
+  # MyBatis 配置
+  configuration:
+    # 启用 sql 打印，生产环境建议关闭
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 日志配置
+logging:
+  level:
+    root: info
+  # 日志文件的存放位置。例如，`/var/log`。
+  file:
+    path: /tmp/logs
+  # 日志配置文件的位置。例如，对于 Logback，为 `classpath:logback.xml`。
+  config: classpath:logback-spring.xml
+  pattern:
+    # 用于日志日期格式的追加器模式。
+    dateformat: yyyy-MM-dd HH:mm:ss
+
+
+
+
+# server.servlet.context-path 是全局性的，影响所有类型的请求；而 spring.mvc.servlet.path 只针对Spring MVC处理的请求。

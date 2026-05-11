@@ -1,0 +1,148 @@
+spring:
+  # Spring Security 配置，参考 https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.security
+  security:
+    # 基于内存的用户配置
+    user:
+      name: user
+      password: password
+      roles: USER
+    # 本微服务项目作为客户端，其登录页面集成如下第三方登录。需要到第三方登录平台申请。
+    oauth2:
+
+      # 配置参考 OAuth2ClientProperties 类
+      # 1、OAuth2 客户端的配置信息，配置参考官方文档： https://docs.springjava.cn/spring-security/reference/servlet/oauth2/client/index.html
+      client:
+        # 配置第三方登录的客户端信息。CommonOAuth2Provider 类为许多知名提供商预定义了一组默认客户端属性：Google、GitHub、Facebook 和 Okta。 只有这四个。除此之外的需要自己手动配置 provider 信息
+        registration:
+          github:
+            # 第三方识符。默认提供可（google、github、facebook、okta）除此之外的需要自己手动配置 provider 信息。因此 github 无需手动配置 provider 信息
+            # 客户标识符。
+            client-id: Ov23lida53HnDVt6eiWe
+            # 客户密钥。
+            client-secret: d557bc555c9a952fc020373ea6fd85de5b7d233f
+          # 唯一标识客户注册的 ID。注册地址为 https://gitee.com/oauth/applications
+          # Gitee 官方说明文档 https://gitee.com/api/v5/oauth_doc#/
+          gitee:
+            # 第三方识符。默认提供可（google、github、facebook、okta）除此之外的需要自己手动配置 provider 信息。 此处的 provider 需要下方的
+            # provider: gitee
+            # 客户标识符。
+            client-id: 6c3d8f41b941500911678fa2db22216db19c2089152d1a4dcbfbc431039209b4
+            # 客户密钥。
+            client-secret: f7ba66f884e45e7f21b2eeebf2f5d4311f30d5883def258f587a5e715e4cd3d7
+            # 客户端在授权请求流程中请求的范围，如 openid、电子邮件或个人资料。该范围必须和注册勾选的一致或小于
+            scope: user_info
+            # 客户认证方法。是一个枚举类型，包括 client_secret_post 和 private_key_jwt 等
+            client-authentication-method: client_secret_post
+            # 授权类型。是一个枚举类型，包括 authorization_code、client_credentials、password 以及扩展授权类型 jwt-bearer 等
+            authorization-grant-type: authorization_code
+            # 授权回调地址，必须与第三方登录的回调地址一致。重定向地址格式参考 https://docs.springjava.cn/spring-security/reference/servlet/oauth2/login/core.html#oauth2login-sample-redirect-uri
+            # Spring Security OAuth2 提供的占位符机制，用于动态生成回调 UR
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: Gitee
+        # 第三方登录的配置信息
+        provider:
+          gitee:
+            # 授权端点 (Authorization Endpoint)：这是 OAuth2 授权服务器提供的一个 URL，用于发起授权请求。
+            # 当用户尝试通过某个 OAuth2 提供商登录时，应用程序会重定向用户到这个 URL，并附带必要的参数（如客户端 ID、重定向 URI、作用域等），以开始授权过程。
+            authorization-uri: https://gitee.com/oauth/authorize
+            # 令牌端点 (Token Endpoint) 是授权服务器提供的一个 URL，用于交换授权码为访问令牌。
+            # 一旦用户授权成功，应用程序会向此端点发送 POST 请求，包括授权码和其他必要的凭证，以获取访问令牌。
+            token-uri: https://gitee.com/oauth/token
+            # 用户信息端点 (User Info Endpoint) 是一个 URL，授权服务器通过它提供用户的个人信息。
+            # 应用程序可以使用访问令牌来调用此端点，从而获取有关已认证用户的数据（如用户名、电子邮件等）。
+            user-info-uri: https://gitee.com/api/v5/user
+            # 用户信息端点使用的认证方法。
+            user-info-authentication-method: form
+            # 指定从用户信息响应中提取哪个字段作为用户的唯一标识符或用户名。这通常是一个字符串值，例如 sub（主体）、id 或 login。
+            user-name-attribute: login
+            #
+            jwk-set-uri: https://gitee.com/oauth/token
+            #
+            issuer-uri: https://gitee.com/oauth/token
+
+      # 2、Oauth2 认证授权服务器配置，参考 Oauth2AuthorizationServerProperties 类
+      authorization-server:
+        # 客户端注册信息，可以有多个客户端。
+        # 当一个开发者想要让他们的应用程序集成 OAuth2 登录功能时，他们通常需要向 OAuth2 授权服务器（如Google、GitHub、Gitee、你自己搭建的服务等）提交一份申请，填写类似以下客户端注册信息。
+        client:
+          custom-client:
+            registration:
+              # 这是分配给每个客户端应用程序的唯一标识符。它用于识别发起请求的应用程序。自己生成、分配
+              client-id: 6c3d8f41b94150091
+              # 这是一个秘密密钥，用于验证客户端的身份。在某些授权模式下（如授权码模式），客户端需要使用这个密钥来交换访问令牌。自己生成、分配
+              client-secret: f7ba66f884e45e7f21b2eeebf2f
+              # 定义了客户端请求可申请的权限范围，例如读取用户资料、发布状态更新等。
+              scopes:
+                - user_info
+                - email
+                - public
+              # 客户端可以使用的客户端身份验证方法。参考 ClientAuthenticationMethod 类
+              client-authentication-methods:
+                - client_secret_post
+                - private_key_jwt
+                - client_secret_basic
+              # 指定客户端可以使用的授权类型，如授权码模式（authorization_code）、隐式模式（implicit）、密码模式（password）、客户端凭证模式（client_credentials）等。参考 AuthorizationGrantType 类
+              authorization-grant-types:
+                - authorization_code
+                - refresh_token
+                - client_credentials
+                - password
+                - jwt-bearer
+                - implicit
+              # 这是授权服务器在完成认证后将用户重定向到的URL。它确保用户被安全地送回到发起请求的应用程序中，并附带必要的认证信息。
+              redirect-uris:
+                - "{baseUrl}/login/oauth2/code/{registrationId}"
+              # 重定向客户端可用于注销的 URI。
+              post-logout-redirect-uris:
+                - "{baseUrl}/logout/oauth2/code/{registrationId}"
+              # 客户端的名称，用于在用户界面中显示。
+              client-name: Custom Client
+        # 认证服务器的端点配置，一般来说，使用默认的预设配置即可。参考 Oauth2AuthorizationServerEndpointsProperties 类
+        endpoint:
+          # 定义认证服务器的 OAuth 2.0 授权端点。供 Oauth2 客户端获取授权码使用。
+          authorization-uri: /oauth2/authorize
+          # 定义认证服务器的 OAuth 2.0 令牌端点。供 Oauth2 客户端通过授权码换取访问令牌使用。
+          token-uri: /oauth2/token
+          # 定义认证服务器的 OAuth 2.0 令牌撤销端点。
+          token-revocation-uri: /oauth2/revoke
+          # 定义认证服务器的 OAuth 2.0 令牌内省端点。
+          token-introspection-uri: /oauth2/introspect
+          # 定义认证服务器的 JWK 集端点。
+          jwk-set-uri: /oauth2/token
+          # 定义认证服务器的 OAuth 2.0 设备授权端点。
+          device-authorization-uri: /oauth2/device_authorization
+          # 定义认证服务器的 OAuth 2.0 设备验证端点。
+          device-verification-uri: /oauth2/device_verification
+          # 定义认证服务器的 OIDC 客户端注册端点。
+          oidc:
+            #  定义认证服务器的 OIDC 客户端注册端点。
+            client-registration-uri: /connect/register
+            # 定义认证服务器的 OIDC 用户信息端点。
+            user-info-uri: /userinfo
+            # 定义认证服务器的 OIDC 注销端点。
+            logout-uri: /connect/logout
+        # 认证服务器的颁发者标识符的 URL。
+        issuer: https://gitee.com/oauth/token
+
+      # 3、Oauth2 资源服务器配置，参考 OAuth2ResourceServerProperties 类
+      resource-server:
+        # 配置 Oauth2 认证授权服务器的 JWT 令牌验证。
+        jwt:
+          # Oauth2 认证授权服务器的颁发者 URI
+          # 指定授权服务器的颁发者URI，通常指向OpenID Connect发现文档（例如 https://your-authorization-server.com/.well-known/openid-configuration）。
+          # 这个URI用于获取关于授权服务器的信息，如JWK集（JSON Web Key Set）的URL，以便下载公钥来验证JWT签名。
+          issuer-uri: https://your-authorization-server.com/issuer
+          # 用于验证 JWT 令牌的 JSON Web 密钥 URI。
+          # 直接指定JWK集的URL。如果你不想依赖于 issuer-uri 提供的发现文档来查找JWK集，可以使用此选项明确指定。这在某些情况下可能更高效，因为它减少了请求次数。
+          jwk-set-uri: https://gitee.com/oauth/token
+          # 验证 JWT 令牌的算法。默认为 RS256。
+          jws-algorithms: RS256
+          # 验证 JWT 令牌的 audience。
+          # 指定受保护资源的预期观众（Audience）。JWT中通常包含一个或多个观众标识符（aud 声明），资源服务器会检查这些值是否匹配配置中的观众列表。如果不匹配，则认为该令牌无效。
+          audiences:
+            - 6c3d8f41b94150091
+        # 如果你使用的是不透明令牌（Opaque Token），则需要配置一个 OAuth2TokenIntrospector 来调用授权服务器的 introspection 端点来验证令牌的有效性。
+        opaque-token:
+          client-id: your-client-id
+          client-secret: your-client-secret
+          introspection-uri: https://your-authorization-server.com/oauth2/introspect

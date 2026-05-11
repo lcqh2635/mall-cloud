@@ -133,3 +133,4 @@ https://hub.docker.com/_/kong
 https://hub.docker.com/r/apache/kafka
 https://hub.docker.com/r/otel/opentelemetry-collector-contrib
 https://hub.docker.com/r/otel/opentelemetry-collector-k8s
+https://opentelemetry.io/zh/
