@@ -1,8 +1,7 @@
-# ================================================================
-# user-service 主配置文件
-# 说明：只保留启动必须的基础配置，其余配置托管到 Nacos 配置中心
-# 敏感信息全部通过环境变量注入，不写任何明文密码
-# ================================================================
+# Spring Boot Admin Server 使用教程
+# https://docs.spring-boot-admin.com/
+# https://github.com/codecentric/spring-boot-admin
+
 
 server:
   # 服务端口

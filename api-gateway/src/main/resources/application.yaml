@@ -1,3 +1,8 @@
+# Spring Cloud Gateway 配置
+# https://docs.springjava.cn/spring-cloud-gateway/reference/index.html
+# https://docs.springjava.cn/spring-cloud-gateway/reference/appendix.html
+
+
 # 服务器配置
 server:
   port: 8888
