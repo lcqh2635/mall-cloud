@@ -63,3 +63,10 @@ https://www.alibabacloud.com/zh/product/object-storage-service
 https://sca.aliyun.com/docs/2025.x/user-guide/schedulerx/overview
 https://www.alibabacloud.com/help/zh/schedulerx
 https://www.aliyun.com/ntms/middleware/schedulerx
+
+
+https://github.com/apache/kafka
+https://github.com/apache/skywalking
+https://github.com/apache/shardingsphere
+https://github.com/apache/cassandra
+https://github.com/apache/druid
