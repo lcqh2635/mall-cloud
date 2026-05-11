@@ -10,6 +10,7 @@ https://github.com/alibaba/spring-cloud-alibaba
 https://sca.aliyun.com/docs/2025.x/user-guide/nacos/overview
 https://nacos.io/
 https://github.com/alibaba/nacos
+https://hub.docker.com/r/nacos/nacos-server
 
 
 # Seata
@@ -17,6 +18,7 @@ https://github.com/alibaba/nacos
 https://sca.aliyun.com/docs/2025.x/user-guide/seata/overview
 https://seata.apache.org/zh-cn/
 https://github.com/apache/incubator-seata
+https://hub.docker.com/r/apache/seata-server
 
 
 # RocketMQ
@@ -25,6 +27,7 @@ https://sca.aliyun.com/docs/2025.x/user-guide/rocketmq/overview
 https://rocketmq.apache.org/zh/
 https://www.alibabacloud.com/help/zh/apsaramq-for-rocketmq
 https://github.com/apache/rocketmq
+https://hub.docker.com/r/apache/rocketmq
 
 
 # Sentinel
@@ -32,6 +35,7 @@ https://github.com/apache/rocketmq
 https://sca.aliyun.com/docs/2025.x/user-guide/sentinel/overview
 https://sentinelguard.io/zh-cn/index.html
 https://github.com/alibaba/Sentinel
+https://hub.docker.com/r/bladex/sentinel-dashboard
 
 
 # Higress 易用的生产级AI网关
@@ -78,23 +82,49 @@ https://github.com/apache/druid
 https://github.com/redis/redis
 https://redis.io/
 https://www.redis.net.cn/tutorial/3501.html
+https://hub.docker.com/_/redis
+https://hub.docker.com/r/redis/redis-stack
+https://hub.docker.com/r/redis/redis-stack-server
+https://hub.docker.com/r/redis/redisinsight
+
 
 https://github.com/valkey-io/valkey
 https://valkey.io/
 https://valkey.cn/
+https://hub.docker.com/r/valkey/valkey
+https://hub.docker.com/r/valkey/valkey-bundle
+https://hub.docker.com/r/valkey/valkey-admin
 
 https://github.com/postgres/postgres
 https://www.postgresql.org/
 https://postgresql.ac.cn/
+https://hub.docker.com/_/postgres
 
 https://github.com/mariadb
 https://mariadb.org/zh/
+https://hub.docker.com/_/mariadb
 
 https://github.com/mysql/mysql-server
 https://www.mysql.com/cn/
+https://hub.docker.com/_/mysql
 
 https://github.com/prometheus/prometheus
 https://github.com/prometheus/alertmanager
+
 https://github.com/grafana/grafana
+https://hub.docker.com/r/grafana/grafana
 
 https://github.com/xuxueli/xxl-job
+
+https://github.com/n8n-io/n8n
+https://n8n.ac.cn/
+
+https://hub.docker.com/_/nginx
+https://hub.docker.com/_/influxdb
+https://hub.docker.com/_/cassandra
+https://hub.docker.com/_/rabbitmq
+https://hub.docker.com/_/consul
+https://hub.docker.com/_/vault
+https://hub.docker.com/_/elasticsearch
+https://hub.docker.com/_/kibana
+https://hub.docker.com/_/logstash
