@@ -1,3 +1,8 @@
+# 缓存相关教程
+# https://docs.springjava.cn/spring-framework/reference/integration/cache.html
+# https://docs.springjava.cn/spring-boot/reference/io/caching.html#io.caching.provider
+
+
 # 配置配置应用的常规、非敏感、不变动的属性
 spring:
   # Redis 配置
@@ -32,8 +37,3 @@ spring:
       use-key-prefix: true
       # 缓存 key 的前缀 prefix
       key-prefix: "redis:cache:"
-
-
-# 缓存相关教程
-# https://docs.springjava.cn/spring-framework/reference/integration/cache.html
-# https://docs.springjava.cn/spring-boot/reference/io/caching.html#io.caching.provider

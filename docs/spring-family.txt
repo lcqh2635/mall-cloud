@@ -57,3 +57,6 @@ https://docs.springjava.cn/spring-data/elasticsearch/reference/index.html
 # Spring Security
 https://docs.springjava.cn/spring-boot/reference/web/spring-security.html
 https://docs.springjava.cn/spring-security/reference/
+
+# WebSockets
+https://docs.springjava.cn/spring-framework/reference/web/websocket.html
