@@ -1,0 +1,59 @@
+# Spring Framework 文档
+https://docs.springjava.cn/spring-framework/reference/
+
+# IoC 容器
+https://docs.springjava.cn/spring-framework/reference/core/beans.html
+
+# Java Bean 验证
+https://docs.springjava.cn/spring-framework/reference/core/validation/beanvalidation.html
+
+# Spring AOP 面向切面编程
+https://docs.springjava.cn/spring-framework/reference/core/aop.html
+
+# 弹性功能，特别是用于方法调用的 @Retryable 和 @ConcurrencyLimit 注解
+https://docs.springjava.cn/spring-framework/reference/core/resilience.html
+
+# 基于 Servlet 栈的 Web
+https://docs.springjava.cn/spring-framework/reference/web.html
+
+
+# REST 客户端
+https://docs.springjava.cn/spring-framework/reference/integration/rest-clients.html
+
+# 电子邮件
+https://docs.springjava.cn/spring-framework/reference/integration/email.html
+
+# 任务执行与调度
+https://docs.springjava.cn/spring-framework/reference/integration/scheduling.html
+
+# 缓存相关教程
+# https://docs.springjava.cn/spring-framework/reference/integration/cache.html
+# https://docs.springjava.cn/spring-boot/reference/io/caching.html#io.caching.provider
+
+# 可观测性支持
+https://docs.springjava.cn/spring-framework/reference/integration/observability.html
+
+# Servlet Web 应用程序
+https://docs.springjava.cn/spring-boot/reference/web/servlet.html
+# CORS 支持
+https://docs.springjava.cn/spring-boot/reference/web/servlet.html#web.servlet.spring-mvc.cors
+# API 版本控制
+https://docs.springjava.cn/spring-boot/reference/web/servlet.html#web.servlet.spring-mvc.api-versioning
+
+
+# JPA 和 Spring Data JPA
+https://docs.springjava.cn/spring-boot/reference/data/sql.html#data.sql.jpa-and-spring-data
+https://docs.springjava.cn/spring-data/jpa/reference/
+
+# 使用 NoSQL 技术
+https://docs.springjava.cn/spring-boot/reference/data/nosql.html#data.nosql.redis
+https://docs.springjava.cn/spring-boot/reference/data/nosql.html#data.nosql.elasticsearch
+# Spring Data Redis
+https://docs.springjava.cn/spring-data/redis/reference/index.html
+# Spring Data Elasticsearch
+https://docs.springjava.cn/spring-data/elasticsearch/reference/index.html
+
+
+# Spring Security
+https://docs.springjava.cn/spring-boot/reference/web/spring-security.html
+https://docs.springjava.cn/spring-security/reference/

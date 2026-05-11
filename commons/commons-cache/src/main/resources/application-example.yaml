@@ -2,6 +2,7 @@
 spring:
   # Redis 配置
   data:
+    # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#application-properties.data.spring.data.redis.client-name
     redis:
       # Redis 服务器的 IP 地址
       host: 192.168.56.10
@@ -15,6 +16,7 @@ spring:
       timeout: 10000
       # Lettuce 是 Redis 的异步客户端，它提供了高性能的非阻塞 I/O 操作。默认使用 Lettuce 作为 Redis 客户端
   # 缓存配置, 使用 Redis 作为缓存。启用缓存配置还需要加上 @EnableCaching 注解
+  # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.cache
   cache:
     type: redis
     # Caffeine 缓存策略
@@ -30,3 +32,8 @@ spring:
       use-key-prefix: true
       # 缓存 key 的前缀 prefix
       key-prefix: "redis:cache:"
+
+
+# 缓存相关教程
+# https://docs.springjava.cn/spring-framework/reference/integration/cache.html
+# https://docs.springjava.cn/spring-boot/reference/io/caching.html#io.caching.provider

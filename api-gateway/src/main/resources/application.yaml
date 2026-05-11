@@ -28,6 +28,7 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
   # 开启虚拟线程功能
+  # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#application-properties.core.spring.threads.virtual.enabled
   threads:
     virtual:
       enabled: true
@@ -42,6 +43,9 @@ spring:
     loadbalancer:
       nacos:
         enabled: true
+    # Spring Cloud Nacos 配置
+    # Nacos 是阿里巴巴开源的一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台
+    # https://github.com/alibaba/spring-cloud-alibaba/blob/2025.1.x/spring-cloud-alibaba-examples/nacos-example/readme-zh.md
     nacos:
       # Nacos 服务器地址
       server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
@@ -67,6 +71,7 @@ spring:
         # 是否启用配置监听
         enable-remote-sync-config: true
   # 配置导入（关键！Spring Boot 3 的新方式）
+  # https://docs.springjava.cn/spring-cloud-config/reference/client.html#config-data-import
   config:
     import:
       # 导入 Nacos 配置

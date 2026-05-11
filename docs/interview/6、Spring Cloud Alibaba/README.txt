@@ -3,6 +3,7 @@
 https://sca.aliyun.com/
 https://sca.aliyun.com/docs/2025.x/overview/what-is-sca
 https://github.com/alibaba/spring-cloud-alibaba
+https://github.com/alibaba/spring-cloud-alibaba/tree/2025.1.x/spring-cloud-alibaba-examples
 
 
 # Nacos

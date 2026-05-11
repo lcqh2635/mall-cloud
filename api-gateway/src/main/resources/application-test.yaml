@@ -1,7 +1,10 @@
 # 配置配置应用的常规、非敏感、不变动的属性
 spring:
-  # Spring Cloud Gateway 配置
   cloud:
+
+    # Spring Cloud Gateway 配置
+    # https://docs.springjava.cn/spring-cloud-gateway/reference/index.html
+    # https://docs.springjava.cn/spring-cloud-gateway/reference/appendix.html
     gateway:
       # 以上路由我们用 Java DSL 实现了，这里可留空或作为备用
       server:
@@ -15,11 +18,11 @@ spring:
                 allowed-origin-patterns:
                   - "*"
                 allowed-methods:
-                  -  GET
-                  -  POST
-                  -  PUT
-                  -  DELETE
-                  -  PATCH
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - PATCH
                 # 允许的请求头（Header）常见的如 Content-Type, Authorization, X-Requested-With 等
                 # * 允许所有请求头（生产环境建议明确列出）
                 allowed-headers: "*"
@@ -37,6 +40,9 @@ spring:
           # 负载均衡（自动注册 Nacos 服务）
           loadbalancer:
             use404: true
+          discovery:
+            locator:
+              lower-case-service-id: true
           # ========================
           # ✅ 路由配置（核心！使用 YAML 定义）
           # ========================
@@ -166,15 +172,28 @@ spring:
           metrics:
             enabled: true
 
-# 日志级别（方便调试）
-logging:
-  level:
-    io.urbane.gateway: DEBUG
-    org.springframework.cloud.gateway: INFO
-
-# 可选：启用健康检查端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"  # 生产环境建议只暴露 health/info
+    # Spring Cloud Sentinel 熔断降级配置
+    # https://github.com/alibaba/spring-cloud-alibaba/blob/2025.1.x/spring-cloud-alibaba-examples/sentinel-example/README-zh.md
+    sentinel:
+      # 是否提前触发 Sentinel 初始化
+      eager: true
+      # 关于 Sentinel Dashboard 仪表盘和本地 Sentinel 客户端的传输配置
+      transport:
+        # 本应用与 Sentinel 控制台交互的端口
+        port: 8719
+        # Sentinel 控制台地址
+        dashboard: localhost:8080
+      # Sentinel 动态数据源配置
+      datasource:
+        ds1:
+          file:
+            file: classpath:gateway.json
+            rule-type: gw_flow
+        ds2:
+          nacos:
+            server-addr: ${spring.cloud.nacos.config.server-addr}
+            namespace: ${spring.cloud.nacos.config.namespace}
+            group-id: ${spring.cloud.nacos.config.group}
+            data-id: ${spring.application.name}-sentinel
+            data-type: json
+            rule-type: flow
