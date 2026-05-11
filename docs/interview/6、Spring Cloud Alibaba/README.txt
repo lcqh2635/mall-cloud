@@ -65,8 +65,36 @@ https://www.alibabacloud.com/help/zh/schedulerx
 https://www.aliyun.com/ntms/middleware/schedulerx
 
 
+https://github.com/alibaba/arthas
+https://github.com/alibaba/druid
+
+
 https://github.com/apache/kafka
 https://github.com/apache/skywalking
 https://github.com/apache/shardingsphere
 https://github.com/apache/cassandra
 https://github.com/apache/druid
+
+https://github.com/redis/redis
+https://redis.io/
+https://www.redis.net.cn/tutorial/3501.html
+
+https://github.com/valkey-io/valkey
+https://valkey.io/
+https://valkey.cn/
+
+https://github.com/postgres/postgres
+https://www.postgresql.org/
+https://postgresql.ac.cn/
+
+https://github.com/mariadb
+https://mariadb.org/zh/
+
+https://github.com/mysql/mysql-server
+https://www.mysql.com/cn/
+
+https://github.com/prometheus/prometheus
+https://github.com/prometheus/alertmanager
+https://github.com/grafana/grafana
+
+https://github.com/xuxueli/xxl-job
