@@ -113,6 +113,7 @@ https://github.com/prometheus/alertmanager
 
 https://github.com/grafana/grafana
 https://hub.docker.com/r/grafana/grafana
+https://hub.docker.com/r/grafana/loki
 
 https://github.com/xuxueli/xxl-job
 
@@ -128,3 +129,7 @@ https://hub.docker.com/_/vault
 https://hub.docker.com/_/elasticsearch
 https://hub.docker.com/_/kibana
 https://hub.docker.com/_/logstash
+https://hub.docker.com/_/kong
+https://hub.docker.com/r/apache/kafka
+https://hub.docker.com/r/otel/opentelemetry-collector-contrib
+https://hub.docker.com/r/otel/opentelemetry-collector-k8s
