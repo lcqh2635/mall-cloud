@@ -12,8 +12,9 @@
     <artifactId>commons-job</artifactId>
     <packaging>jar</packaging>
     <name>commons-job</name>
-    <description
-    >定时任务模块：基于 XXL-Job 或 Quartz 封装定时任务的统一配置、任务注册及分布式调度基础支持</description>
+    <description>
+        定时任务模块：基于 XXL-Job 或 Quartz 封装定时任务的统一配置、任务注册及分布式调度基础支持
+    </description>
 
     <dependencies>
         <dependency>
