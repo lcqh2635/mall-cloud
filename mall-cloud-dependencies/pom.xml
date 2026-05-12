@@ -1,7 +1,7 @@
 <project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
     <!-- 1. 模型版本，固定写法 -->
     <modelVersion>4.0.0</modelVersion>
@@ -16,7 +16,8 @@
     <name>mall-cloud-dependencies</name>
     <!-- 5. 当前模块的详细描述：说明职责和功能 -->
     <description
-    >全局依赖版本管理模块：统一管控全项目所有第三方依赖的版本号，避免各模块间依赖版本冲突</description>
+    >全局依赖版本管理模块：统一管控全项目所有第三方依赖的版本号，避免各模块间依赖版本冲突
+    </description>
     <url>https://github.com/lcqh2635/mall-cloud</url>
     <!-- 在根 pom.xml 中引入 BOM 之前，需要先单独构建并安装 BOM，只需执行一次（或版本变更时执行）
         cd mall-cloud-dependencies
@@ -50,28 +51,20 @@
         <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
         <spring-ai.version>2.0.0-M5</spring-ai.version>
 
+        <mybatis-plus.version>3.5.16</mybatis-plus.version>
+        <mybatis-flex.version>1.11.7</mybatis-flex.version>
+        <hutool.version>5.8.44</hutool.version>
+
         <!-- 数据库 -->
-        <mysql.version>8.0.33</mysql.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
-        <druid.version>1.2.22</druid.version>
-        <p6spy.version>3.9.1</p6spy.version>
 
         <!-- 缓存 -->
         <redisson.version>3.51.0</redisson.version>
-        <caffeine.version>3.2.2</caffeine.version>
-
-        <!-- 安全 -->
-        <jjwt.version>0.12.5</jjwt.version>
-        <sa-token.version>1.38.0</sa-token.version>
 
         <!-- 工具类 -->
-        <hutool.version>5.8.27</hutool.version>
-        <mybatis-flex.version>1.11.7</mybatis-flex.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <mapstruct-plus.version>1.5.0</mapstruct-plus.version>
-        <lombok.version>1.18.32</lombok.version>
-        <fastjson2.version>2.0.51</fastjson2.version>
     </properties>
 
     <!-- 8. 依赖版本锁定管理 -->
@@ -112,6 +105,13 @@
                 <groupId>org.springframework.ai</groupId>
                 <artifactId>spring-ai-bom</artifactId>
                 <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
