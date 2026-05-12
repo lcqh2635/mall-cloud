@@ -1,1 +1,1 @@
-com.mallcloud.user.api.config.UserRemoteClientAutoConfiguration
+com.mallcloud.order.api.config.OrderRemoteClientAutoConfiguration

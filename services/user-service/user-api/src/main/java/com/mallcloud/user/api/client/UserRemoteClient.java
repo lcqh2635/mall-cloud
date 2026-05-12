@@ -3,11 +3,15 @@ package com.mallcloud.user.api.client;
 import com.mallcloud.user.api.constant.UserApiPath;
 import com.mallcloud.user.api.dto.UserRequest;
 import com.mallcloud.user.api.dto.UserResponse;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.service.annotation.GetExchange;
-import org.springframework.web.service.annotation.HttpExchange;
-import org.springframework.web.service.annotation.PostExchange;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.*;
+
+import java.util.List;
 
 /**
  * 用户服务远程调用 HTTP 客户端接口
@@ -22,7 +26,7 @@ import org.springframework.web.service.annotation.PostExchange;
  */
 // @HttpExchange 是我们可以应用于 HTTP 接口及其 exchange 方法的根注解。如果我们将其应用于接口层，那么它就会应用于所有 exchange 方法。
 // 这对于指定所有接口方法的共同属性（如 content type 或 URL 前缀）非常有用。模式类似有 @RequestMapping。
-@HttpExchange(url = UserApiPath.USER, accept = "application/json", contentType = "application/json")
+@HttpExchange(url = UserApiPath.USER, contentType = MediaType.APPLICATION_JSON_VALUE, accept = MediaType.APPLICATION_JSON_VALUE)
 public interface UserRemoteClient {
     // 注意，所有 HTTP 方法注解都是用 @HttpExchange 元注解的。因此，@GetExchange("/books") 等同于 @HttpExchange(url = "/books"，method = "GET")。
     // 既然我们已经定义了 HTTP 服务接口，就需要创建一个代理来实现该接口并在我们调用其内的接口方法时，会自动执行 exchange。
@@ -50,6 +54,22 @@ public interface UserRemoteClient {
      */
     @PostExchange(UserApiPath.CREATE)
     UserResponse create(@RequestBody UserRequest request);
+
+    @GetExchange("/{id}")
+    UserResponse getUserById(@PathVariable String id);
+
+    @PostExchange("/api/v1/create")
+    UserResponse createUser(@RequestBody UserResponse user);
+
+    @PutExchange("/{id}")
+    ResponseEntity<Void> updateUser(@PathVariable String id, @RequestBody UserResponse user);
+
+    @DeleteExchange("/{id}")
+    void deleteUser(@PathVariable String id);
+
+    // 支持自定义 Header、超时、响应类型映射
+    @GetExchange("/search")
+    List<UserResponse> search(@RequestParam("name") String name, @RequestHeader("X-Trace-Id") String traceId);
 
 }
 
