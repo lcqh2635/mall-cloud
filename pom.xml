@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <!-- 项目模型版本 -->
     <modelVersion>4.0.0</modelVersion>
     <!-- 项目坐标 -->
@@ -127,7 +130,8 @@
         <log.level>@log.level@</log.level>
         <mock.enabled>@mock.enabled@</mock.enabled>
         <powerjob.server>@powerjob.server@</powerjob.server>
-        <app.version>@project.version@</app.version> <!-- 使用 Maven 内置变量，仍用 @ 符号 -->
+        <app.version
+        >@project.version@</app.version> <!-- 使用 Maven 内置变量，仍用 @ 符号 -->
 
         <docker-maven-plugin.version>0.45.0</docker-maven-plugin.version>
         <docker.host>http://192.168.56.10:2375</docker.host>
@@ -228,7 +232,8 @@
                         </excludes>
                         <image>
                             <!-- 自定义镜像名称 -->
-                            <name>${project.artifactId}:${project.version}</name>
+                            <name
+                            >${project.artifactId}:${project.version}</name>
                             <publish>true</publish>
                         </image>
                         <docker>
@@ -255,7 +260,8 @@
                             </path>
                             <path>
                                 <groupId>io.github.linpeilie</groupId>
-                                <artifactId>mapstruct-plus-processor</artifactId>
+                                <artifactId
+                                >mapstruct-plus-processor</artifactId>
                             </path>
                             <!-- 在 lombok 1.18.16 及以后，mapstruct 搭配 lombok 使用时需要添加这个配置 -->
                             <!-- 参考自
@@ -264,7 +270,8 @@
                             -->
                             <path>
                                 <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok-mapstruct-binding</artifactId>
+                                <artifactId
+                                >lombok-mapstruct-binding</artifactId>
                                 <version>0.2.0</version>
                             </path>
                             <!-- https://mybatis-flex.com/zh/intro/maven.html -->
@@ -275,7 +282,8 @@
                             </path>
                             <path>
                                 <groupId>org.springframework.boot</groupId>
-                                <artifactId>spring-boot-configuration-processor</artifactId>
+                                <artifactId
+                                >spring-boot-configuration-processor</artifactId>
                             </path>
                         </annotationProcessorPaths>
                     </configuration>
@@ -289,8 +297,10 @@
                             <configuration>
                                 <annotationProcessorPaths>
                                     <path>
-                                        <groupId>org.springframework.boot</groupId>
-                                        <artifactId>spring-boot-configuration-processor</artifactId>
+                                        <groupId
+                                        >org.springframework.boot</groupId>
+                                        <artifactId
+                                        >spring-boot-configuration-processor</artifactId>
                                     </path>
                                     <path>
                                         <groupId>org.projectlombok</groupId>
@@ -362,11 +372,13 @@
                             <image>
                                 <!-- docker制作镜像名称，格式必须遵照阿里云的规则，否则无法使用插件完成上传 -->
                                 <!-- 镜像名称必须按照阿里云的规则来，否则无法使用插件完成上传，需要手动打 tag 上传 -->
-                                <name>${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>
+                                <name
+                                >${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>
                                 <!-- 镜像构建配置 -->
                                 <build>
                                     <!-- DockerFile的存放位置，每个服务制作成docker镜像都需要一个DockerFile文件 -->
-                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                    <dockerFile
+                                    >${project.basedir}/Dockerfile</dockerFile>
                                 </build>
                             </image>
                         </images>
@@ -378,15 +390,18 @@
                     <artifactId>smart-doc-maven-plugin</artifactId>
                     <version>2.7.7</version>
                     <configuration>
-                        <configFile>./src/main/resources/smart-doc.json</configFile>
+                        <configFile
+                        >./src/main/resources/smart-doc.json</configFile>
                         <projectName>${project.description}</projectName>
                         <includes>
                             <!-- 使用了mybatis-plus的Page分页需要include所使用的源码包 -->
-                            <include>com.baomidou:mybatis-plus-extension</include>
+                            <include
+                            >com.baomidou:mybatis-plus-extension</include>
                             <!-- 使用了mybatis-plus的IPage分页需要include mybatis-plus-core-->
                             <include>com.baomidou:mybatis-plus-core</include>
                             <!-- 使用了jpa的分页需要include所使用的源码包 -->
-                            <include>org.springframework.data:spring-data-commons</include>
+                            <include
+                            >org.springframework.data:spring-data-commons</include>
                         </includes>
                     </configuration>
                     <executions>
@@ -462,7 +477,8 @@
         <repository>
             <id>2330291-release-Ikhm5V</id>
             <name>阿里云效 Maven 私有仓库</name>
-            <url>https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
+            <url
+            >https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -495,7 +511,8 @@
     <distributionManagement>
         <repository>
             <id>2330291-release-Ikhm5V</id>
-            <url>https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
+            <url
+            >https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
         </repository>
     </distributionManagement>
 
@@ -528,7 +545,8 @@
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <!-- 如果使用的是默认的public命名空间，可以不设置namespace，直接使用 <nacos.namespace/> 单标签 -->
-                <nacos.namespace>91452963-e494-45b7-b518-5430c283bca1</nacos.namespace>
+                <nacos.namespace
+                >91452963-e494-45b7-b518-5430c283bca1</nacos.namespace>
             </properties>
         </profile>
 
@@ -537,14 +555,16 @@
             <id>test</id>
             <properties>
                 <spring.profiles.active>test</spring.profiles.active>
-                <db.url>jdbc:postgresql://pg-test.company.com:5432/insurance_test</db.url>
+                <db.url
+                >jdbc:postgresql://pg-test.company.com:5432/insurance_test</db.url>
                 <db.username>test_user</db.username>
                 <db.password>test_pass</db.password>
                 <redis.host>redis-test.company.com</redis.host>
                 <gateway.url>https://api-test.company.com/gateway</gateway.url>
                 <log.level>INFO</log.level>
                 <mock.enabled>true</mock.enabled>
-                <powerjob.server>https://powerjob-test.company.com</powerjob.server>
+                <powerjob.server
+                >https://powerjob-test.company.com</powerjob.server>
                 <app.version>${project.version}</app.version>
             </properties>
         </profile>
@@ -554,7 +574,8 @@
             <id>prod</id>
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
-                <db.url>jdbc:postgresql://pg-prod.company.com:5432/insurance_prod</db.url>
+                <db.url
+                >jdbc:postgresql://pg-prod.company.com:5432/insurance_prod</db.url>
                 <db.username>prod_user</db.username>
                 <!-- 生产密码不写入 pom.xml！此处仅为占位，实际由 CI/CD 注入 -->
                 <db.password>@db.password@</db.password>
@@ -562,7 +583,8 @@
                 <gateway.url>https://api.company.com/gateway</gateway.url>
                 <log.level>INFO</log.level>
                 <mock.enabled>false</mock.enabled>
-                <powerjob.server>https://powerjob-prod.company.com</powerjob.server>
+                <powerjob.server
+                >https://powerjob-prod.company.com</powerjob.server>
                 <app.version>${project.version}</app.version>
                 <!-- 生产构建跳过测试 -->
                 <skipTests>true</skipTests>

@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>payment-service</artifactId>
     <packaging>pom</packaging>
     <name>payment-service</name>
-    <description>支付服务：负责对接支付宝、微信支付等第三方支付渠道，处理支付、退款及对账等支付全流程</description>
+    <description
+    >支付服务：负责对接支付宝、微信支付等第三方支付渠道，处理支付、退款及对账等支付全流程</description>
 
     <modules>
         <module>payment-api</module>

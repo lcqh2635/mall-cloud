@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
   <artifactId>commons-banner</artifactId>
   <packaging>jar</packaging>
   <name>commons-banner</name>
-  <description>启动 Banner 模块：统一定制和管理各微服务启动时的控制台 Banner 输出样式与项目版本信息展示</description>
+  <description
+    >启动 Banner 模块：统一定制和管理各微服务启动时的控制台 Banner 输出样式与项目版本信息展示</description>
 
   <dependencies>
     <dependency>

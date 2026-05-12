@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>commons-mybatis</artifactId>
     <packaging>jar</packaging>
     <name>commons-mybatis</name>
-    <description>MyBatis 扩展模块：封装 MyBatis-Plus 统一配置、分页插件、公共字段自动填充、代码生成基础及通用 Mapper 扩展</description>
+    <description
+    >MyBatis 扩展模块：封装 MyBatis-Plus 统一配置、分页插件、公共字段自动填充、代码生成基础及通用 Mapper 扩展</description>
 
     <dependencies>
         <dependency>

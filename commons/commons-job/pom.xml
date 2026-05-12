@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>commons-job</artifactId>
     <packaging>jar</packaging>
     <name>commons-job</name>
-    <description>定时任务模块：基于 XXL-Job 或 Quartz 封装定时任务的统一配置、任务注册及分布式调度基础支持</description>
+    <description
+    >定时任务模块：基于 XXL-Job 或 Quartz 封装定时任务的统一配置、任务注册及分布式调度基础支持</description>
 
     <dependencies>
         <dependency>

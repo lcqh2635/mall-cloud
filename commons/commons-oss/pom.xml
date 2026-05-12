@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>commons-oss</artifactId>
     <packaging>jar</packaging>
     <name>commons-oss</name>
-    <description>对象存储模块：封装阿里云 OSS、MinIO 等对象存储服务的统一上传、下载、删除操作及文件访问 URL 生成</description>
+    <description
+    >对象存储模块：封装阿里云 OSS、MinIO 等对象存储服务的统一上传、下载、删除操作及文件访问 URL 生成</description>
 
     <dependencies>
 

@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>auth-service</artifactId>
     <packaging>pom</packaging>
     <name>auth-service</name>
-    <description>认证授权服务：负责用户登录、注册、Token 签发与校验、OAuth2 第三方登录等认证授权功能</description>
+    <description
+    >认证授权服务：负责用户登录、注册、Token 签发与校验、OAuth2 第三方登录等认证授权功能</description>
 
     <modules>
         <module>auth-api</module>

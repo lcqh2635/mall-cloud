@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,12 +12,14 @@
     <artifactId>commons-openapi</artifactId>
     <packaging>jar</packaging>
     <name>commons-openapi</name>
-    <description>接口文档模块：基于 SpringDoc/Knife4j 封装统一的 OpenAPI 文档配置、全局参数注入及文档聚合基础支持</description>
+    <description
+    >接口文档模块：基于 SpringDoc/Knife4j 封装统一的 OpenAPI 文档配置、全局参数注入及文档聚合基础支持</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <artifactId
+            >knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>4.5.0</version>
         </dependency>
 

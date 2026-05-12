@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>product-service</artifactId>
     <packaging>pom</packaging>
     <name>product-service</name>
-    <description>商品服务：负责商品 SPU/SKU 的管理、商品分类、品牌、属性及上下架等商品全生命周期管理</description>
+    <description
+    >商品服务：负责商品 SPU/SKU 的管理、商品分类、品牌、属性及上下架等商品全生命周期管理</description>
 
     <modules>
         <module>product-api</module>
