@@ -12,8 +12,9 @@
     <artifactId>cart-service</artifactId>
     <packaging>pom</packaging>
     <name>cart-service</name>
-    <description
-    >购物车服务：负责购物车商品的增删改查、选中状态管理、价格实时计算及与库存/促销的联动</description>
+    <description>
+        购物车服务：负责购物车商品的增删改查、选中状态管理、价格实时计算及与库存/促销的联动
+    </description>
 
     <modules>
         <module>cart-api</module>
