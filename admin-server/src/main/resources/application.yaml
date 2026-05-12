@@ -2,7 +2,6 @@
 # https://docs.spring-boot-admin.com/
 # https://github.com/codecentric/spring-boot-admin
 
-
 # 服务器配置
 # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.server
 server:
@@ -34,11 +33,11 @@ server:
 
 # 配置配置应用的常规、非敏感、不变动的属性
 spring:
-  # ==================== 应用基础信息 ====================
+  # 应用基础信息
   application:
     # 服务名称：注册到 Nacos 的唯一标识，务必与 Nacos 配置文件名保持一致
     name: admin-server
-  # ==================== 环境激活 ====================
+  # 环境激活
   # 默认激活开发环境，生产通过启动参数覆盖
   profiles:
     # 默认激活开发环境，生产环境通过启动参数覆盖：--spring.profiles.active=prod
@@ -80,54 +79,41 @@ spring:
         default-password: 479368
       notify:
         mail:
-          enabled: false   # 按需开启邮件告
+          enabled: false # 按需开启邮件告
   # 显式开启颜色：
   output:
     ansi:
-      enabled: always   # always=强制开启 / detect=自动检测 / never=关闭
+      enabled: always # always=强制开启 / detect=自动检测 / never=关闭
 
 mallcloud:
   banner:
-    # ── 基础信息 ──────────────────────────────────────
+    # 基础信息
     version: 2.1.0
     author: 龙茶清欢
     description: 管理服务 - 负责用户权限与后台管理
-    protocol: http           # 生产若走 HTTPS 改为 https
-
-    # ── 显示主题 ──────────────────────────────────────
+    protocol: http # 生产若走 HTTPS 改为 https
+    # 显示主题
     # 可选值：default | box | colorful
     #   default  — 标准带分隔线 + Emoji（默认，适合本地开发）
     #   box      — Unicode 边框（终端体验更佳）
     #   colorful — 每行不同颜色（视觉最丰富）
     theme: colorful
-
-    # ── 字体文件路径（classpath）────────────────────────
+    # 字体文件路径（classpath）
     # 更多字体：https://github.com/xero/figlet-fonts
     font-path: /fonts/ANSI Shadow.flf
-
-    # ── 各信息行显示开关 ──────────────────────────────
+    # 各信息行显示开关
     show:
-      pid: true            # 进程 PID（方便 kill / 日志关联）
-      cost: true           # 启动耗时（排查慢启动必备）
-      author: true         # 项目作者
-      description: true    # 服务描述
-      context-path: true   # Servlet Context Path（无前缀时可关闭）
-      db-url: false        # 数据库地址（生产环境建议关闭，避免信息泄露）
-
-    # ── 自定义 ANSI 颜色（仅 default 主题生效）──────────
+      pid: true # 进程 PID（方便 kill / 日志关联）
+      cost: true # 启动耗时（排查慢启动必备）
+      author: true # 项目作者
+      description: true # 服务描述
+      context-path: true # Servlet Context Path（无前缀时可关闭）
+      db-url: false # 数据库地址（生产环境建议关闭，避免信息泄露）
+    # 自定义 ANSI 颜色（仅 default 主题生效）
     # 色号参考：30=黑 31=红 32=绿 33=黄 34=蓝 35=紫 36=青 37=白
     #           90-97 为对应高亮版本
     color:
-      title: 96      # ASCII Art 标题 → 亮青色
-      separator: 32  # 分隔线       → 绿色
-      label: 32      # 标签         → 绿色
-      value: 33      # 值           → 黄色
-
-#mallcloud:
-#  banner:
-#    enabled: true
-#    application-name: "My Awesome App 666"
-#    version: "2.1.0"
-#    author: "龙茶清欢"
-#    description: "This is a sample application using custom banner"
-#    show-info: true
+      title: 96 # ASCII Art 标题 → 亮青色
+      separator: 32 # 分隔线       → 绿色
+      label: 32 # 标签         → 绿色
+      value: 33 # 值           → 黄色
