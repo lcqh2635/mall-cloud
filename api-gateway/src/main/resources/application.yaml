@@ -1,9 +1,10 @@
 # Spring Cloud Gateway 配置
 # https://docs.springjava.cn/spring-cloud-gateway/reference/index.html
-# https://docs.springjava.cn/spring-cloud-gateway/reference/appendix.html
+# https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html
 
 
 # 服务器配置
+# https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.server
 server:
   port: 8888
   # servlet 配置
@@ -28,17 +29,30 @@ spring:
   # 默认激活开发环境，生产通过启动参数覆盖
   profiles:
     active: dev
-  # 时间日期格式化配置
+
+  # Jackson 序列化配置
+  # https://docs.springjava.cn/spring-boot/reference/features/json.html
+  # https://docs.springjava.cn/spring-boot/how-to/spring-mvc.html#howto.spring-mvc.customize-jackson-jsonmapper
+  # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.json
   Jackson:
-    time-zone: GMT+8
+    # 时区
+    time-zone: Asia/Shanghai
+    # 日期时间格式
     date-format: yyyy-MM-dd HH:mm:ss
+    # 序列化配置
+    serialization:
+      write-self-references-as-null: true
+    deserialization:
+      # 反序列化时忽略未知字段
+      fail-on-unknown-properties: false
+
   # 开启虚拟线程功能
-  # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#application-properties.core.spring.threads.virtual.enabled
+  # https://docs.springjava.cn/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
   threads:
     virtual:
       enabled: true
   # 虚拟线程的一个副作用是它们是守护线程。如果其所有线程都是守护线程，则 JVM 将退出。
-  # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
+  # 建议将属性 spring.main.keep-alive 设置为 true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
 
@@ -76,6 +90,7 @@ spring:
         # 是否启用配置监听
         enable-remote-sync-config: true
   # 配置导入（关键！Spring Boot 3 的新方式）
+  # https://docs.springjava.cn/spring-boot/reference/features/external-config.html
   # https://docs.springjava.cn/spring-cloud-config/reference/client.html#config-data-import
   config:
     import:

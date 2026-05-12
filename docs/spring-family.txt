@@ -39,6 +39,7 @@ https://docs.springjava.cn/spring-boot/reference/web/servlet.html
 https://docs.springjava.cn/spring-boot/reference/web/servlet.html#web.servlet.spring-mvc.cors
 # API 版本控制
 https://docs.springjava.cn/spring-boot/reference/web/servlet.html#web.servlet.spring-mvc.api-versioning
+https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#application-properties.web.spring.mvc.apiversion.default
 
 
 # JPA 和 Spring Data JPA
@@ -60,3 +61,15 @@ https://docs.springjava.cn/spring-security/reference/
 
 # WebSockets
 https://docs.springjava.cn/spring-framework/reference/web/websocket.html
+
+# Spring Cloud Kubernetes
+https://docs.springjava.cn/spring-cloud-kubernetes/reference/
+
+# Spring Cloud Stream
+https://docs.springjava.cn/spring-cloud-stream/reference/preface.html
+
+# Spring Cloud Function
+https://docs.springjava.cn/spring-cloud-function/reference/spring-cloud-function/introduction.html
+
+# Docker Compose 属性
+https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.docker-compose

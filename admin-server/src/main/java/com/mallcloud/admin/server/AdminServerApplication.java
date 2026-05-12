@@ -11,3 +11,6 @@ public class AdminServerApplication {
         SpringApplication.run(AdminServerApplication.class, args);
     }
 }
+
+// SpringApplication 相关教程
+// https://docs.springjava.cn/spring-boot/reference/features/spring-application.html

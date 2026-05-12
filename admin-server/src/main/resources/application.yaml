@@ -3,6 +3,8 @@
 # https://github.com/codecentric/spring-boot-admin
 
 
+# 服务器配置
+# https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.server
 server:
   # 服务端口
   port: 7777
@@ -41,19 +43,25 @@ spring:
   profiles:
     # 默认激活开发环境，生产环境通过启动参数覆盖：--spring.profiles.active=prod
     active: dev
-  # ==================== Jackson 序列化配置 ====================
+
+  # Jackson 序列化配置
+  # https://docs.springjava.cn/spring-boot/reference/features/json.html
+  # https://docs.springjava.cn/spring-boot/how-to/spring-mvc.html#howto.spring-mvc.customize-jackson-jsonmapper
+  # https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.json
   Jackson:
-    # 日期时间格式
-    date-format: yyyy-MM-dd HH:mm:ss
     # 时区
     time-zone: Asia/Shanghai
+    # 日期时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
     # 序列化配置
     serialization:
       write-self-references-as-null: true
     deserialization:
       # 反序列化时忽略未知字段
       fail-on-unknown-properties: false
+
   # 开启虚拟线程功能
+  # https://docs.springjava.cn/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
   threads:
     virtual:
       enabled: true
@@ -61,7 +69,7 @@ spring:
   # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
-    # banner-mode: off
+
   # 配置 admin 服务端地址和认证信息
   boot:
     admin:

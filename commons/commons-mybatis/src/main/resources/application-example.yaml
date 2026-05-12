@@ -1,3 +1,7 @@
+# 数据迁移属性
+# https://docs.springjava.cn/spring-boot/appendix/application-properties/index.html#appendix.application-properties.data-migration
+
+
 # 详细的配置内容参考 MybatisFlexProperties 类
 # mybatis-flex 配置，参考 https://mybatis-flex.com/zh/base/configuration.html
 mybatis-flex:
