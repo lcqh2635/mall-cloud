@@ -12,8 +12,9 @@
     <artifactId>promotion-service</artifactId>
     <packaging>pom</packaging>
     <name>promotion-service</name>
-    <description
-    >促销服务：负责满减、秒杀、限时折扣、买赠等营销活动的创建、规则计算及活动生命周期管理</description>
+    <description>
+        促销服务：负责满减、秒杀、限时折扣、买赠等营销活动的创建、规则计算及活动生命周期管理
+    </description>
 
     <modules>
         <module>promotion-api</module>

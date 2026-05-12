@@ -12,8 +12,9 @@
     <artifactId>user-service</artifactId>
     <packaging>pom</packaging>
     <name>user-service</name>
-    <description
-    >用户服务：负责用户基本信息管理、收货地址、会员等级、积分及账户安全等用户中心核心功能</description>
+    <description>
+        用户服务：负责用户基本信息管理、收货地址、会员等级、积分及账户安全等用户中心核心功能
+    </description>
 
     <modules>
         <module>user-api</module>

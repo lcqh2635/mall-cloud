@@ -12,8 +12,9 @@
     <artifactId>logistics-service</artifactId>
     <packaging>pom</packaging>
     <name>logistics-service</name>
-    <description
-    >物流服务：负责订单发货、物流轨迹查询、快递公司对接及配送状态的实时更新与通知</description>
+    <description>
+        物流服务：负责订单发货、物流轨迹查询、快递公司对接及配送状态的实时更新与通知
+    </description>
 
     <modules>
         <module>logistics-api</module>

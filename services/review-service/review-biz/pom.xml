@@ -12,8 +12,9 @@
     <artifactId>review-biz</artifactId>
     <packaging>jar</packaging>
     <name>review-biz</name>
-    <description
-    >评价服务：负责订单商品评价的发布、回复、审核、点赞及评分统计，支持图文混合评价内容</description>
+    <description>
+        评价服务：负责订单商品评价的发布、回复、审核、点赞及评分统计，支持图文混合评价内容
+    </description>
 
     <dependencies>
         <dependency>

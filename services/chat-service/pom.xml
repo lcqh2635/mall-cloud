@@ -12,8 +12,9 @@
     <artifactId>chat-service</artifactId>
     <packaging>pom</packaging>
     <name>chat-service</name>
-    <description
-    >即时通讯服务：负责用户与客服、用户与商家之间的实时消息收发、会话管理及消息记录存储</description>
+    <description>
+        即时通讯服务：负责用户与客服、用户与商家之间的实时消息收发、会话管理及消息记录存储
+    </description>
 
     <modules>
         <module>chat-api</module>

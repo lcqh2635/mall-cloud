@@ -12,8 +12,9 @@
     <artifactId>order-service</artifactId>
     <packaging>pom</packaging>
     <name>order-service</name>
-    <description
-    >订单服务：负责订单的创建、支付确认、取消、售后及订单状态流转，是交易核心链路的主服务</description>
+    <description>
+        订单服务：负责订单的创建、支付确认、取消、售后及订单状态流转，是交易核心链路的主服务
+    </description>
 
     <modules>
         <module>order-api</module>

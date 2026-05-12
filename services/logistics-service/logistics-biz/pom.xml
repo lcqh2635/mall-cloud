@@ -12,6 +12,9 @@
     <artifactId>logistics-biz</artifactId>
     <packaging>jar</packaging>
     <name>logistics-biz</name>
+    <description>
+        即时通讯服务：负责用户与客服、用户与商家之间的实时消息收发、会话管理及消息记录存储
+    </description>
 
     <dependencies>
         <dependency>
