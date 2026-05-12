@@ -12,8 +12,9 @@
     <artifactId>commons-log</artifactId>
     <packaging>jar</packaging>
     <name>commons-logging</name>
-    <description
-    >日志公共模块：提供统一的日志格式配置、操作日志注解、链路追踪 TraceId 注入及日志采集基础支持</description>
+    <description>
+        日志公共模块：提供统一的日志格式配置、操作日志注解、链路追踪 TraceId 注入及日志采集基础支持
+    </description>
 
     <dependencies>
 

@@ -12,8 +12,9 @@
     <artifactId>commons-oss</artifactId>
     <packaging>jar</packaging>
     <name>commons-oss</name>
-    <description
-    >对象存储模块：封装阿里云 OSS、MinIO 等对象存储服务的统一上传、下载、删除操作及文件访问 URL 生成</description>
+    <description>
+        对象存储模块：封装阿里云 OSS、MinIO 等对象存储服务的统一上传、下载、删除操作及文件访问 URL 生成
+    </description>
 
     <dependencies>
 

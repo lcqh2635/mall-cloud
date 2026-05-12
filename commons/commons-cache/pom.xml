@@ -13,8 +13,7 @@
     <packaging>jar</packaging>
     <name>commons-cache</name>
     <description>
-        缓存公共模块：多级缓存公共组件（L1 Caffeine + L2 Redis）。
-        集群环境下通过 Redis Pub/Sub 自动同步 L1 失效。
+        缓存公共模块：多级缓存公共组件（L1 Caffeine + L2 Redis）。集群环境下通过 Redis Pub/Sub 自动同步 L1 失效。
     </description>
 
     <dependencies>
