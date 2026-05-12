@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>order-biz</artifactId>
     <packaging>jar</packaging>
     <name>order-biz</name>
-    <description>订单服务：负责订单的创建、支付确认、取消、售后及订单状态流转，是交易核心链路的主服务</description>
+    <description
+    >订单服务：负责订单的创建、支付确认、取消、售后及订单状态流转，是交易核心链路的主服务</description>
 
     <dependencies>
         <dependency>

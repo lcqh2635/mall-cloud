@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mallcloud</groupId>
@@ -9,7 +12,8 @@
     <artifactId>inventory-biz</artifactId>
     <packaging>jar</packaging>
     <name>inventory-biz</name>
-    <description>库存服务：负责商品库存的查询、扣减、回滚及预占，支持高并发场景下的库存安全扣减</description>
+    <description
+    >库存服务：负责商品库存的查询、扣减、回滚及预占，支持高并发场景下的库存安全扣减</description>
 
     <dependencies>
         <dependency>
