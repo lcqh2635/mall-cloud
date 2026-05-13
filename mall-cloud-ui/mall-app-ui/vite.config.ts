@@ -1,4 +1,3 @@
-/// <reference types="vitest/config" />
 import {defineConfig, loadEnv} from 'vite';
 import {defaultExclude} from 'vitest/config';
 import {dirname, resolve} from 'node:path';

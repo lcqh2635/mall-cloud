@@ -1,0 +1,18 @@
+{
+  "productName": "my-app",
+  "bundle": {
+    // 安卓打包构建配置：https://tauri.app/zh-cn/reference/config/#android
+    "android": {
+      "package": "com.tauri.myapp"
+    }
+  },
+  "plugins": {
+    "cli": {
+      "description": "My app",
+      "subcommands": {
+        "update": {}
+      }
+    },
+    "deep-link": {}
+  }
+}
