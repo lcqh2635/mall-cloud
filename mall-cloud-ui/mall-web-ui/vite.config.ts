@@ -137,7 +137,7 @@ export default defineConfig(async ({command, mode}) => {
         // 2. Tauri 需要一个固定端口，如果该端口不可用，则失败
         server: {
             // 指定开发服务器端口。注意：如果端口已经被使用，Vite 会自动尝试下一个可用的端口
-            port: 1420,
+            port: 1422,
             // 固定端口，设为 true 时若端口已占用则会直接退出，而不是尝试下一个可用端口。
             strictPort: true,
             // 指定服务器应该监听哪个 IP 地址。 如果将此设置为 0.0.0.0 或者 true 将监听所有地址，包括局域网和公网地址。
