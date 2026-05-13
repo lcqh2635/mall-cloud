@@ -1,0 +1,6 @@
+/src/main/java/com/lcqh/tauri_bun_ts/generated
+/src/main/jniLibs/**/*.so
+/src/main/assets/tauri.conf.json
+/tauri.build.gradle.kts
+/proguard-tauri.pro
+/tauri.properties

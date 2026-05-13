@@ -1,0 +1,93 @@
+// mixins.scss 是一个 SCSS 混合（Mixin）工具文件，
+// 用于集中存放可复用的 CSS 代码片段（类似于 JavaScript 中的函数）。
+// 通过 Mixin，可以避免重复编写相同的样式逻辑，提升代码可维护性。
+// variables.scss：存放全局变量（如颜色、间距）
+// mixins.scss：存放动态生成的样式逻辑。两者通常配合使用：
+
+
+/**
+ * 弹性布局（Flexbox）快速配置
+ * @param $justify 主轴对齐方式
+ * @param $align 交叉轴对齐方式
+ * @param $direction 排列方向
+ */
+@mixin flex($justify: center, $align: center, $direction: row) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+
+/**
+ * 文字溢出显示省略号（单行）
+ * @param $width 容器宽度（可选）
+ */
+@mixin text-ellipsis($width: 100%) {
+  width: $width;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/**
+ * 移动端优先的媒体查询
+ * @param $breakpoint 断点尺寸（默认 desktop）
+ */
+@mixin respond-to($breakpoint: desktop) {
+  @if $breakpoint == phone {
+    @media (max-width: 599px) { @content; }
+  } @else if $breakpoint == tablet {
+    @media (min-width: 600px) and (max-width: 1023px) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (min-width: 1024px) { @content; }
+  }
+}
+
+/**
+ * 渐入动画
+ * @param $duration 动画时长（默认 0.3s）
+ */
+@mixin fade-in($duration: 0.3s) {
+  opacity: 0;
+  animation: fadeIn $duration ease-in forwards;
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+}
+
+/**
+ * 按钮基础样式（可扩展）
+ * @param $bg-color 背景色
+ * @param $text-color 文字颜色
+ */
+@mixin button-base($bg-color: #1890ff, $text-color: white) {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: $bg-color;
+  color: $text-color;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    //background-color: darken($bg-color, 10%);
+  }
+}
+
+// 此处为使用示例，实际开发过程中不推荐在 mixins.scss 中写如下样式 ，仅作为示例
+// 引入全局 Mixin（通过 additionalData 自动注入，无需手动 @use）
+.card {
+  @include flex(space-between, flex-start); // 使用 flex 布局
+  @include respond-to(tablet) {             // 响应式调整
+    flex-direction: column;
+  }
+}
+
+.title {
+  @include text-ellipsis; // 文字超出省略
+}
+
+.submit-btn {
+  @include button-base(#ff4d4f, white); // 红色按钮
+}

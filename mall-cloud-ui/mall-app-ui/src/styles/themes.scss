@@ -1,0 +1,123 @@
+// 主题样式
+
+// 深色主题变量
+[data-theme="dark"] {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --primary-color: #409eff;
+  // 其他浅色主题变量...
+}
+
+// 浅色主题变量
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --primary-color: #409eff;
+  // 其他浅色主题变量...
+}
+
+
+/**
+ * 主题管理系统
+ * 功能：多主题切换 | 暗黑模式 | CSS变量注入 | 组件主题适配
+ * 原则：语义化命名 + 分层设计 + 运行时动态切换
+ */
+
+// ==================== 1. 主题配置 ====================
+/// 主主题配置Map
+/// 结构：主题名 → 变量键值对
+$themes: (
+        'light': (
+                'color-primary': #1890ff,
+                'color-bg': #ffffff,
+                'color-text': #333333,
+                'color-border': #d9d9d9,
+        ),
+        'dark': (
+                'color-primary': #177ddc,
+                'color-bg': #1a1a1a,
+                'color-text': #e6e6e6,
+                'color-border': #434343,
+        ),
+        'high-contrast': (
+                'color-primary': #ff0000,
+                'color-bg': #000000,
+                'color-text': #ffffff,
+                'color-border': #ffffff,
+        )
+);
+
+// ==================== 2. CSS变量生成 ====================
+/// 将主题Map转换为CSS变量
+/// @param {map} $theme - 主题配置
+@mixin generate-theme-vars($theme) {
+  :root {
+    // 生成基础变量
+    @each $key, $value in $theme {
+      --#{$key}: #{$value};
+    }
+
+    // 派生变量（基于基础变量计算）
+    --color-primary-hover: #{lighten(map-get($theme, 'color-primary'), 10%)};
+    --color-text-secondary: #{transparentize(map-get($theme, 'color-text'), 0.3)};
+  }
+}
+
+// ==================== 3. 默认主题激活 ====================
+// 默认加载light主题（可通过JS动态修改）
+@include generate-theme-vars(map-get($themes, 'light'));
+
+// ==================== 4. 暗黑模式自动响应 ====================
+// 方法1：CSS媒体查询（跟随系统偏好）
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include generate-theme-vars(map-get($themes, 'dark'));
+  }
+}
+
+// 方法2：通过HTML类名控制（推荐）
+[data-theme='dark'] {
+  @include generate-theme-vars(map-get($themes, 'dark'));
+}
+
+[data-theme='high-contrast'] {
+  @include generate-theme-vars(map-get($themes, 'high-contrast'));
+}
+
+// ==================== 5. 组件级主题适配 ====================
+/// 组件主题混入（避免硬编码颜色）
+/// @param {string} $component - 组件名
+@mixin component-theme($component) {
+  .#{$component} {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border-color: var(--color-border);
+
+    &-primary {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    // 状态类
+    &:hover {
+      background-color: var(--color-primary-hover);
+    }
+  }
+}
+
+// 生成组件主题（示例）
+@include component-theme('button');
+@include component-theme('card');
+
+// ==================== 6. 主题工具类 ====================
+// 文本颜色
+@each $name, $color in map-get($themes, 'light') {
+  .text-#{$name} {
+    color: var(--#{$name});
+  }
+}
+
+// 背景色
+.bg-primary {
+  background-color: var(--color-primary);
+}

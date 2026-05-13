@@ -8,18 +8,56 @@ repository = ""
 edition = "2021"
 rust-version = "1.77.2"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# 查看更多键及其定义，请访问 https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
+# “_lib”后缀可能看起来多余，但却是必要的，使 lib 名称唯一且不会与 bin 名称冲突。
+# 这似乎只是 Windows 上的问题，请参阅 https://github.com/rust-lang/cargo/issues/8519
 name = "app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
+# JSON5 格式配置文件支持 https://tauri.app/zh-cn/develop/configuration-files/
 [build-dependencies]
-tauri-build = { version = "2.6.1" }
+tauri-build = { version = "2.6.1", features = ["config-json5"] }
 
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
-log = "0.4"
-tauri = { version = "2.11.1" }
+tokio = { version = "1.47.1", features = ["time"] }
+# Tauri 允许您为应用程序创建和自定义系统托盘。这可以通过提供对常用操作的快速访问来提升用户体验。
+# 详情请查看 https://v2.tauri.org.cn/learn/system-tray/
+tauri = { version = "2.11.1", features = ["tray-icon", "image-png", "unstable", "config-json5"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1.0.69"
+url = "2.5.4"
+
+# Tauri 常用插件使用请参考 https://v2.tauri.org.cn/plugin/
+# 全平台通用 Tauri 插件
+tauri-plugin-dialog = "2"
+tauri-plugin-os = "2"
+tauri-plugin-opener = "2"
 tauri-plugin-log = "2"
+
+# 仅适用于 Windows、macOS 和 Linux 桌面端插件
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-autostart = "2"
+tauri-plugin-updater = "2"
+tauri-plugin-window-state = "2"
+
+# 仅适用于 Android 和 iOS 移动端插件
+[target.'cfg(any(target_os = "android", target_os = "ios"))'.dependencies]
+tauri-plugin-barcode-scanner = "2"
+tauri-plugin-biometric = "2"
+
+
+# Tauri 应用程序大小， https://tauri.app/zh-cn/concept/size/
+# 虽然 Tauri 默认提供非常小的二进制文件，但稍微推一下极限也无妨，因此这里有一些技巧和建议，以达到最佳效果。
+[profile.dev]
+incremental = true # 以较小的步骤编译您的二进制文件。
+
+[profile.release]
+codegen-units = 1 # 允许 LLVM 执行更好地优化。
+lto = true # 启用链接时优化。
+# opt-level: 确定编译器的关注点。使用 3 来优化性能，使用 z 来优化大小，使用 s 以达到两者之间的平衡。
+opt-level = 3 # 优先考虑小的二进制文件大小。如果您更喜欢速度，请使用 `3`。
+panic = "abort" # 通过禁用 panic 处理程序来提高性能。
+strip = true # 确保移除调试符号。
