@@ -8,9 +8,9 @@
   "license": "MIT",
   "scripts": {
     "comments": "// -b, --bun  强制脚本或包使用 Bun 的运行时而不是 Node.js",
-    "dev": "bun run --bun vite --mode .env.development",
-    "prod": "bun run --bun vite --mode .env.production",
-    "test": "bun run --bun vitest --mode .env.test",
+    "dev": "bun run --bun vite --mode ../mall-admin-ui/.env.development",
+    "prod": "bun run --bun vite --mode ../mall-admin-ui/.env.production",
+    "test": "bun run --bun vitest --mode ../mall-admin-ui/.env.test",
     "build": "bun run --bun vue-tsc --noEmit && bun run --bun vite build",
     "preview": "bun run --bun vite preview",
     "tauri": "tauri",
