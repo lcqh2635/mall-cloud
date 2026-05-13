@@ -16,6 +16,9 @@ source ~/.bash_profile
 # 使用阿里云安装脚本
 curl --proto '=https' --tlsv1.2 -sSf https://mirrors.aliyun.com/repo/rust/rustup-init.sh | sh -s -- -y
 . "$HOME/.cargo/env"
+rustup update
+rustup toolchain install stable
+
 
 # 配置 Cargo 镜像
 # 如果正在使用 cargo 1.68 及以上版本，在 $HOME/.cargo/config.toml 中添加如下内容即可：
