@@ -1,3 +1,12 @@
+sudo dnf check-update
+sudo dnf install webkit2gtk4.1-devel \
+    openssl-devel \
+    curl wget file \
+    libappindicator-gtk3-devel \
+    librsvg2-devel \
+    libxdo-devel
+sudo dnf group install "c-development"
+
 echo '
 # 设置 Rustup 镜像，参考：https://developer.aliyun.com/mirror/rustup
 export RUSTUP_DIST_SERVER=https://mirrors.aliyun.com/rustup
