@@ -7,7 +7,7 @@
     ],
     "module": "esnext",
     "types": [
-      "node"
+      "bun"
     ],
     "skipLibCheck": true,
     /* Bundler mode */
@@ -57,6 +57,7 @@
     }
   },
   "include": [
-    "vite.config.ts"
+    "vite.config.ts",
+    "plugins/**/*.ts"
   ]
 }
