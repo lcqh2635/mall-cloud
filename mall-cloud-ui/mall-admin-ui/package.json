@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "description": "A project built with Bun",
-  "author": "Your Name <you@example.com>",
+  "author": {
+    "name": "龙茶清欢",
+    "email": "lcqh2635@gmail.com"
+  },
   "license": "MIT",
   "scripts": {
     "comments": "// -b, --bun  强制脚本或包使用 Bun 的运行时而不是 Node.js",
