@@ -1,0 +1,32 @@
+{
+  "productName": "my-app",
+  "bundle": {
+    // linux 打包构建配置：https://tauri.app/zh-cn/reference/config/#linux
+    "linux": {
+      // deb 打包构建配置：https://tauri.app/zh-cn/reference/config/#debconfig
+      "deb": {
+        "files": {}
+      },
+      // rpm 打包构建配置：https://tauri.app/zh-cn/reference/config/#rpmconfig
+      "rpm": {
+        "epoch": 0,
+        "files": {},
+        "release": "1"
+      } ,
+      // appimage 打包构建配置：https://tauri.app/zh-cn/reference/config/#appimageconfig
+      "appimage": {
+        "bundleMediaFramework": false,
+        "files": {}
+      }
+    },
+  },
+  "plugins": {
+    "cli": {
+      "description": "My app",
+      "subcommands": {
+        "update": {}
+      }
+    },
+    "deep-link": {}
+  }
+}

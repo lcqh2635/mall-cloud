@@ -154,6 +154,11 @@ export default defineConfig(async ({command, mode}) => {
                     port: 1421,
                 }
                 : undefined,
+            // 忽略文件监听
+            watch: {
+                // 3. 告诉 Vite 忽略观看 “src-tauri” 文件夹
+                // ignored: ["./src-tauri/**"],
+            },
             // 为开发服务器配置自定义代理规则，代理所有从vite发出的url中带/api的请求
             // 代理配置参考 https://cn.vitejs.dev/config/server-options.html#server-proxy
             proxy: {
