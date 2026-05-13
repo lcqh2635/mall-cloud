@@ -12,11 +12,12 @@
   "scripts": {
     "comments": "// -b, --bun  强制脚本或包使用 Bun 的运行时而不是 Node.js",
     "dev": "bun run --bun vite --mode .env.development",
-    "prod": "bun run --bun vite --mode .env.production",
     "test": "bun run --bun vitest --mode .env.test",
+    "prod": "bun run --bun vite --mode .env.production",
     "build": "bun run --bun vue-tsc --noEmit && bun run --bun vite build",
     "preview": "bun run --bun vite preview",
     "tauri": "tauri",
+    "tauri:dev": "bun run --bun tauri dev",
     "tauri:build": "bun run --bun tauri build",
     "tauri:build:android": "bun run --bun tauri android build",
     "tauri:build:ios": "bun run --bun tauri ios build",
