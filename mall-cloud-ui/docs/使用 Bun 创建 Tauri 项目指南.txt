@@ -44,7 +44,7 @@ index = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
 EOF
 
 # 使用 Android Studio 需要提前安装 gradle
-# https://sdkman.io/
+# https://sdkman.io/    执行以下命令时，推荐开启 VPN 否则容易失败并且下载速度极慢
 rm -rf $HOME/.sdkman
 curl -fsSL "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
