@@ -58,6 +58,9 @@ mkdir -vp "$HOME/.android/Sdk/ndk"
 # https://tauri.app/zh-cn/start/prerequisites/#android
 # https://linuxcapable.com/how-to-set-java-environment-path-in-fedora-linux/
 # 在执行该命令前，请先提前安装 Android Studio
+flatpak install -y flathub com.google.AndroidStudio
+flatpak run --command=gsettings com.google.AndroidStudio set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+
 echo '
 # Tauri 开发 Android 应用需要配置如下内容，具体参考：https://tauri.app/zh-cn/start/prerequisites/#android
 # 1. 配置 JDK 变量，使用  alternatives --display java 查看  JDK 安装的根目录
