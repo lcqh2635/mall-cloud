@@ -79,6 +79,12 @@ rustup target add aarch64-apple-ios aarch64-apple-ios-sim
 # Android SDK Build-Tools
 # Android SDK Command-line Tools
 
+# No target device found.	错误处理
+# 1、点击 Android Studio 右侧工具栏中的手机图标。
+# 2、选择 " + " 号
+# 3、点击 "Create Virtual Device"。
+# 4、选择设备类型（如 Pixel 3a XL），点击 "Next"。
+# 5、下载并安装系统镜像。
 
 bun create tauri-app --help
 bun create tauri-app my-tauri-app \
