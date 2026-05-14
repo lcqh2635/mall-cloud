@@ -90,13 +90,28 @@ rustup target add aarch64-apple-ios aarch64-apple-ios-sim
 # 5、下载并安装系统镜像。
 
 bun create tauri-app --help
-bun create tauri-app my-tauri-app \
+
+cd mall-cloud-ui
+bun create tauri-app mall-admin-ui \
 --template vue-ts \
 --manager bun \
 --yes
+cd mall-admin-ui
+bun install
+bun run tauri android init
+
+cd mall-cloud-ui
+bun create tauri-app mall-web-ui \
+--template vue-ts \
+--manager bun \
+--yes
+cd mall-web-ui
+bun install
+bun run tauri android init
+
 
 1、模板已创建！要开始，请运行：
-cd tauri-app
+cd mall-admin-ui
 bun install
 bun run tauri android init
 2、对于桌面开发，运行：

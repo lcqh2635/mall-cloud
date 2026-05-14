@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -18,7 +17,6 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-
 <!--
   | 这是 Maven 的配置文件。可以在两个级别上指定它：
   |
@@ -33,9 +31,11 @@ under the License.
   | 在适当的情况下，默认值提供了值（未指定设置时使用的值）。
   |
   |-->
-<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
+<settings
+    xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd"
+>
     <!-- localRepository
       | 本地存储库 maven 将用于存储工件的路径。
       |
@@ -165,7 +165,8 @@ under the License.
         <mirror>
             <id>maven-default-http-blocker</id>
             <mirrorOf>external:http:*</mirrorOf>
-            <name>Pseudo repository to mirror external repositories initially using HTTP.</name>
+            <name
+            >Pseudo repository to mirror external repositories initially using HTTP.</name>
             <url>http://0.0.0.0/</url>
             <blocked>true</blocked>
         </mirror>
@@ -298,7 +299,8 @@ under the License.
                 <!-- 还可以接着配置插件下载的仓库，如阿里云校 Maven 私有仓库，配置参考云校官网 https://packages.aliyun.com/ -->
                 <repository>
                     <id>2330291-release-Ikhm5V</id>
-                    <url>https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
+                    <url
+                    >https://packages.aliyun.com/maven/repository/2330291-release-Ikhm5V</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
