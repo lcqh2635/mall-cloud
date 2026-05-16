@@ -44,37 +44,26 @@ index = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
 EOF
 
 # 使用 Android Studio 需要提前安装 gradle 和 kotlin
-sudo dnf install -y kotlin
 # https://sdkman.io/    执行以下命令时，推荐开启 VPN 否则容易失败并且下载速度极慢
 rm -rf $HOME/.sdkman
 curl -fsSL "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install gradle kotlin
-# sdkman 自我检查更新，并且更新所有已经安装的工具，例如：java、gradle、maven 等
-sdk selfupdate && sdk update
+# 通过 SDKMAN! 安装的工具（Java、Kotlin、Maven、Gradle 等）完全不需要手动配置环境变量。SDKMAN! 的核心设计就是自动接管并动态注入这些变量。可以直接 echo $JAVA_HOME
+# 通过运行以下命令来安装您选择的最新稳定版本SDK（例如Java JDK）：
+sdk install java
+echo $JAVA_HOME
+sdk install maven
+echo $MAVEN_HOME
+sdk install mvnd
+echo $MVND_HOME
+sdk install kotlin
+echo $KOTLIN_HOME
+sdk install gradle
+echo $GRADLE_HOME
+sdk current
 
-mkdir -vp "$HOME/.android/Sdk"
-mkdir -vp "$HOME/.android/Sdk/ndk"
 # https://tauri.app/zh-cn/start/prerequisites/#android
-# https://linuxcapable.com/how-to-set-java-environment-path-in-fedora-linux/
-# 在执行该命令前，请先提前安装 Android Studio
-flatpak install -y flathub com.google.AndroidStudio
-flatpak run --command=gsettings com.google.AndroidStudio set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
-
-echo '
-# Tauri 开发 Android 应用需要配置如下内容，具体参考：https://tauri.app/zh-cn/start/prerequisites/#android
-# 1. 配置 JDK 变量，使用  alternatives --display java 查看  JDK 安装的根目录
-# 参考：https://linuxcapable.com/how-to-set-java-environment-path-in-fedora-linux/
-export JAVA_HOME=/usr/lib/jvm/java-25-openjdk
-export PATH=$JAVA_HOME/bin:$PATH
-# 2. 基础变量（所有场景都建议配置）
-export ANDROID_HOME="$HOME/.android/Sdk"
-# 3. NDK 变量（构建工具会自动读取，仅手动调用 ndk-build 时需要 PATH）
-export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
-' >> ~/.bashrc
-source ~/.bashrc
 rustup target add aarch64-linux-android x86_64-linux-android
-rustup target add aarch64-apple-ios aarch64-apple-ios-sim
 # 打开 Android Studio 、创建一个应用、点击设置、点击 SDK Manager、选择 SDK Tools 然后勾选下面 5 个工具
 # Android SDK Platform
 # Android SDK Platform-Tools
@@ -98,6 +87,7 @@ bun create tauri-app mall-admin-ui \
 --yes
 cd mall-admin-ui
 bun install
+# 可能存在 Gradle 和 Java 不兼容导致运行失败的情况
 bun run tauri android init
 
 cd mall-cloud-ui
@@ -107,6 +97,7 @@ bun create tauri-app mall-web-ui \
 --yes
 cd mall-web-ui
 bun install
+# 可能存在 Gradle 和 Java 不兼容导致运行失败的情况
 bun run tauri android init
 
 
@@ -118,3 +109,9 @@ bun run tauri android init
 bun run tauri dev
 3、对于 Android 开发，运行：
 bun run tauri android dev
+
+
+# 使用 Bun 创建一个 Vite + Vue + TypeScript 项目
+# bun create vite --help
+# -i, --immediate	自动安装依赖并启动  dev 开发环境
+# bun create vite my-vue-app --template vue-ts --immediate
