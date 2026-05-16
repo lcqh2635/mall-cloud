@@ -1,8 +1,0 @@
-{
-  "hello": "Hello",
-  "welcome": "Welcome to our application",
-  "buttons": {
-    "submit": "Submit",
-    "cancel": "Cancel"
-  }
-}
