@@ -1,0 +1,134 @@
+/**
+ * 全局布局系统
+ * 包含：网格系统 | 通用容器 | 间距工具 | 定位工具 | 响应式工具
+ * 原则：原子化设计 + 组合式复用
+ */
+
+// ==================== 1. 网格系统 ====================
+/// 12列响应式网格（支持Gap间距）
+/// @param {string} $prefix - 类名前缀（默认'.grid'）
+@mixin grid-system($prefix: '.grid') {
+  #{$prefix} {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--grid-gap, #{spacing('md')}); // 使用variables中的间距变量
+
+    // 列跨度工具类（1-12）
+    @for $i from 1 through 12 {
+      &-#{$i} {
+        grid-column: span $i;
+      }
+    }
+
+    // 响应式调整
+    @include respond-to('sm') { // 使用mixins中的媒体查询
+      --grid-gap: #{spacing('lg')};
+    }
+  }
+}
+
+// 生成网格系统
+@include grid-system();
+
+// ==================== 2. 通用容器 ====================
+.container {
+  width: 100%;
+  margin-inline: auto; // 逻辑属性支持RTL
+  padding-inline: spacing('md');
+
+  // 响应式宽度控制
+  @each $breakpoint, $width in ( // 使用variables中的断点
+          'sm': 640px,
+          'md': 768px,
+          'lg': 1024px,
+          'xl': 1280px
+  ) {
+    @include respond-to($breakpoint) {
+      max-width: $width;
+    }
+  }
+
+  // 全宽模式（用于Banner等场景）
+  &-fluid {
+    max-width: 100%;
+  }
+}
+
+// ==================== 3. 间距工具 ====================
+/// 生成margin/padding工具类
+/// @param {string} $type - 'm'（margin）或 'p'（padding）
+/// @param {string} $direction - 方向（t/r/b/l/x/y）
+//@mixin spacing-utils($type, $direction: null) {
+//  $property: if($type == 'm', 'margin', 'padding');
+//
+//  @each $size, $value in spacing-sizes() { // 使用variables中的间距
+//    .#{$type}#{$direction}-#{$size} {
+//      @if $direction == 't' { #{$property}-top: $value; }
+//      @else if $direction == 'b' { #{$property}-bottom: $value; }
+//      @else if $direction == 'x' {
+//        #{$property}-left: $value;
+//        #{$property}-right: $value;
+//      }
+//        // ...其他方向
+//      @else { #{$property}: $value; } // 默认全方向
+//    }
+//  }
+//}
+
+// 生成工具类（按需启用）
+@include spacing-utils('m'); // .m-sm, .m-md...
+@include spacing-utils('p', 'x'); // .px-sm, .px-md...
+
+// ==================== 4. 定位工具 ====================
+.position {
+  &-relative { position: relative; }
+  &-absolute { position: absolute; }
+  &-sticky {
+    position: sticky;
+    top: 0;
+    z-index: map-get($z-index, 'sticky'); // 使用variables中的z-index
+  }
+
+  // 定位方向组合（示例：.top-0 .left-0）
+  @each $pos in (top, right, bottom, left) {
+    @for $i from 0 through 4 {
+      .#{$pos}-#{$i} {
+        #{$pos}: spacing($i); // 使用spacing函数
+      }
+    }
+  }
+}
+
+// ==================== 5. 响应式工具 ====================
+// 显示/隐藏工具（基于断点）
+.hide {
+  @each $breakpoint in map-keys($breakpoints) {
+    &-#{$breakpoint} {
+      @include respond-to($breakpoint) {
+        display: none;
+      }
+    }
+  }
+}
+
+.show {
+  &-mobile {
+    @include respond-to('md') {
+      display: none;
+    }
+  }
+}
+
+// ==================== 6. 浮动与清除 ====================
+.clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.float {
+  &-left { float: left; }
+  &-right { float: right; }
+}

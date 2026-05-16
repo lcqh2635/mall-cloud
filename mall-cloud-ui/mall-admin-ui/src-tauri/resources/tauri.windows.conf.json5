@@ -1,0 +1,28 @@
+{
+  "productName": "my-app",
+  "bundle": {
+    // windows 打包构建配置：https://tauri.app/zh-cn/reference/config/#windows-1
+    "windows": {
+      "allowDowngrades": true,
+      "certificateThumbprint": null,
+      "digestAlgorithm": null,
+      "nsis": null,
+      "signCommand": null,
+      "timestampUrl": null,
+      "tsp": false,
+      "webviewInstallMode": {
+        "silent": true,
+        "type": "downloadBootstrapper"
+      },
+      "wix": null
+    } ,
+    "plugins": {
+      "cli": {
+        "description": "My app",
+        "subcommands": {
+          "update": {}
+        }
+      },
+      "deep-link": {}
+    }
+  },

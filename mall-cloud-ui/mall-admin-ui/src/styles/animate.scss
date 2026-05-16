@@ -1,0 +1,172 @@
+/**
+ * 动画系统
+ * 分类：入场动画 | 交互反馈 | 加载状态 | 微交互 | 高级动效
+ * 原则：性能优先 + 可配置 + 原子化类名
+ */
+
+// ==================== 1. 动画基础变量 ====================
+// 时间变量（与design system同步）
+$animation-durations: (
+        'fast': 0.15s,
+        'normal': 0.3s,
+        'slow': 0.6s
+);
+
+// 缓动曲线（参考：https://easings.net）
+$easing-functions: (
+        'ease-in-out': cubic-bezier(0.42, 0, 0.58, 1),
+        'ease-out-back': cubic-bezier(0.34, 1.56, 0.64, 1),
+        'bounce': cubic-bezier(0.68, -0.6, 0.32, 1.6)
+);
+
+// ==================== 2. 入场动画（Enter） ====================
+/// 渐显动画
+/// @param {number} $duration - 持续时间
+/// @param {string} $easing - 缓动函数
+@mixin fade-in($duration: map-get($animation-durations, 'normal'), $easing: 'ease-in-out') {
+  opacity: 0;
+  animation: fadeIn $duration map-get($easing-functions, $easing) forwards;
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/// 上滑进入
+@mixin slide-up($distance: 20px, $duration: 0.3s) {
+  transform: translateY($distance);
+  animation: slideUp $duration ease-out forwards;
+
+  @keyframes slideUp {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+// 生成原子类（按需使用）
+.fade-in {
+  @include fade-in;
+}
+
+.slide-up {
+  @include slide-up;
+}
+
+// ==================== 3. 交互反馈（Feedback） ====================
+/// 点击涟漪效果（Material Design风格）
+@mixin ripple-effect($color: rgba(255, 255, 255, 0.7)) {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    width: 0;
+    height: 0;
+    background: $color;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width 0.6s, height 0.6s, opacity 0.6s;
+  }
+
+  &:active::after {
+    width: 300px;
+    height: 300px;
+    opacity: 0.3;
+    transition: 0s;
+  }
+}
+
+// ==================== 4. 加载状态（Loading） ====================
+/// 旋转加载动画
+@mixin spin($size: 24px, $border-width: 3px) {
+  width: $size;
+  height: $size;
+  border: $border-width solid var(--color-primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.loading-spinner {
+  @include spin;
+}
+
+// ==================== 5. 微交互（Micro-interactions） ====================
+/// 悬浮放大
+@mixin scale-on-hover($scale: 1.05) {
+  transition: transform map-get($animation-durations, 'fast') map-get($easing-functions, 'ease-out-back');
+
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+/// 按钮按压效果
+@mixin button-press {
+  transition: transform 0.1s;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// ==================== 6. 高级动效 ====================
+/// 视差滚动效果
+@mixin parallax($speed: 0.5) {
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--scroll-parallax) * #{$speed}px));
+}
+
+/// 骨架屏动画
+@mixin skeleton-loading {
+  background: linear-gradient(
+                  90deg,
+                  var(--color-bg-secondary) 25%,
+                  var(--color-bg-tertiary) 50%,
+                  var(--color-bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s infinite linear;
+
+  @keyframes skeletonShimmer {
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
+// ==================== 7. 工具类生成 ====================
+// 动画持续时间
+@each $name, $duration in $animation-durations {
+  .duration-#{$name} {
+    animation-duration: $duration;
+  }
+}
+
+// 缓动函数
+@each $name, $function in $easing-functions {
+  .ease-#{$name} {
+    animation-timing-function: $function;
+  }
+}
+
+// 延迟
+@for $i from 1 through 5 {
+  .delay-#{$i} {
+    animation-delay: #{$i * 0.1}s;
+  }
+}

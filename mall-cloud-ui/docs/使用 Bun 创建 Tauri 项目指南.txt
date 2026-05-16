@@ -117,6 +117,43 @@ bun run tauri android dev
 # bun create vite my-vue-app --template vue-ts --immediate
 
 # 配置 Bun 替代 Nodejs
+# whereis bun
 # 将 IDEA 的 JS/TS 默认运行时环境从 nodejs 改为 bun 操作如下：
 # 1、设置 -> 语言和框架 -> Bun -> /usr/local/bin/bun
 # 2、设置 -> 语言和框架 -> Node.js -> Node解释器 -> /usr/local/bin/bun
+
+
+
+bun add \
+axios gsap figlet \
+screenfull nprogress lodash-es \
+vue-i18n vue-router \
+echarts vue-echarts \
+pinia pinia-plugin-persistedstate \
+@tauri-apps/plugin-autostart \
+@tauri-apps/plugin-barcode-scanner \
+@tauri-apps/plugin-biometric \
+@tauri-apps/plugin-dialog \
+@tauri-apps/plugin-os \
+@tauri-apps/plugin-updater \
+@tauri-apps/plugin-window-state
+
+
+bun add -d \
+axios gsap figlet \
+@biomejs/biome \
+@intlify/unplugin-vue-i18n \
+@types/bun \
+@types/figlet \
+@types/nprogress \
+@unocss/reset \
+@vitest/ui \
+postcss \
+postcss-preset-env \
+sass \
+unocss \
+unplugin-auto-import \
+unplugin-icons \
+unplugin-vue-components \
+vitepress \
+vitest
