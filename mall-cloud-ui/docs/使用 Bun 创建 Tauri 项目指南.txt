@@ -115,3 +115,8 @@ bun run tauri android dev
 # bun create vite --help
 # -i, --immediate	自动安装依赖并启动  dev 开发环境
 # bun create vite my-vue-app --template vue-ts --immediate
+
+# 配置 Bun 替代 Nodejs
+# 将 IDEA 的 JS/TS 默认运行时环境从 nodejs 改为 bun 操作如下：
+# 1、设置 -> 语言和框架 -> Bun -> /usr/local/bin/bun
+# 2、设置 -> 语言和框架 -> Node.js -> Node解释器 -> /usr/local/bin/bun
