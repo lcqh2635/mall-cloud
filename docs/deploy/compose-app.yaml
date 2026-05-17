@@ -1,15 +1,5 @@
 version: "3.9"
 
-# 网络配置（所有服务统一通信）
-networks:
-  mall-cloud-net:
-    driver: bridge
-
-# 数据卷（持久化数据）
-volumes:
-  postgres_data:
-  redis_data:
-
 services:
 
   # PostgreSQL
@@ -54,3 +44,13 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+
+# 网络配置（所有服务统一通信）
+networks:
+  mall-cloud-net:
+    driver: bridge
+
+# 数据卷（持久化数据）
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,60 @@
+# 6. podman、podman-compose
+echo "安装配置 podman、podman-compose 环境..."
+sudo dnf install -y podman podman-compose
+# 启用用户级 socket
+systemctl --user enable --now podman.socket
+systemctl --user status podman.socket --no-pager
+
+# https://github.com/containers/podman/blob/cea9340242f3f6cf41f20fb0b6239aa3db5decd6/docs/tutorials/socket_activation.md
+# cat /usr/lib/systemd/user/podman.socket
+# ls $XDG_RUNTIME_DIR/podman/podman.sock
+# unix:///run/user/1000/podman/podman.sock
+# podman info
+# 配置国内加速镜像仓库
+# 主要用于 登录到容器镜像仓库（Registry），以便拉取（pull）私有镜像或推送（push）镜像到仓库
+# lcqh2635@gmail.com
+# podman login
+# cat /etc/containers/registries.conf
+# 备份到同目录（添加 .bak 后缀）
+if [ -f "/etc/containers/registries.conf.bak" ]; then
+echo "registries.conf.bak 备份文件存在，不再重复备份"
+else
+echo "registries.conf.bak 备份文件不存在，开始备份"
+sudo cp /etc/containers/registries.conf{,.bak}
+# 检查 .bak 文件是否存在
+# ls -l /etc/containers
+# 从同目录 .bak 文件恢复
+# nautilus admin:/etc/containers
+# sudo cp /etc/containers/registries.conf{.bak,}
+# tee -a 中的 -a 参数的作用是 追加（append）内容到文件末尾，而不是覆盖文件原有内容
+
+cat << EOF | sudo tee -a /etc/containers/registries.conf
+# 定义未指定镜像仓库前缀时，默认搜索的镜像仓库列表
+# 例如执行 "podman pull nginx" 会自动从 "docker.io" 查找 "library/nginx"
+unqualified-search-registries = ["docker.io"]
+
+# Podman 优先尝试从 registry.mirror 拉取镜像，如果加速器不可用/镜像不存在，则自动回退到 location 指定的官方地址
+# 官方仓库地址（最终回退地址）
+[[registry]]
+# 匹配的镜像仓库前缀（支持通配符 *）
+# 例如 "docker.io" 会匹配所有 "docker.io/xxx" 的镜像
+prefix = "docker.io"
+# 实际访问的仓库服务器地址
+# Docker Hub 的官方注册表地址
+location = "registry-1.docker.io"
+
+# 镜像加速器地址（优先使用的镜像源）
+# 添加该仓库的镜像加速器（Mirror）以阿里云镜像加速为示例
+[[registry.mirror]]
+# 镜像加速器地址（替换为你的阿里云镜像加速URL）
+location = "docker.1ms.run"
+# 是否允许不安全的 HTTP 连接（生产环境建议 false）
+insecure = false
+EOF
+fi
+
+# 创建网络
+# podman network create podman-net
+# Pods 是一个 podman 的前端。它的用户界面使用 libadwaita 并力求符合 GNOME 的设计原则
+# 打开 Pods 软件，点击 “新建连接” 然后选择使用默认的 “Unix Socket” 点击 Connect
+# IDEA 连接 Podman：按 Ctrl+Alt+S 打开设置，然后选择 构建、执行、部署 | Docker。点击 "添加"按钮 以添加 Docker 配置。选择  Podman 然后直接点击确定

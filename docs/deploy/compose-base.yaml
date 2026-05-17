@@ -1,57 +1,111 @@
-version: "3.9"
+# ==========================================================
+# Docker Compose 配置文件
+# 说明：现代 Docker Compose (V2) 已默认支持最新规范，无需显式声明 version 字段
 
-# 网络配置（所有服务统一通信）
-networks:
-  mall-cloud-net:
-    driver: bridge
 
-# 数据卷（持久化数据）
-volumes:
-  postgres_data:
-  redis_data:
+# ==========================================================
 
-# 服务
 services:
 
-  # PostgreSQL
-  postgres:
-    image: postgres:17
-    container_name: mall-postgres
-    restart: always
-    # 环境变量
-    environment:
-      POSTGRES_USER: mall
-      POSTGRES_PASSWORD: mall123
-      POSTGRES_DB: mall_cloud
-      TZ: Asia/Shanghai
-    # 数据持久化（:Z = Podman + SELinux 必须）
+  # ---------------- Redis 缓存数据库服务 ----------------
+  redis:
+    # 使用官方 Redis 7 的 Alpine 精简镜像，稳定且轻量
+    image: redis:7-alpine
+    # 指定容器名称
+    container_name: app-redis
+    # 覆盖镜像默认启动命令，追加生产级安全与性能参数
+    command:
+      - "redis-server"
+      - "--requirepass"  # 启用 Redis 密码认证
+      - "479368"  # 设置 Redis 连接密码（生产环境务必更换）
+      - "--appendonly"  # 开启 AOF 持久化模式
+      - "yes"  # 启用 AOF，保证写入操作不丢失
+      - "--maxmemory"  # 限制 Redis 最大内存使用量
+      - "256mb"  # 限制为 256MB，防止缓存击穿或内存泄漏拖垮宿主机
+      - "--maxmemory-policy"  # 配置内存淘汰策略
+      - "allkeys-lru"  # 内存满载时，优先淘汰最近最少使用的键
+    # 端口映射配置
+    ports:
+      # 将宿主机的 6379 端口映射至容器内部
+      - "6379:6379"
+    # 数据卷挂载配置
     volumes:
-      - postgres_data:/var/lib/postgresql/data:Z
+      # 命名卷挂载至 Redis 默认工作目录，用于持久化 RDB 快照与 AOF 日志文件
+      - redis_data:/data
+    # 容器退出策略：除非手动停止，否则始终自动重启
+    restart: unless-stopped
+    # 健康检查配置
+    healthcheck:
+      # 携带密码发送 PING 命令，验证 Redis 是否正常响应
+      test: ["CMD", "redis-cli", "-a", "SecureRedis456!", "ping"]
+      # 每隔 10 秒检查一次
+      interval: 10s
+      # 检查超时时间
+      timeout: 5s
+      # 失败 3 次标记为不健康
+      retries: 3
+      # 预留 10 秒启动缓冲期
+      start_period: 10s
+    # 网络配置
+    networks:
+      # 与 PostgreSQL 处于同一自定义网络，应用可通过服务名直接访问
+      - app-network
+
+  # ---------------- PostgreSQL 数据库服务 ----------------
+  postgres:
+    # 使用官方 PostgreSQL 16 的 Alpine 精简镜像，体积小且安全更新快
+    image: postgres:16-alpine
+    # 指定容器名称，便于通过 docker ps 或日志命令快速定位
+    container_name: app-postgres
+    # 容器启动时注入的环境变量，用于初始化数据库
+    environment:
+      # 设置数据库默认超级管理员用户名（生产环境建议修改）
+      POSTGRES_USER: lcqh2635
+      # 设置数据库管理员密码（务必使用强密码，生产环境建议结合 Docker Secrets）
+      POSTGRES_PASSWORD: 479368
+      # 容器首次启动时自动创建的空数据库，专门用于 Nacos 配置与注册数据持久化
+      POSTGRES_DB: nacos_config
+      # 设置容器时区，避免日志和查询时间出现偏差
+      TZ: Asia/Shanghai
+    # 端口映射配置（格式：宿主机端口:容器内部端口）
+    # 将宿主机的 5432 端口映射至容器内部，允许外部客户端直连
     ports:
       - "5432:5432"
-    networks:
-      - mall-cloud-net
-    # 健康检查
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U mall" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Redis（缓存 / 分布式锁）
-  redis:
-    image: redis:7.4
-    container_name: mall-redis
-    restart: always
-    command: redis-server --appendonly yes
+    # 数据卷挂载配置，实现数据与容器生命周期解耦
     volumes:
-      - redis_data:/data:Z
-    ports:
-      - "6379:6379"
-    networks:
-      - mall-cloud-net
+      # 命名卷挂载至 PostgreSQL 默认数据存储目录，防止容器重建导致数据丢失
+      - postgres_data:/var/lib/postgresql/data
+    # 容器退出策略：除非手动执行 docker stop，否则异常退出或宿主机重启时自动拉起
+    restart: unless-stopped
+    # 健康检查配置，用于编排系统判断服务是否真正就绪
     healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
+      # 调用官方内置工具验证 PG 实例是否可接受连接
+      test: ["CMD-SHELL", "pg_isready -U app_user -d app_database"]
+      # 每隔 10 秒执行一次健康检查
       interval: 10s
-      timeout: 3s
-      retries: 5
+      # 单次检查命令的超时时间
+      timeout: 5s
+      # 连续 3 次检查失败后，Docker 会将该容器标记为 unhealthy
+      retries: 3
+      # 容器启动后预留 30 秒的缓冲期，避免初始化未完成时被误判为不健康
+      start_period: 30s
+    # 网络配置
+    networks:
+      # 将容器加入自定义网络，实现服务间安全通信
+      - app-network
+
+# ==========================================================
+# 数据卷定义（Docker 自动管理宿主机实际存储路径）
+# ==========================================================
+volumes:
+  postgres_data:  # PostgreSQL 专用持久化卷
+    driver: local  # 使用 Docker 默认本地存储驱动
+  redis_data:  # Redis 专用持久化卷
+    driver: local  # 使用 Docker 默认本地存储驱动
+
+# ==========================================================
+# 网络定义（实现容器间隔离与安全互通）
+# ==========================================================
+networks:
+  app-network:  # 自定义网络名称
+    driver: bridge  # 使用桥接网络模式，适用于单机多容器场景，默认拒绝外部未授权访问
