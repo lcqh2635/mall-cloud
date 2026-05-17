@@ -1,4 +1,4 @@
-# 🚀 tauri-bun-ts — 用 Tauri 2.0 + Bun + TypeScript 构建现代桌面应用
+# 🚀 mall-web-ui — 用 Tauri 2.0 + Bun + TypeScript 构建现代桌面应用
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Tauri](https://img.shields.io/badge/tauri-%5E2.0.0-orange)](https://tauri.app)
@@ -7,13 +7,13 @@
 
 > 使用 **Tauri 2.0**、**Bun** 和 **TypeScript** 构建的现代化、高性能桌面应用程序模板，适用于快速启动跨平台桌面开发。
 
-🔗 项目地址：[https://github.com/lcqh2635/tauri-bun-ts](https://github.com/lcqh2635/tauri-bun-ts)
+🔗 项目地址：[https://github.com/lcqh2635/mall-web-ui](https://github.com/lcqh2635/mall-web-ui)
 
 ---
 
 ## 🌟 项目简介
 
-`tauri-bun-ts` 是一个基于 **Tauri 2.0** 的桌面应用模板，采用 **Bun** 作为运行时和包管理器，结合 **TypeScript** 实现前后端一体化开发。该项目旨在提供一个轻量、高效、现代化的技术栈组合，帮助开发者快速构建安全、跨平台的桌面应用。
+`mall-web-ui` 是一个基于 **Tauri 2.0** 的桌面应用模板，采用 **Bun** 作为运行时和包管理器，结合 **TypeScript** 实现前后端一体化开发。该项目旨在提供一个轻量、高效、现代化的技术栈组合，帮助开发者快速构建安全、跨平台的桌面应用。
 
 ### ✅ 特性亮点
 
@@ -106,7 +106,7 @@ bun run --bun tauri android build
 ## 🧩 项目结构
 
 ```bash
-tauri-bun-ts/
+mall-web-ui/
 ├── src/                    # 前端源码（Vue/TS/CSS）
 ├── public/                 # 静态资源（图标、字体等）
 ├── src-tauri/              # Tauri 后端代码（Rust）

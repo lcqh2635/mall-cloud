@@ -1,23 +1,23 @@
-**`urbane-commerce` 电商微服务系统** 量身定制的 **综合性、企业级 README.md 项目介绍文档**，内容全面、结构清晰、语言专业，兼具技术深度与工程哲学，可直接用于 GitHub / GitLab 仓库首页，作为团队协作、对外展示或面试汇报的核心材料。
+**`mall-cloud` 电商微服务系统** 量身定制的 **综合性、企业级 README.md 项目介绍文档**，内容全面、结构清晰、语言专业，兼具技术深度与工程哲学，可直接用于 GitHub / GitLab 仓库首页，作为团队协作、对外展示或面试汇报的核心材料。
 
 ---
 
-# 🌐 urbane-commerce —— 现代化、高可用、可扩展的电商中台系统
+# 🌐 mall-cloud —— 现代化、高可用、可扩展的电商中台系统
 
 > **“Commerce, refined.” —— 让每一次购物，都是一次优雅的体验。**
 
-![urbane-commerce 架构图](docs/architecture-diagram.png)  
+![mall-cloud 架构图](docs/architecture-diagram.png)  
 *(建议将架构图置于 docs/ 目录下，并在 README 中引用)*
 
 ---
 
 ## ✅ 项目简介
 
-`urbane-commerce` 是一个基于 **Spring Cloud 微服务架构** 构建的现代化、高性能、可落地的电商平台系统。它不是一个简单的“商品+订单”Demo，而是一个面向**真实生产环境**、遵循**领域驱动设计（DDD）**、支持**亿级并发访问**、具备**完整商业闭环能力**的企业级电商中台解决方案。
+`mall-cloud` 是一个基于 **Spring Cloud 微服务架构** 构建的现代化、高性能、可落地的电商平台系统。它不是一个简单的“商品+订单”Demo，而是一个面向**真实生产环境**、遵循**领域驱动设计（DDD）**、支持**亿级并发访问**、具备**完整商业闭环能力**的企业级电商中台解决方案。
 
 本项目涵盖从**用户认证、商品管理、购物车、下单支付、库存履约、物流追踪、优惠促销、智能推荐、通知触达**到**搜索推荐**等全链路核心模块，采用**分布式、无状态、事件驱动**的设计理念，所有服务独立部署、自治演进，完美适配云原生环境（Kubernetes + Docker + Nacos + Kafka + Redis + Elasticsearch）。
 
-无论你是正在构建企业级电商平台、准备技术面试、还是希望学习工业级微服务架构实践，`urbane-commerce` 都是你不可多得的**标杆级参考范例**。
+无论你是正在构建企业级电商平台、准备技术面试、还是希望学习工业级微服务架构实践，`mall-cloud` 都是你不可多得的**标杆级参考范例**。
 
 ---
 
@@ -96,7 +96,7 @@
 ## 📁 项目目录结构（推荐规范）
 
 ```
-urbane-commerce/
+mall-cloud/
 ├── pom.xml                          ← 父工程，统一管理依赖版本
 ├── commons/                         ← 公共组件库（DTO、异常、工具类）
 │   ├── commons-dto/
@@ -116,7 +116,7 @@ urbane-commerce/
 │   ├── recommendation-service/
 │   └── search-service/
 ├── gateway/                         ← API 网关
-│   └── urbane-commerce-gateway/
+│   └── mall-cloud-gateway/
 ├── infrastructure/                  ← IaC（基础设施即代码）
 │   ├── k8s/                         ← Kubernetes YAML
 │   ├── helm/                        ← Helm Chart
@@ -199,7 +199,7 @@ cd services/logistics-service && mvn spring-boot:run
 cd services/notification-service && mvn spring-boot:run
 cd services/recommendation-service && mvn spring-boot:run
 cd services/search-service && mvn spring-boot:run
-cd gateway/urbane-commerce-gateway && mvn spring-boot:run
+cd gateway/mall-cloud-gateway && mvn spring-boot:run
 ```
 
 > ⚠️ **注意**：
@@ -311,9 +311,9 @@ sequenceDiagram
 
 ---
 
-## ✅ 总结：为什么选择 urbane-commerce？
+## ✅ 总结：为什么选择 mall-cloud？
 
-| 对比项 | 普通 Demo 项目 | urbane-commerce |
+| 对比项 | 普通 Demo 项目 | mall-cloud |
 |--------|----------------|------------------|
 | 是否真实可用？ | ❌ 只能跑起来 | ✅ 可上线生产 |
 | 是否支持高并发？ | ❌ 100 QPS | ✅ 10,000+ QPS |
@@ -353,11 +353,11 @@ sequenceDiagram
 ---
 
 > **Built with care, for the discerning shopper.**  
-> © 2025 urbane-commerce Project. All rights reserved.
+> © 2025 mall-cloud Project. All rights reserved.
 
 ---
 
 ✅ **立即 Star，开启你的企业级电商架构之旅！**  
-👉 [https://github.com/yourname/urbane-commerce](https://github.com/yourname/urbane-commerce)
+👉 [https://github.com/yourname/mall-cloud](https://github.com/yourname/mall-cloud)
 
 ---
