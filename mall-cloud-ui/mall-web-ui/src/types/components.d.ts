@@ -11,7 +11,19 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AvatarDropdown: typeof import('./../components/shared/AvatarDropdown.vue')['default']
+    BarcodeScanner: typeof import('./../components/BarcodeScanner.vue')['default']
+    BaseButton: typeof import('./../components/ui/buttons/BaseButton.vue')['default']
+    BaseCard: typeof import('./../components/ui/cards/BaseCard.vue')['default']
+    Demo: typeof import('./../components/shared/demo.vue')['default']
+    Drawer: typeof import('./../components/drawer/Drawer.vue')['default']
+    Dropdown: typeof import('./../components/shared/dropdown/Dropdown.vue')['default']
+    DropdownItem: typeof import('./../components/shared/dropdown/DropdownItem.vue')['default']
+    DropdownMenu: typeof import('./../components/shared/dropdown/DropdownMenu.vue')['default']
+    HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SettingsDrawer: typeof import('./../components/ui/SettingsDrawer.vue')['default']
+    ThemeColorPicker: typeof import('./../components/ui/ThemeColorPicker.vue')['default']
   }
 }

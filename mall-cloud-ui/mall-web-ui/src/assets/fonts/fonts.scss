@@ -1,0 +1,52 @@
+// 字体定义入口，阿里巴巴字体下载 https://www.iconfont.cn/fonts 选择思源字体
+
+// 以下是：思源宋体
+@font-face {
+  font-family: "思源宋体 Regular";
+  font-weight: 400;
+  src: url("@assets/fonts/思源字体/思源宋体 Regular/L7tc23XjgJ2b/D38sbA8YSqKH.woff2") format("woff2"),
+  url("@assets/fonts/思源字体/思源宋体 Regular/L7tc23XjgJ2b/D38sbA8YSqKH.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "思源宋体 Medium";
+  font-weight: 500;
+  src: url("@assets/fonts/思源字体/思源宋体 Medium/li80N8rvVHzE/vuMP83Edthhb.woff2") format("woff2"),
+  url("@assets/fonts/思源字体/思源宋体 Medium/li80N8rvVHzE/vuMP83Edthhb.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "思源宋体 Bold";
+  font-weight: 700;
+  src: url("@assets/fonts/思源字体/思源宋体 Bold/R15pKi16hyq3/cNYQlCYZlhmi.woff2") format("woff2"),
+  url("@assets/fonts/思源字体/思源宋体 Bold/R15pKi16hyq3/cNYQlCYZlhmi.woff") format("woff");
+  font-display: swap;
+}
+
+
+// 以下是：思源黑体
+@font-face {
+  font-family: "思源黑体 Regular";
+  font-weight: 400;
+  src: url("@assets/fonts/思源字体/思源黑体 Regular/n4JnS6vmhgCT/OPnO5PEBdGFT.woff2") format("woff2"),
+  url("@assets/fonts/思源字体/思源黑体 Regular/n4JnS6vmhgCT/OPnO5PEBdGFT.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "思源黑体 Medium";
+  font-weight: 500;
+  src: url("@assets/fonts/思源字体/思源黑体 Medium/ZSRJRlKjCdKU/NcGk9Q11hSCp.woff2") format("woff2"),
+  url("@assets/fonts/思源字体/思源黑体 Medium/ZSRJRlKjCdKU/NcGk9Q11hSCp.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "思源黑体 Bold";
+  font-weight: 700;
+  src: url("@assets/fonts/思源字体/思源黑体 Bold/gzeBRqjJBwlT/MyaxEu5CwXSL.woff2") format("woff2"),
+  url("@assets/fonts/思源字体/思源黑体 Bold/gzeBRqjJBwlT/MyaxEu5CwXSL.woff") format("woff");
+  font-display: swap;
+}

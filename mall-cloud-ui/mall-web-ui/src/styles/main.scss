@@ -1,0 +1,120 @@
+/**
+ * 全局样式入口文件 - main.scss
+ * 加载顺序原则：基础 → 工具 → 布局 → 主题 → 组件 → 覆盖
+ * 使用 @use 代替 @import（Sass官方推荐）
+ */
+
+/* 1. 初始化样式（最优先加载） */
+//@use 'reset'; // 重置浏览器默认样式（或使用 @unocss/reset）
+
+/* 2. 核心工具（变量、混入、函数）*/
+//@use 'variables' as *; // 全局变量（颜色、间距等）
+//@use 'mixins' as *;    // 混入工具（需在variables之后加载）
+
+/* 3. 布局系统（网格、容器等） */
+//@use 'layouts' as *;   // 通用布局规则（如.grid-container）
+
+/* 4. 动态主题（颜色模式、字体等） */
+//@use 'themes' as *;    // 主题变量覆盖（如暗黑模式）
+
+/* 5. 动画效果（依赖主题变量时需放在后面） */
+//@use 'animate' as *;   // 关键帧动画、过渡效果
+
+/* 6. 全局组件样式（可选，推荐使用CSS Modules处理组件级样式） */
+// @use 'components/buttons';
+// @use 'components/forms';
+
+/* 7. 第三方库样式覆盖（最后加载） */
+// @use 'overrides/element-plus';
+// @use 'overrides/swiper';
+
+/* 8. 全局附加样式（谨慎添加） */
+body {
+  //font-family: map-get($font-families, 'sans'); // 使用variables中定义的变量
+  //@include smooth-scroll; // 使用mixins中的混入
+}
+
+/* 9. 打印样式（可选） */
+@media print {
+  //@include print-reset; // 打印专用重置
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.card {
+  padding: 2em;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
