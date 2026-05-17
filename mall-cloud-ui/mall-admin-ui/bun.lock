@@ -38,6 +38,7 @@
         "@unocss/reset": "^66.6.8",
         "@vitejs/plugin-vue": "^5.2.1",
         "@vitest/ui": "^4.1.6",
+        "@vue/tsconfig": "^0.9.1",
         "postcss": "^8.5.14",
         "postcss-preset-env": "^11.3.0",
         "sass": "^1.99.0",
@@ -687,6 +688,8 @@
     "@vue/server-renderer": ["@vue/server-renderer@3.5.34", "https://registry.npmmirror.com/@vue/server-renderer/-/server-renderer-3.5.34.tgz", { "dependencies": { "@vue/compiler-ssr": "3.5.34", "@vue/shared": "3.5.34" }, "peerDependencies": { "vue": "3.5.34" } }, "sha512-nHxmJoTrKsmrkbILRhkC9gY1G3moZbJTqCzDd7DOOzG5KH9oeJ0Unqrff5f9v0pW//jES05ZkJcNtfE8JjOIew=="],
 
     "@vue/shared": ["@vue/shared@3.5.34", "https://registry.npmmirror.com/@vue/shared/-/shared-3.5.34.tgz", {}, "sha512-24uqU4OIiX29ryC3MeWid/Xf2fa2EFRUVLb77nRhk+UrTVrh/XiGtFAFmJBAtBRbjwNdsPRP+jj/OL27Eg1NDA=="],
+
+    "@vue/tsconfig": ["@vue/tsconfig@0.9.1", "https://registry.npmmirror.com/@vue/tsconfig/-/tsconfig-0.9.1.tgz", { "peerDependencies": { "typescript": ">= 5.8", "vue": "^3.4.0" }, "optionalPeers": ["typescript", "vue"] }, "sha512-buvjm+9NzLCJL29KY1j1991YYJ5e6275OiK+G4jtmfIb+z4POywbdm0wXusT9adVWqe0xqg70TbI7+mRx4uU9w=="],
 
     "@vueuse/core": ["@vueuse/core@12.8.2", "https://registry.npmmirror.com/@vueuse/core/-/core-12.8.2.tgz", { "dependencies": { "@types/web-bluetooth": "^0.0.21", "@vueuse/metadata": "12.8.2", "@vueuse/shared": "12.8.2", "vue": "^3.5.13" } }, "sha512-HbvCmZdzAu3VGi/pWYm5Ut+Kd9mn1ZHnn4L5G8kOQTPs/IwIAmJoBrmYk2ckLArgMXZj0AW3n5CAejLUO+PhdQ=="],
 

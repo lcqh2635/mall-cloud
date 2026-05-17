@@ -148,6 +148,7 @@ axios gsap figlet \
 @types/nprogress \
 @unocss/reset \
 @vitest/ui \
+@vue/tsconfig \
 postcss \
 postcss-preset-env \
 sass \
