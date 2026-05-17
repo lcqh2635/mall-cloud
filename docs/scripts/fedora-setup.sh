@@ -1815,9 +1815,11 @@ install_jetbrains_toolbox() {
 	    # ~/.config/JetBrains/IntelliJIdea2026.1/idea64.vmoptions
 	    # nautilus ~/.local/share/JetBrains/Toolbox/apps
 
-	    # 自动配置  jetbrains 代码编辑器 vmoptions
-            # --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
-	    # --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
+	    # IDEA 默认的虚拟机配置参数
+	    # cat ~/.local/share/JetBrains/Toolbox/apps/intellij-idea/bin/idea64.vmoptions
+	    # 用户自定义的 IDEA 虚拟机配置参数，可以扩展和覆盖 IDEA 默认的配置
+	    # cat ~/.config/JetBrains/IntelliJIdea*/idea64.vmoptions
+	    # https://3.jetbra.in/
 	    # -javaagent:/home/lcqh/.jetbra/ja-netfilter.jar=jetbrains
 }
 
