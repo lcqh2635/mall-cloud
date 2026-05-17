@@ -55,6 +55,9 @@ fi
 
 # 创建网络
 # podman network create podman-net
+
+flatpak install -y flathub com.github.marhkb.Pods
+flatpak install -y flathub dev.skynomads.Seabird
 # Pods 是一个 podman 的前端。它的用户界面使用 libadwaita 并力求符合 GNOME 的设计原则
 # 打开 Pods 软件，点击 “新建连接” 然后选择使用默认的 “Unix Socket” 点击 Connect
 # IDEA 连接 Podman：按 Ctrl+Alt+S 打开设置，然后选择 构建、执行、部署 | Docker。点击 "添加"按钮 以添加 Docker 配置。选择  Podman 然后直接点击确定
