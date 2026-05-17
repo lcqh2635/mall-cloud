@@ -1,0 +1,68 @@
+# ==========================================================
+# RocketMQ 消息队列编排文件
+# 包含：NameServer（路由中心） + Broker（存储与代理）
+# ==========================================================
+
+services:
+  # ---------------- NameServer ----------------
+  rocketmq-namesrv:
+    image: ${RMQ_IMAGE}  # 引用统一 RocketMQ 镜像
+    container_name: rocketmq-namesrv  # 容器命名
+    command: sh mqnamesrv  # 覆盖默认入口命令，仅启动轻量级路由服务
+    environment:  # JVM 资源限制配置
+      JAVA_OPT_EXT: "-server -Xms${JVM_XMS_RMQ} -Xmx${JVM_XMX_RMQ}"  # 控制路由服务内存水位
+    ports:  # 端口暴露配置
+      - "${RMQ_NAMESRV}:${RMQ_NAMESRV}"  # 路由注册与元数据发现端口
+    volumes:  # 日志持久化挂载
+      - rmq_namesrv_logs:/home/rocketmq/logs  # 持久化路由变更与节点心跳日志
+    restart: unless-stopped  # 退出策略
+    healthcheck:  # 连通性探测配置
+      test: ["CMD-SHELL", "nc -z localhost ${RMQ_NAMESRV} || exit 1"]  # TCP 端口监听状态检查
+      interval: 10s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 15s  # 启动缓冲期
+    networks:  # 网络归属
+      - infra-net  # 加入共享网络
+
+  # ---------------- Broker ----------------
+  rocketmq-broker:
+    image: ${RMQ_IMAGE}  # 版本与 NameServer 严格一致保障协议兼容
+    container_name: rocketmq-broker  # 容器命名
+    command: >  # 复合启动命令，指定路由地址、配置文件并开启 5.x 网关
+      sh mqbroker -n rocketmq-namesrv:${RMQ_NAMESRV}
+      -c /home/rocketmq/rocketmq-5.1.4/conf/broker.conf
+      --enable-proxy
+    environment:  # JVM 资源限制配置
+      JAVA_OPT_EXT: "-server -Xms${JVM_XMS_RMQ} -Xmx${JVM_XMX_RMQ}"  # 控制消息存储内存水位
+    ports:  # 多协议端口暴露配置
+      - "10909:10909"  # VIP 高速通信通道端口
+      - "${RMQ_BROKER}:${RMQ_BROKER}"  # 常规生产者/消费者消息收发端口
+      - "10912:10912"  # 主从 CommitLog 异步同步端口
+      - "8081:8081"  # Proxy 网关 HTTP/gRPC 端口
+    depends_on:  # 启动依赖控制声明
+      rocketmq-namesrv:  # 依赖对象名称
+        condition: service_healthy  # 等待 NameServer 健康检查通过后再拉起
+    volumes:  # 数据与日志持久化挂载
+      - rmq_broker_logs:/home/rocketmq/logs  # 保留事务轨迹、堆积报警与消费偏移量日志
+      - rmq_broker_store:/home/rocketmq/store  # 物理存储 CommitLog/ConsumeQueue 索引文件
+    restart: unless-stopped  # 退出策略
+    healthcheck:  # 就绪探测配置
+      test: ["CMD-SHELL", "nc -z localhost ${RMQ_BROKER} || exit 1"]  # 主通信端口连通性验证
+      interval: 15s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 35s  # 缓冲期（适配索引加载与内存映射文件初始化）
+    networks:  # 网络归属
+      - infra-net  # 加入共享网络
+
+networks:
+  infra-net:
+    external: false
+volumes:
+  rmq_namesrv_logs:
+    external: false
+  rmq_broker_logs:
+    external: false
+  rmq_broker_store:
+    external: false

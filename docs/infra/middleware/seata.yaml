@@ -1,0 +1,34 @@
+# ==========================================================
+# Seata 分布式事务协调器编排文件
+# 说明：单机开发模式使用 file 存储，生产建议切换 db/nacos
+# ==========================================================
+
+services:
+  seata-server:
+    image: ${SEATA_IMAGE}  # 引用官方 Seata 服务端镜像
+    container_name: alibaba-seata  # 容器命名
+    environment:  # 核心运行参数配置
+      SEATA_PORT: ${SEATA_PORT}  # 设置 RPC 协调服务监听端口
+      STORE_MODE: file  # 事务日志本地文件存储模式（开发环境友好）
+      CONFIG_TYPE: file  # 配置加载源为本地配置文件
+      REGISTRY_TYPE: file  # 注册中心模式为本地（非 Nacos 自动注册）
+    ports:  # 端口暴露配置
+      - "${SEATA_PORT}:${SEATA_PORT}"  # 映射全局事务提交/回滚通信端口
+    volumes:  # 数据与配置持久化挂载
+      - seata_data:/root/seata-server  # 挂载工作目录，保留 undo_log 与本地配置快照
+    restart: unless-stopped  # 退出策略
+    healthcheck:  # 就绪探测配置
+      test: ["CMD-SHELL", "nc -z localhost ${SEATA_PORT} || exit 1"]  # TCP 端口监听状态检查
+      interval: 15s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 30s  # 缓冲期（适配事务日志回放与集群元数据加载）
+    networks:  # 网络归属
+      - infra-net  # 加入共享网络
+
+networks:
+  infra-net:
+    external: false
+volumes:
+  seata_data:
+    external: false

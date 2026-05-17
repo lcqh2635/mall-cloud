@@ -1,0 +1,187 @@
+# ==========================================================
+# Docker Compose 配置文件：PostgreSQL + Alibaba 微服务中间件全家桶
+# 架构说明：Nacos 配置中心已对接 PostgreSQL 持久化存储
+# 注意：本配置基于 Docker Compose V2 规范编写，无需声明 version 字段
+# ==========================================================
+
+services:
+  # ---------------- PostgreSQL 数据库（Nacos 专属数据源） ----------------
+  postgres:
+    image: postgres:16-alpine  # 使用官方 PostgreSQL 16 Alpine 精简镜像，轻量且安全更新及时
+    container_name: infra-postgres  # 指定容器名称，便于统一运维监控与日志检索
+    environment:  # 容器初始化环境变量
+      POSTGRES_USER: nacos_admin  # 设置 PostgreSQL 专属管理员用户名，与业务库隔离提升安全性
+      POSTGRES_PASSWORD: NacosPgPass2026!  # 设置高强度数据库密码，生产环境务必替换并配合 Secrets 管理
+      POSTGRES_DB: nacos_config  # 容器首次启动时自动创建的空数据库，专门用于 Nacos 配置与注册数据持久化
+      TZ: Asia/Shanghai  # 设置容器系统时区，保障事务时间戳与日志记录符合东八区标准
+    ports:  # 端口映射配置（宿主机:容器）
+      - "5432:5432"  # 暴露 PostgreSQL 标准端口，允许外部客户端或本机调试工具直连
+    volumes:  # 数据持久化卷挂载
+      - pg_data:/var/lib/postgresql/data  # 命名卷挂载至 PG 默认数据目录，防止容器销毁导致 Nacos 元数据丢失
+    restart: unless-stopped  # 容器退出策略：非手动停止情况下，异常退出或宿主机重启均自动恢复
+    healthcheck:  # 健康检查机制，用于 Docker 编排系统精准感知数据库就绪状态
+      test: ["CMD-SHELL", "pg_isready -U nacos_admin -d nacos_config"]  # 调用官方内置工具验证 PG 实例是否可接受连接
+      interval: 10s  # 健康检查执行频率
+      timeout: 5s  # 单次检查命令最大超时时间
+      retries: 3  # 连续失败次数阈值，达标后 Docker 将标记容器为 unhealthy
+      start_period: 20s  # 容器启动缓冲期，规避 PG 初始化阶段被误判为故障
+    networks:  # 网络归属声明
+      - infra-net  # 加入自定义内部网络，使中间件可通过 Docker DNS 直接解析服务名
+
+  # ---------------- Nacos 服务注册与配置中心（对接 PostgreSQL） ----------------
+  nacos:
+    image: nacos/nacos-server:v2.3.0  # 使用 Nacos 2.3.0 官方镜像，原生支持 PG 数据源与 gRPC 长连接
+    container_name: alibaba-nacos  # 指定容器名称
+    environment:  # 核心运行时环境变量
+      MODE: standalone  # 运行模式设为单机版，适用于开发测试环境（生产集群需改为 cluster）
+      SPRING_DATASOURCE_PLATFORM: pg  # 强制指定数据源平台为 PostgreSQL，覆盖默认的内嵌 Derby 数据库
+      PGSQL_SERVICE_HOST: infra-postgres  # 指定 PG 服务地址，利用 Docker 内部 DNS 自动解析容器名
+      PGSQL_SERVICE_PORT: 5432  # 指定 PG 服务监听端口
+      PGSQL_SERVICE_DB_NAME: nacos_config  # 指定 Nacos 连接的目标数据库名称，需与 postgres 服务 POSTGRES_DB 保持一致
+      PGSQL_SERVICE_USER: nacos_admin  # 指定 Nacos 连接 PG 的认证用户名
+      PGSQL_SERVICE_PASSWORD: NacosPgPass2026!  # 指定 Nacos 连接 PG 的认证密码
+      JVM_XMS: 256m  # 限制 JVM 初始堆内存，防止小规格宿主机启动 OOM
+      JVM_XMX: 512m  # 限制 JVM 最大堆内存，控制整体资源水位
+      NACOS_AUTH_ENABLE: "true"  # 开启控制台与 OpenAPI 鉴权，拦截未授权操作
+      NACOS_AUTH_TOKEN: SecretToken2026!  # 设置鉴权加密盐值，生产环境必须更换为随机强字符串
+    ports:  # 端口映射配置
+      - "8848:8848"  # 暴露 HTTP 控制台端口，用于 Web 界面访问与 RESTful API 调用
+      - "9848:9848"  # 暴露 gRPC 客户端通信端口，微服务实例注册与配置拉取核心通道
+      - "9849:9849"  # 暴露 gRPC 服务端同步端口，集群模式下节点间数据复制通道
+    volumes:  # 数据与日志持久化
+      - nacos_data:/home/nacos/data  # 命名卷挂载至数据目录，保留本地配置快照、操作日志与运行缓存
+    depends_on:  # 服务依赖与启动顺序控制
+      postgres:  # 依赖声明对象
+        condition: service_healthy  # 严格等待 PostgreSQL 健康检查通过后，再拉起 Nacos 容器
+    restart: unless-stopped  # 容器退出策略
+    healthcheck:  # 健康检查配置
+      test: ["CMD-SHELL", "curl -f http://localhost:8848/nacos/ || exit 1"]  # 通过 HTTP GET 验证控制台首页是否可达
+      interval: 15s  # 检查间隔时间
+      timeout: 10s  # 检查超时阈值
+      retries: 3  # 连续失败标记 unhealthy 的次数
+      start_period: 45s  # 预留充足缓冲期，适应 JVM 预热、PG 连接池初始化与元数据加载
+    networks:  # 网络归属声明
+      - infra-net  # 加入同一内部网络，实现与 PG 及其他中间件的零延迟互通
+
+  # ---------------- RocketMQ NameServer 路由发现节点 ----------------
+  rocketmq-namesrv:
+    image: apache/rocketmq:5.1.4  # 使用 RocketMQ 5.1.4 官方标准镜像，兼容云原生架构
+    container_name: rocketmq-namesrv  # 指定容器名称
+    command: sh mqnamesrv  # 覆盖默认启动命令，仅运行轻量级 NameServer 路由服务
+    environment:  # 环境变量配置
+      JAVA_OPT_EXT: "-server -Xms128m -Xmx256m"  # 限制 NameServer JVM 内存，避免路由服务过度消耗宿主机资源
+    ports:  # 端口映射配置
+      - "9876:9876"  # 暴露 NameServer 监听端口，供 Broker 注册路由信息与客户端发现元数据
+    volumes:  # 日志持久化
+      - namesrv_logs:/home/rocketmq/logs  # 命名卷挂载日志目录，便于排查路由注册异常与网络抖动
+    restart: unless-stopped  # 容器退出策略
+    healthcheck:  # 健康检查配置
+      test: ["CMD-SHELL", "nc -z localhost 9876 || exit 1"]  # 使用 netcat 探测 TCP 端口是否处于监听状态
+      interval: 10s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 15s  # 启动缓冲期
+    networks:  # 网络归属声明
+      - infra-net  # 加入内部网络
+
+  # ---------------- RocketMQ Broker 消息存储与代理节点 ----------------
+  rocketmq-broker:
+    image: apache/rocketmq:5.1.4  # 使用与 NameServer 严格一致的镜像版本，保障协议兼容
+    container_name: rocketmq-broker  # 指定容器名称
+    command: >  # 多行启动命令覆盖，显式指定 NameServer 地址、配置文件并开启 5.x Proxy 网关
+      sh mqbroker -n rocketmq-namesrv:9876
+      -c /home/rocketmq/rocketmq-5.1.4/conf/broker.conf
+      --enable-proxy
+    environment:  # 环境变量配置
+      JAVA_OPT_EXT: "-server -Xms256m -Xmx512m"  # 限制 Broker JVM 内存，高吞吐场景需按实际压测调整
+    ports:  # 端口映射配置
+      - "10909:10909"  # 暴露 VIP 高速通道端口，用于高性能客户端直连通信
+      - "10911:10911"  # 暴露常规请求端口，生产者/消费者默认连接与消息收发主通道
+      - "10912:10912"  # 暴露 HA 主从同步端口，集群模式下 CommitLog 异步复制通道
+      - "8081:8081"  # 暴露 Proxy HTTP/gRPC 端口，用于 5.x 新协议客户端平滑接入
+    depends_on:  # 服务依赖控制
+      rocketmq-namesrv:  # 依赖对象
+        condition: service_healthy  # 严格等待 NameServer 就绪后再启动 Broker，避免路由注册失败
+    volumes:  # 数据与日志持久化
+      - broker_logs:/home/rocketmq/logs  # 命名卷挂载运行日志，保留事务轨迹、堆积报警与消费偏移量日志
+      - broker_store:/home/rocketmq/store  # 命名卷挂载消息物理存储目录，防止容器重建导致消息丢失
+    restart: unless-stopped  # 容器退出策略
+    healthcheck:  # 健康检查配置
+      test: ["CMD-SHELL", "nc -z localhost 10911 || exit 1"]  # 探测 Broker 主通信端口连通性
+      interval: 15s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 35s  # 预留缓冲期，适应 CommitLog 加载、内存映射初始化与索引重建
+    networks:  # 网络归属声明
+      - infra-net  # 加入内部网络
+
+  # ---------------- Sentinel 流量控制与熔断降级仪表盘 ----------------
+  sentinel-dashboard:
+    image: bladex/sentinel-dashboard:1.8.7  # 使用社区长期维护的稳定版控制台镜像（官方已停止 Docker Hub 推送）
+    container_name: alibaba-sentinel  # 指定容器名称
+    environment:  # 环境变量配置
+      JAVA_OPTS: >  # 传递 JVM 参数至容器内部，固定服务端口与项目标识
+        -Dserver.port=8080
+        -Dcsp.sentinel.dashboard.server=localhost:8080
+        -Dproject.name=sentinel-dashboard
+    ports:  # 端口映射配置
+      - "8080:8080"  # 暴露 Sentinel 控制台 Web 端口，默认登录账号与密码均为 sentinel
+    restart: unless-stopped  # 容器退出策略
+    healthcheck:  # 健康检查配置
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]  # 验证 Web 控制台首页是否返回 HTTP 200
+      interval: 15s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 25s  # 启动缓冲期
+    networks:  # 网络归属声明
+      - infra-net  # 加入内部网络，微服务应用可通过内部 DNS 推送限流规则与实时指标
+
+  # ---------------- Seata 分布式事务协调器 ----------------
+  seata-server:
+    image: seataio/seata-server:1.7.1  # 使用 Seata 1.7.1 官方镜像，全面支持 AT/TCC/SAGA/XA 模式
+    container_name: alibaba-seata  # 指定容器名称
+    environment:  # 环境变量配置
+      SEATA_PORT: 8091  # 设置 Seata Server 监听端口，微服务客户端通过此端口获取全局锁与分支状态
+      STORE_MODE: file  # 设置事务日志存储模式为本地文件（单机开发推荐，生产建议改为 db 或 redis）
+      CONFIG_TYPE: file  # 设置配置加载模式为本地文件（单机开发推荐，生产建议接入 Nacos 集中管理）
+      REGISTRY_TYPE: file  # 设置注册中心模式为本地文件（若需注册到 Nacos 供业务自动发现，请改为 nacos）
+    ports:  # 端口映射配置
+      - "8091:8091"  # 暴露 Seata RPC 通信端口，处理全局事务提交/回滚请求与心跳保活
+    volumes:  # 配置与数据持久化
+      - seata_data:/root/seata-server  # 命名卷挂载 Seata 工作目录，保留事务快照、undo_log 与本地配置文件
+    restart: unless-stopped  # 容器退出策略
+    healthcheck:  # 健康检查配置
+      test: ["CMD-SHELL", "nc -z localhost 8091 || exit 1"]  # 探测 Seata Server RPC 端口是否处于监听状态
+      interval: 15s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 30s  # 启动缓冲期，适应事务日志回放与集群元数据加载
+    networks:  # 网络归属声明
+      - infra-net  # 加入内部网络
+
+# ==========================================================
+# 命名卷定义（Docker 自动管理宿主机底层存储路径与权限隔离）
+# ==========================================================
+volumes:
+  pg_data:  # PostgreSQL 数据持久化卷
+    driver: local  # 使用 Docker 默认本地存储驱动
+  nacos_data:  # Nacos 数据持久化卷
+    driver: local  # 使用本地存储驱动
+  namesrv_logs:  # RocketMQ NameServer 日志卷
+    driver: local  # 使用本地存储驱动
+  broker_logs:  # RocketMQ Broker 运行日志卷
+    driver: local  # 使用本地存储驱动
+  broker_store:  # RocketMQ Broker 消息物理存储卷
+    driver: local  # 使用本地存储驱动（生产环境强烈建议替换为高性能 SSD 或分布式存储）
+  seata_data:  # Seata 事务协调数据卷
+    driver: local  # 使用本地存储驱动
+
+# ==========================================================
+# 自定义网络定义（实现中间件间安全隔离与内部 DNS 自动解析）
+# ==========================================================
+networks:
+  infra-net:  # 自定义网络名称
+    driver: bridge  # 使用桥接模式，默认提供内部 DNS 服务，容器间可通过服务名直接互访
+    ipam:  # IP 地址管理配置
+      config:  # 子网规划配置
+        - subnet: 172.28.0.0/16  # 分配独立子网段，避免与宿主机默认 Docker 网桥冲突

@@ -1,0 +1,62 @@
+# ==========================================================
+# 核心数据层编排文件
+# 包含：PostgreSQL（Nacos 专属数据源） + Redis（缓存层）
+# ==========================================================
+
+services:
+  # ---------------- PostgreSQL ----------------
+  postgres:
+    image: ${PG_IMAGE}  # 引用 .env 中定义的 PostgreSQL 镜像版本
+    container_name: infra-postgres  # 固定容器名称，便于脚本调用与日志追踪
+    environment:  # 注入数据库初始化环境变量
+      POSTGRES_USER: ${PG_USER}  # 设置数据库超级管理员用户名
+      POSTGRES_PASSWORD: ${PG_PASSWORD}  # 设置数据库管理员密码
+      POSTGRES_DB: ${PG_DB}  # 首次启动自动创建的专用业务库
+      TZ: Asia/Shanghai  # 设置容器时区为东八区，保障事务时间戳一致
+    ports:  # 端口映射配置（宿主机:容器）
+      - "${PG_PORT}:${PG_PORT}"  # 暴露标准 SQL 端口供外部客户端直连调试
+    volumes:  # 数据卷挂载配置
+      - pg_data:/var/lib/postgresql/data  # 映射至 PG 默认数据目录，实现 WAL 与表空间持久化
+    restart: unless-stopped  # 退出策略：非手动停止则异常退出后自动重启
+    healthcheck:  # 健康检查机制配置
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DB}"]  # 调用官方工具验证实例连接状态
+      interval: 10s  # 健康检查执行间隔时间
+      timeout: 5s  # 单次检查命令最大超时时间
+      retries: 3  # 连续失败次数阈值，达标后标记为 unhealthy
+      start_period: 20s  # 启动缓冲期，避开 PG 初始化阶段误判
+    networks:  # 网络归属声明
+      - infra-net  # 加入共享内部网络
+
+  # ---------------- Redis ----------------
+  redis:
+    image: ${REDIS_IMAGE}  # 引用 .env 中定义的 Redis 镜像版本
+    container_name: infra-redis  # 固定容器名称
+    command: >  # 覆盖默认启动命令，追加安全与性能参数
+      redis-server
+      --requirepass ${REDIS_PASSWORD}  # 启用密码认证，拦截未授权访问
+      --appendonly yes  # 开启 AOF 持久化，保障写入数据不丢失
+      --maxmemory 256mb  # 限制最大内存占用，防止缓存击穿拖垮宿主机
+      --maxmemory-policy allkeys-lru  # 内存满载时采用 LRU 算法淘汰最近最少使用键
+    ports:  # 端口映射配置
+      - "${REDIS_PORT}:${REDIS_PORT}"  # 暴露标准端口供应用层连接
+    volumes:  # 数据卷挂载配置
+      - redis_data:/data  # 映射至 Redis 工作目录，持久化 RDB/AOF 文件
+    restart: unless-stopped  # 退出策略
+    healthcheck:  # 健康检查机制配置
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]  # 携带密码发送 PING 验证服务响应
+      interval: 10s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 10s  # 启动缓冲期
+    networks:  # 网络归属声明
+      - infra-net  # 加入共享内部网络
+
+# 声明引用的基础网络与卷（Compose 合并运行时自动复用同名定义）
+networks:
+  infra-net:  # 引用外部定义的网络
+    external: false  # 标记为当前项目内部管理，由 00-networks.yaml 提供定义
+volumes:
+  pg_data:  # 引用外部定义的卷
+    external: false
+  redis_data:
+    external: false

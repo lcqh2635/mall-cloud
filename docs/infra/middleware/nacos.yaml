@@ -1,0 +1,43 @@
+# ==========================================================
+# Nacos 注册与配置中心编排文件
+# 说明：已配置直连 PostgreSQL，替代默认内嵌 Derby 数据库
+# ==========================================================
+
+services:
+  nacos:
+    image: ${NACOS_IMAGE}  # 引用 Nacos 官方镜像
+    container_name: alibaba-nacos  # 容器命名
+    environment:  # 运行时核心配置
+      MODE: standalone  # 单机运行模式（开发/测试推荐）
+      SPRING_DATASOURCE_PLATFORM: pg  # 强制指定数据源为 PostgreSQL
+      PGSQL_SERVICE_HOST: infra-postgres  # 利用 Docker DNS 自动解析 PG 容器名
+      PGSQL_SERVICE_PORT: ${PG_PORT}  # 指定 PG 服务监听端口
+      PGSQL_SERVICE_DB_NAME: ${PG_DB}  # 指定连接的目标数据库名
+      PGSQL_SERVICE_USER: ${PG_USER}  # 指定数据库连接账号
+      PGSQL_SERVICE_PASSWORD: ${PG_PASSWORD}  # 指定数据库连接密码
+      JVM_XMS: ${JVM_XMS_NACOS}  # JVM 初始堆内存限制
+      JVM_XMX: ${JVM_XMX_NACOS}  # JVM 最大堆内存限制
+      NACOS_AUTH_ENABLE: "true"  # 开启控制台与 OpenAPI 鉴权
+      NACOS_AUTH_TOKEN: ${NACOS_TOKEN}  # 鉴权加密盐值配置
+    ports:  # 端口暴露配置
+      - "${NACOS_HTTP}:${NACOS_HTTP}"  # HTTP 控制台与 RESTful API 端口
+      - "${NACOS_GRPC_CLIENT}:${NACOS_GRPC_CLIENT}"  # gRPC 客户端实例注册与配置拉取端口
+      - "${NACOS_GRPC_SERVER}:${NACOS_GRPC_SERVER}"  # gRPC 集群节点间数据同步端口
+    volumes:  # 持久化挂载配置
+      - nacos_data:/home/nacos/data  # 保留配置快照、操作日志与本地运行缓存
+    restart: unless-stopped  # 退出策略
+    healthcheck:  # 就绪探测配置
+      test: ["CMD-SHELL", "curl -f http://localhost:${NACOS_HTTP}/nacos/ || exit 1"]  # HTTP 状态码验证控制台可达性
+      interval: 15s  # 检查间隔
+      timeout: 10s  # 超时阈值
+      retries: 3  # 失败阈值
+      start_period: 45s  # 预留 JVM 预热与 PG 连接池初始化时间
+    networks:  # 网络配置
+      - infra-net  # 加入共享内部网络
+
+networks:
+  infra-net:
+    external: false
+volumes:
+  nacos_data:
+    external: false

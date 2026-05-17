@@ -1,0 +1,20 @@
+# ==========================================================
+# 基础存储卷定义文件
+# 说明：集中声明所有命名卷，实现数据持久化与容器生命周期解耦
+# ==========================================================
+
+volumes:
+  pg_data:  # PostgreSQL 数据持久化卷
+    driver: local  # 使用宿主机本地存储驱动
+  redis_data:  # Redis 数据持久化卷
+    driver: local  # 使用本地存储驱动
+  nacos_data:  # Nacos 配置与运行日志卷
+    driver: local  # 使用本地存储驱动
+  rmq_namesrv_logs:  # RocketMQ NameServer 运行日志卷
+    driver: local  # 使用本地存储驱动
+  rmq_broker_logs:  # RocketMQ Broker 运行日志卷
+    driver: local  # 使用本地存储驱动
+  rmq_broker_store:  # RocketMQ Broker 消息物理存储卷
+    driver: local  # 使用本地存储驱动（生产建议替换为 SSD/NFS 保障 IO）
+  seata_data:  # Seata 事务协调数据卷
+    driver: local  # 使用本地存储驱动

@@ -1,0 +1,29 @@
+# ==========================================================
+# Sentinel 流量防卫兵仪表盘编排文件
+# 说明：独立运行，微服务通过 HTTP 主动推送限流规则与实时指标
+# ==========================================================
+
+services:
+  sentinel-dashboard:
+    image: ${SENTINEL_IMAGE}  # 引用社区维护的稳定版控制台镜像
+    container_name: alibaba-sentinel  # 容器命名
+    environment:  # JVM 与运行参数注入配置
+      JAVA_OPTS: >  # 传递启动参数至容器内部 Java 进程
+        -Dserver.port=${SENTINEL_PORT}  # 固定 Web 服务监听端口
+        -Dcsp.sentinel.dashboard.server=localhost:${SENTINEL_PORT}  # 指定控制台自身通信回环地址
+        -Dproject.name=sentinel-dashboard  # 设置监控大盘项目标识名称
+    ports:  # 端口暴露配置
+      - "${SENTINEL_PORT}:${SENTINEL_PORT}"  # 映射控制台端口，默认登录账号密码均为 sentinel
+    restart: unless-stopped  # 退出策略
+    healthcheck:  # 就绪探测配置
+      test: ["CMD-SHELL", "curl -f http://localhost:${SENTINEL_PORT}/ || exit 1"]  # HTTP 首页状态码验证
+      interval: 15s  # 检查间隔
+      timeout: 5s  # 检查超时
+      retries: 3  # 重试次数
+      start_period: 25s  # 启动缓冲期
+    networks:  # 网络归属
+      - infra-net  # 加入共享网络
+
+networks:
+  infra-net:
+    external: false
