@@ -151,7 +151,7 @@ export default defineConfig(async ({command, mode}) => {
                 ? {
                     protocol: "ws",
                     host,
-                    port: 1421,
+                    port: 1420,
                 }
                 : undefined,
             // 忽略文件监听
