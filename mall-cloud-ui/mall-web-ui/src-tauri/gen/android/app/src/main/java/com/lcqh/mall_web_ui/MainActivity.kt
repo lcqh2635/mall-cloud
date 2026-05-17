@@ -1,4 +1,4 @@
-package com.lcqh.tauri_bun_ts
+package com.lcqh.mall_web_ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

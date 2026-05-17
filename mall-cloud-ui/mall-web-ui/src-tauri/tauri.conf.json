@@ -1,22 +1,20 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "mall-app-ui",
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "mall-web-ui",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.lcqh.mall-web-ui",
   "build": {
-    "frontendDist": "../dist",
-    "devUrl": "http://localhost:8080",
-    "beforeDevCommand": "bun dev",
-    "beforeBuildCommand": "bun build"
+    "beforeDevCommand": "bun run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "bun run build",
+    "frontendDist": "../dist"
   },
   "app": {
     "windows": [
       {
-        "title": "mall-app-ui",
+        "title": "mall-web-ui",
         "width": 800,
-        "height": 600,
-        "resizable": true,
-        "fullscreen": false
+        "height": 600
       }
     ],
     "security": {
@@ -32,9 +30,6 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ],
-    "android": {
-      "debugApplicationIdSuffix": ".debug"
-    }
+    ]
   }
 }

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">tauri-bun-ts</string>
-    <string name="main_activity_title">tauri-bun-ts</string>
+    <string name="app_name">mall-web-ui</string>
+    <string name="main_activity_title">mall-web-ui</string>
 </resources>
