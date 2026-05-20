@@ -1,9 +1,69 @@
+# 项目的元数据，用于生成 crate 元数据，例如 crate 图标、说明、分类、关键词等。
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [package]
+# -----------------------------------------------------------------------------
+# 1. 基础标识信息 (Basic Identity)
+# -----------------------------------------------------------------------------
+
+# 项目名称：必须是唯一的，且符合 crates.io 的命名规范 (小写、连字符)。
+# 这也将是生成的二进制文件名 (例如: user-service)。
 name = "mall-web-ui"
+
+# 版本号：遵循语义化版本规范 (SemVer: Major.Minor.Patch)。
+# - Major: 不兼容的 API 变更
+# - Minor: 向后兼容的功能新增
+# - Patch: 向后兼容的问题修复
+# 在微服务中，通常每个服务独立版本号，或者使用 monorepo 统一版本。
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-edition = "2021"
+
+# Rust 版本要求：指定编译该项目所需的最小 Rust 版本 (MSRV)。
+# 这能确保团队成员或 CI 环境使用的 Rust 版本不会过旧导致编译失败。
+# 2024 edition 引入了更强大的宏和异步特性，推荐新项目使用。
+edition = "2024"
+
+# -----------------------------------------------------------------------------
+# 2. 团队与元数据 (Team & Metadata)
+# -----------------------------------------------------------------------------
+
+# 作者列表：格式为 "姓名 <邮箱>"。
+# 便于在遇到紧急 Bug 时联系到核心维护者。可以有多个作者。
+authors = [
+    "张三 <zhangsan@example.com>",
+    "李四 <lisi@example.com>",
+    "后端架构组 <backend-arch@example.com>"
+]
+
+# 项目描述：简短的一句话介绍，用于 cargo search 或文档首页。
+# 类似于 Maven POM 中的 <description>。
+description = "基于 Axum 构建的高性能用户中心微服务，替代原 Spring Cloud 架构"
+
+# 许可证：开源协议标识。
+# 企业内网项目常用 "MIT" 或 "Apache-2.0"；闭源项目可写 "UNLICENSED" 或 "Proprietary"。
+# 必须与根目录下的 LICENSE 文件内容一致。
+license = "MIT OR Apache-2.0"
+
+# 关键词：用于在 crates.io 或内部仓库中搜索分类。
+# 类似于 Maven 的 <keywords>。
+keywords = ["axum", "microservice", "tokio", "web", "api"]
+
+# 分类类别：Crates.io 的标准分类列表。
+# 帮助开发者快速定位库的用途。
+categories = ["web-programming::http-server", "asynchronous", "database"]
+
+# -----------------------------------------------------------------------------
+# 3. 仓库与文档链接 (Repository & Documentation)
+# -----------------------------------------------------------------------------
+
+# 代码仓库地址：指向 Git 仓库 (GitHub, GitLab, Gitee 等)。
+# CI/CD 工具和文档生成工具常从此处获取源码链接。
+repository = "https://github.com/your-org/user-microservice"
+
+# 项目主页：通常是文档站点、Wiki 或产品介绍页。
+homepage = "https://docs.your-org.com/user-service"
+
+# 文档地址：如果使用了 docs.rs 托管，可以在此指定；否则默认指向 crates.io 文档。
+documentation = "https://docs.rs/user-microservice"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
