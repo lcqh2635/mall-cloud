@@ -1,0 +1,338 @@
+# 项目的元数据，用于生成 crate 元数据，例如 crate 图标、说明、分类、关键词等。
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+# -----------------------------------------------------------------------------
+# 1. 基础标识信息 (Basic Identity)
+# -----------------------------------------------------------------------------
+
+# 项目名称：必须是唯一的，且符合 crates.io 的命名规范 (小写、连字符)。
+# 这也将是生成的二进制文件名 (例如: user-service)。
+name = "user-microservice"
+
+# 版本号：遵循语义化版本规范 (SemVer: Major.Minor.Patch)。
+# - Major: 不兼容的 API 变更
+# - Minor: 向后兼容的功能新增
+# - Patch: 向后兼容的问题修复
+# 在微服务中，通常每个服务独立版本号，或者使用 monorepo 统一版本。
+version = "0.1.0"
+
+# Rust 版本要求：指定编译该项目所需的最小 Rust 版本 (MSRV)。
+# 这能确保团队成员或 CI 环境使用的 Rust 版本不会过旧导致编译失败。
+# 2024 edition 引入了更强大的宏和异步特性，推荐新项目使用。
+edition = "2024"
+
+# -----------------------------------------------------------------------------
+# 2. 团队与元数据 (Team & Metadata)
+# -----------------------------------------------------------------------------
+
+# 作者列表：格式为 "姓名 <邮箱>"。
+# 便于在遇到紧急 Bug 时联系到核心维护者。可以有多个作者。
+authors = [
+    "张三 <zhangsan@example.com>",
+    "李四 <lisi@example.com>",
+    "后端架构组 <backend-arch@example.com>"
+]
+
+# 项目描述：简短的一句话介绍，用于 cargo search 或文档首页。
+# 类似于 Maven POM 中的 <description>。
+description = "基于 Axum 构建的高性能用户中心微服务，替代原 Spring Cloud 架构"
+
+# 许可证：开源协议标识。
+# 企业内网项目常用 "MIT" 或 "Apache-2.0"；闭源项目可写 "UNLICENSED" 或 "Proprietary"。
+# 必须与根目录下的 LICENSE 文件内容一致。
+license = "MIT OR Apache-2.0"
+
+# 关键词：用于在 crates.io 或内部仓库中搜索分类。
+# 类似于 Maven 的 <keywords>。
+keywords = ["axum", "microservice", "tokio", "web", "api"]
+
+# 分类类别：Crates.io 的标准分类列表。
+# 帮助开发者快速定位库的用途。
+categories = ["web-programming::http-server", "asynchronous", "database"]
+
+# -----------------------------------------------------------------------------
+# 3. 仓库与文档链接 (Repository & Documentation)
+# -----------------------------------------------------------------------------
+
+# 代码仓库地址：指向 Git 仓库 (GitHub, GitLab, Gitee 等)。
+# CI/CD 工具和文档生成工具常从此处获取源码链接。
+repository = "https://github.com/your-org/user-microservice"
+
+# 项目主页：通常是文档站点、Wiki 或产品介绍页。
+homepage = "https://docs.your-org.com/user-service"
+
+# 文档地址：如果使用了 docs.rs 托管，可以在此指定；否则默认指向 crates.io 文档。
+documentation = "https://docs.rs/user-microservice"
+
+# -----------------------------------------------------------------------------
+# 4. 构建与发布控制 (Build & Publish Control)
+# -----------------------------------------------------------------------------
+
+# 自动二进位目标：
+# true (默认): Cargo 会自动扫描 src/bin/ 目录下的 .rs 文件作为可执行入口。
+# false: 禁用自动扫描，必须在 [[bin]] 字段中显式定义入口。
+# 对于复杂的微服务项目（多入口、特定命名），建议设为 false 并手动管理，避免意外生成多余二进制文件。
+autobins = true
+
+# 自动库目标：
+# true (默认): 如果 src/lib.rs 存在，自动将其视为库 crate。
+# 微服务通常主要是二进制 (src/main.rs)，如果不需要被其他 Rust 项目作为库引用，可设为 false 以略微加快编译。
+autolib = false
+
+# 自动示例/测试/基准测试：
+# 默认均为 true。如果项目结构特殊（如自定义测试脚本位置），可关闭自动扫描。
+autoexamples = true
+autotests = true
+autobenches = true
+
+# 发布控制：
+# 如果这是一个私有微服务，不希望被意外发布到公共 crates.io 仓库，请设置为 false。
+# 这是防止敏感代码泄露的重要安全防线。
+publish = false
+
+# 包含的文件：
+# 默认包含所有版本控制下的文件。
+# 如果项目很大，可以显式指定只包含必要文件 (如 src, Cargo.toml, README, LICENSE)，排除测试数据或文档草稿，减小发布包体积。
+# include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE"]
+
+# 排除的文件：
+# 明确排除某些文件或目录，即使它们在 git 中。
+# 常用于排除本地开发配置、大型测试数据集等。
+# exclude = ["tests/data/large_dataset.csv", ".idea", ".vscode"]
+
+# -----------------------------------------------------------------------------
+# 5. 构建脚本与特性 (Build Script & Features)
+# -----------------------------------------------------------------------------
+
+# 构建脚本：
+# 指定一个 build.rs 文件的路径。
+# 用于在编译前执行自定义逻辑（如：生成 protobuf 代码、检查系统依赖、设置环境变量）。
+# 类似于 Maven 的 pre-compile 插件钩子。
+# build = "build.rs"
+
+# 默认特性：
+# 定义当用户 `cargo add` 或 `cargo build` 未指定 --no-default-features 时启用的特性集合。
+# 微服务通常不需要默认特性，或者只包含最核心的功能。
+# default = ["full-stack", "postgres"]
+
+# 工作空间成员 (如果是 Monorepo):
+# 如果此项目是大型 Workspace 的一部分，通常不在 package 下直接写 members，
+# 而是在根目录的 Cargo.toml 中定义 [workspace]。
+# 但如果是独立项目，此项无需填写。
+
+# -----------------------------------------------------------------------------
+# 6. 包元数据扩展 (Package Metadata Extensions)
+# -----------------------------------------------------------------------------
+# Cargo 允许自定义 [package.metadata.*] 字段，供特定工具读取。
+
+# 示例：配置 cargo-dist (用于发布预编译二进制包的工具)
+[package.metadata.dist]
+# 是否启用 cargo-dist 对此包的构建
+dist = true
+# 指定构建的目标平台 (Linux, macOS, Windows)
+targets = ["x86_64-unknown-linux-gnu", "aarch64-apple-darwin"]
+
+# 示例：配置 cargo-audit (安全审计工具)
+[package.metadata.audit]
+# 忽略特定的安全漏洞 ID (仅在确认误报或无法升级时使用)
+# ignore = ["RUSTSEC-2023-XXXX"]
+
+
+
+
+[dependencies]
+
+# =============================================================================
+# 1. 核心 Web 框架与异步运行时 (替代 Spring Boot Web + Tomcat)
+# =============================================================================
+
+# Axum: 核心 Web 框架。基于 Tokio 和 Tower 构建，以类型安全、模块化和高性能著称。
+# 相当于 Spring MVC 的核心 DispatcherServlet 和控制器层。
+axum = { version = "0.8.8", features = ["macros"] }
+
+# Tokio: 异步运行时。提供事件循环、线程池、异步 IO、定时器等。
+# 相当于 Spring Boot 底层的 Reactor Netty 或 Tomcat 线程池，是异步非阻塞的基础。
+# "full" 特性开启所有功能（包括网络、信号、同步原语等）。
+tokio = { version = "1.50.0", features = ["full"] }
+
+# Tower: 服务抽象层。定义了中间件（Layer）和服务的标准接口。
+# 相当于 Spring 的过滤器链（Filter Chain）和 AOP 切面基础。
+tower = "0.5.3"
+
+# Tower-HTTP: 为 HTTP 场景提供的常用 Tower 中间件实现。
+# 包含：跨域处理 (CORS)、请求追踪 (Trace)、超时控制 (Timeout)、请求 ID 生成等。
+# 相当于 Spring Security Filter, CorsFilter, HandlerInterceptor 等功能的集合。
+tower-http = { version = "0.6.8", features = [
+    "cors",          # 跨域资源共享支持
+    "trace",         # 自动记录请求/响应日志
+    "timeout",       # 请求超时处理
+    "request-id",    # 自动生成唯一的请求 ID (用于链路追踪)
+    "compression-gzip", # 响应压缩 (Gzip)
+] }
+
+# =============================================================================
+# 2. 数据序列化与反序列化 (替代 Jackson)
+# =============================================================================
+
+# Serde: Rust 最强大的序列化框架。
+# "derive" 特性允许通过宏自动生成序列化代码，类似 Lombok + Jackson 的组合。
+serde = { version = "1.0.228", features = ["derive"] }
+
+# Serde_JSON: 专门用于处理 JSON 格式的序列化后端。
+# 处理 HTTP 请求体和响应体的 JSON 转换。
+serde_json = "1.0.149"
+
+# =============================================================================
+# 3. 数据库访问层 (替代 Spring Data JPA / MyBatis)
+# =============================================================================
+
+# SeaORM: 目前 Rust 生态最成熟的异步 ORM 框架。
+# 支持主动记录 (Active Record) 和数据映射 (Data Mapper) 模式。
+# 相当于 Spring Data JPA (Hibernate)，但更轻量且完全异步。
+# "sqlx-postgres": 指定底层使用 SQLx 驱动连接 PostgreSQL (可替换为 mysql, sqlite 等)。
+# "runtime-tokio-rustls": 使用 Tokio 运行时和 Rustls (纯 Rust TLS 库) 进行安全连接。
+sea-orm = { version = "1.1.19", features = [
+    "sqlx-postgres", 
+    "runtime-tokio-rustls",
+    "with-chrono",   # 支持 chrono 时间类型
+    "with-uuid",     # 支持 UUID 类型
+] }
+
+# [备选] SQLx: 如果你更喜欢写原生 SQL 而不是 ORM。
+# 它在编译期检查 SQL 语法是否正确，类型安全极高。
+# 相当于 MyBatis 的强类型增强版。
+# sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres"] }
+
+# =============================================================================
+# 4. 服务间通信 (替代 OpenFeign / RestTemplate / gRPC Stub)
+# =============================================================================
+
+# Reqwest: 标准的异步 HTTP 客户端。
+# 支持连接池、自动重试、超时、JSON 处理。
+# 相当于 RestTemplate 或 OpenFeign 的底层 HTTP 执行器。
+reqwest = { version = "0.13.2", features = [
+    "json",          # 内置 JSON 支持
+    "rustls-tls",    # 使用纯 Rust 的 TLS 实现 (无需 OpenSSL)
+    "http2",         # 支持 HTTP/2
+] }
+
+# Tonic: 基于 Tokio 和 Hyper 的高性能 gRPC 框架。
+# 用于微服务内部的高效二进制协议通信。
+# 相当于 Spring Cloud gRPC Starter。
+tonic = "0.14.5"
+
+# Prost: Protocol Buffers 的 Rust 实现，用于 gRPC 消息的编解码。
+# 相当于 protobuf-java。
+prost = "0.13"
+
+# =============================================================================
+# 5. 配置管理 (替代 Spring Cloud Config / Nacos Config)
+# =============================================================================
+
+# Config: 灵活的配置加载库。
+# 支持从文件 (YAML/TOML/JSON)、环境变量、远程 HTTP、Consul 等多源加载配置。
+# 支持配置热重载监听。
+config = "0.15.19"
+
+# Dotenvy: 用于在开发环境中加载 .env 文件中的环境变量。
+# 相当于 Spring Boot 的 application-dev.properties 本地加载辅助。
+dotenvy = "0.15.7"
+
+# =============================================================================
+# 6. 可观测性 (替代 Spring Cloud Sleuth + Micrometer + Logback)
+# =============================================================================
+
+# Tracing: Rust 事实标准的结构化日志和分布式追踪库。
+# 比传统 log crate 更强大，支持 Span (跨度) 概念，能自动关联上下文。
+# 相当于 SLF4J + Spring Cloud Sleuth 的核心功能。
+tracing = "0.1.44"
+
+# Tracing-Subscriber: Tracing 的数据订阅者和处理器。
+# 负责将日志输出到控制台、文件或发送到收集器。
+# "env-filter": 允许通过环境变量动态调整日志级别 (如 RUST_LOG=info)。
+# "json": 输出 JSON 格式日志，便于 ELK/Loki 收集。
+tracing-subscriber = { version = "0.3.22", features = ["env-filter", "json"] }
+
+# OpenTelemetry: 可观测性的行业标准协议实现。
+# 用于生成符合 OTLP 标准的追踪数据。
+opentelemetry = "0.31.0"
+
+# OpenTelemetry-OTLP: 将追踪数据导出到支持 OTLP 的后端 (如 Jaeger, Tempo, SkyWalking)。
+opentelemetry-otlp = "0.31.0"
+
+# Metrics: 指标度量库。用于定义计数器 (Counter)、直方图 (Histogram) 等。
+# 相当于 Micrometer 的核心 API。
+metrics = "0.24.3"
+
+# Metrics-Exporter-Prometheus: 将指标数据暴露为 Prometheus 格式。
+# 通常配合 Axum 路由在 /metrics 端点暴露。
+metrics-exporter-prometheus = "0.18.1"
+
+# =============================================================================
+# 7. 容错与弹性 (替代 Resilience4j / Sentinel)
+# =============================================================================
+
+# Governor: 基于令牌桶算法的限流库。
+# 提供了 Tower Layer 接口，可直接作为 Axum 中间件使用，限制每秒请求数。
+# 相当于 Sentinel 的流控规则。
+governor = "0.7"
+
+# Tower-Retry: 基于 Tower 的重试机制中间件。
+# 当下游服务暂时不可用时，自动进行重试。
+# 相当于 Spring Retry 或 Resilience4j Retry。
+tower-retry = "0.4"
+
+# [注意] 熔断器 (Circuit Breaker): 
+# Rust 目前尚无像 Resilience4j 那样绝对统治地位的库。
+# 常用方案是使用 'circuit-breaker' crate，或者利用 'tokio::time::timeout' 
+# 结合自定义状态机实现，也可以使用 'resilience' 等较新的社区库。
+# circuit-breaker = "0.6" 
+
+# =============================================================================
+# 8. 安全与认证 (替代 Spring Security)
+# =============================================================================
+
+# JsonWebToken: 用于生成和验证 JWT (JSON Web Token)。
+# 实现无状态认证的核心组件。
+jsonwebtoken = "10.3.0"
+
+# [注意] 完整的认证框架 (如 axum-login) 可根据项目复杂度按需引入。
+# axum-login = "0.15" 
+
+# =============================================================================
+# 9. 缓存与消息队列 (替代 RedisTemplate / Spring Cloud Stream)
+# =============================================================================
+
+# Redis: 官方 Redis 客户端的 Rust 版本。
+# "tokio-comp": 开启 Tokio 异步支持。
+# 相当于 Spring Data Redis。
+redis = { version = "1.0.4", features = ["tokio-comp", "connection-manager"] }
+
+# Lapin: 纯 Rust 实现的 AMQP 0-9-1 客户端 (用于 RabbitMQ)。
+# 相当于 Spring AMQP / RabbitTemplate。
+# lapin = "2.5"
+
+# Rdkafka: librdkafka 的 Rust 封装 (用于 Kafka)，性能最强。
+# 相当于 Spring Kafka。
+# rdkafka = { version = "0.36", features = ["cmake-build"] }
+
+# =============================================================================
+# 10. 错误处理与工具 (替代 Lombok / Common Utils)
+# =============================================================================
+
+# ThisError: 用于定义库或模块内部的错误类型。
+# 通过宏自动生成 Error trait 实现，类似定义自定义 Exception 类。
+thiserror = "2.0.18"
+
+# Anyhow: 用于应用层的错误传递和处理。
+# 提供便捷的 ? 操作符支持和上下文包装，类似 throws Exception 的简化版。
+anyhow = "1.0.102"
+
+# Uuid: 生成通用唯一识别码 (UUID)。
+# 常用于生成请求 ID、主键等。
+uuid = { version = "1.22.0", features = ["v4", "serde"] }
+
+# Chrono: 处理日期和时间。
+# 相当于 Java 的 java.time 包。
+chrono = { version = "0.4.44", features = ["serde"] }
