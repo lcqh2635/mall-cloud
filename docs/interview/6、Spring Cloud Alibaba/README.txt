@@ -73,6 +73,21 @@ https://www.aliyun.com/ntms/middleware/schedulerx
 https://github.com/alibaba/arthas
 https://github.com/alibaba/druid
 
+# 阿里巴巴 MySQL binlog 增量订阅&消费组件
+https://github.com/alibaba/canal
+
+#
+https://github.com/alibaba/jetcache/blob/master/introduce_CN.md
+
+# EasyExcel是一个基于Java的、快速、简洁、解决大文件内存溢出的Excel处理工具。
+# 他能让你在不用考虑性能、内存的等因素的情况下，快速完成Excel的读、写等功能。但是作者不在维护，推荐改用 FastExcel
+# https://easyexcel.opensource.alibaba.com/
+https://readmex.com/fast-excel/fastexcel
+# 2023年，原EasyExcel作者带领团队启动FastExcel 项目 ，进行底层架构的彻底重构。
+# 2025年项目进入Apache孵化器，正式更名为 Fesod（Fast. Easy. Done.）。2026年2月发布的2.0.1版本，标志着Java Excel处理技术进入了新的时代。
+https://fesod.apache.org/zh-cn/
+https://github.com/apache/fesod
+
 
 https://github.com/apache/kafka
 https://github.com/apache/skywalking
