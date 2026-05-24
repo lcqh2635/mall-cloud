@@ -115,6 +115,7 @@ bun run tauri android dev
 # bun create vite --help
 # -i, --immediate	自动安装依赖并启动  dev 开发环境
 bun create vite my-vue-app --template vue-ts --immediate
+bun create vite code-generator-ui --template vue-ts --immediate
 
 # 配置 Bun 替代 Nodejs
 # whereis bun
