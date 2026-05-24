@@ -5,6 +5,10 @@ https://sca.aliyun.com/docs/2025.x/overview/what-is-sca
 https://github.com/alibaba/spring-cloud-alibaba
 https://github.com/alibaba/spring-cloud-alibaba/tree/2025.1.x/spring-cloud-alibaba-examples
 
+# Spring AI Alibaba
+# 一个用于构建代理、工作流和多代理应用程序的生产就绪框架。
+https://java2ai.com/
+https://github.com/alibaba/spring-ai-alibaba
 
 # Nacos
 # 一个易于使用的动态服务发现、配置和服务管理平台，用于构建AI云原生应用。
