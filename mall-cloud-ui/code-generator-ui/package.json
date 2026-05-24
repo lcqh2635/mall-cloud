@@ -24,5 +24,28 @@
     "typescript": "~6.0.2",
     "vite": "^8.0.12",
     "vue-tsc": "^3.2.8"
-  }
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "design-system",
+    "typescript"
+  ],
+  "homepage": "https://github.com/my-org/awesome-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/my-org/awesome-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/my-org/awesome-ui/issues"
+  },
+  "engines": {
+    "bun": ">=1.1.20"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
