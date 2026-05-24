@@ -34,5 +34,13 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/com.alicp.jetcache/jetcache-starter-redisson -->
+        <dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redisson</artifactId>
+            <version>2.7.9</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
