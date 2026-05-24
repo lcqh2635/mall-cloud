@@ -4,7 +4,9 @@
     "target": "es2023",
     "lib": ["ES2023"],
     "module": "esnext",
-    "types": ["node"],
+    // 要安装 Bun 内置 API 的 TypeScript 类型定义，请安装 @types/bun。安装命令 bun add -d @types/bun
+    // https://bun.zhcndoc.com/typescript
+    "types": ["bun"],
     "skipLibCheck": true,
 
     /* Bundler mode */
