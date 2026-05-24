@@ -1,8 +1,14 @@
 {
   "name": "code-generator-ui",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "description": "A project built with Bun",
+  "author": {
+    "name": "龙茶清欢",
+    "email": "lcqh2635@gmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",

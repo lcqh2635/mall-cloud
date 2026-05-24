@@ -1,5 +1,7 @@
 {
   "name": "mall-admin-ui",
+  "private": true,
+  "version": "0.1.0",
   "type": "module",
   "description": "A project built with Bun",
   "author": {
