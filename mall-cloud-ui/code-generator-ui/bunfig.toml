@@ -1,0 +1,7 @@
+[install]
+# 使用阿里云加速仓库，仓库地址可从阿里云官方获取，地址为 https://developer.aliyun.com/mirror/
+registry = "https://registry.npmmirror.com/"
+
+
+# Bun 加速仓库配置参考官网 https://bun.westudy.wang/install/registries.html
+# https://bun.westudy.wang/runtime/bunfig.html
