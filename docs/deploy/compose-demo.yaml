@@ -1,0 +1,214 @@
+# 使用 Compose 规范，Podman Compose 原生支持
+name: nacos-pg-cluster
+
+networks:
+  nacos-pg-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+
+services:
+  # ==========================================
+  # 1. PostgreSQL 主库 (Primary)
+  # ==========================================
+  postgres-primary:
+    image: bitnami/postgresql:16
+    container_name: pg-primary
+    restart: always
+    networks:
+      - nacos-pg-net
+    environment:
+      # 主库配置
+      - POSTGRESQL_USERNAME=nacos
+      - POSTGRESQL_PASSWORD=nacos123
+      - POSTGRESQL_DATABASE=nacos_config
+      # 开启主从复制
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_pass
+      # 优化连接数 (Nacos 集群连接)
+      - POSTGRESQL_MAX_CONNECTIONS=200
+    volumes:
+      - pg_primary_data:/bitnami/postgresql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nacos -d nacos_config"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================
+  # 2. PostgreSQL 从库 (Standby)
+  # ==========================================
+  postgres-secondary:
+    image: bitnami/postgresql:16
+    container_name: pg-secondary
+    restart: always
+    networks:
+      - nacos-pg-net
+    environment:
+      # 从库配置
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_pass
+      # 指向主库
+      - POSTGRESQL_MASTER_HOST=postgres-primary
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+      - POSTGRESQL_USERNAME=nacos
+      - POSTGRESQL_PASSWORD=nacos123
+      - POSTGRESQL_DATABASE=nacos_config
+    volumes:
+      - pg_secondary_data:/bitnami/postgresql
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+
+  # ==========================================
+  # 3. PostgreSQL 从库 (Standby)
+  # ==========================================
+  postgres-third:
+    image: bitnami/postgresql:16
+    container_name: pg-secondary
+    restart: always
+    networks:
+      - nacos-pg-net
+    environment:
+      # 从库配置
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_pass
+      # 指向主库
+      - POSTGRESQL_MASTER_HOST=postgres-primary
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+      - POSTGRESQL_USERNAME=nacos
+      - POSTGRESQL_PASSWORD=nacos123
+      - POSTGRESQL_DATABASE=nacos_config
+    volumes:
+      - pg_secondary_data:/bitnami/postgresql
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+
+  # ==========================================
+  # 3. Nacos 节点 1
+  # ==========================================
+  nacos1:
+    image: nacos/nacos-server:v3.2.1
+    container_name: nacos1
+    restart: always
+    networks:
+      - nacos-pg-net
+    environment:
+      - MODE=cluster
+      - PREFER_HOST_MODE=hostname
+      - NACOS_SERVERS=nacos1:8848 nacos2:8848 nacos3:8848
+      # --- PostgreSQL 原生配置 (Nacos 3.x) ---
+      - SPRING_DATASOURCE_PLATFORM=postgresql
+      # 利用 PG JDBC 多主机特性，实现自动故障转移 (targetServerType=primary 确保只连主库)
+      - POSTGRESQL_SERVICE_HOST=postgres-primary,postgres-secondary
+      - POSTGRESQL_SERVICE_PORT=5432
+      - POSTGRESQL_SERVICE_DB_NAME=nacos_config
+      - POSTGRESQL_SERVICE_USER=nacos
+      - POSTGRESQL_SERVICE_PASSWORD=nacos123
+      # 强制指定 JDBC URL 参数以确保高可用特性生效 (如果环境变量不支持多Host，可通过此方式覆盖)
+      - NACOS_DATASOURCE_URL_PARAMS=targetServerType=primary&connectTimeout=5000&socketTimeout=10000
+      # --- JVM 与 鉴权 ---
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - JVM_XMN=128m
+      - NACOS_AUTH_ENABLE=true
+      - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
+      - NACOS_AUTH_IDENTITY_KEY=serverIdentity
+      - NACOS_AUTH_IDENTITY_VALUE=security
+    volumes:
+      - nacos1_logs:/home/nacos/logs
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+
+  # ==========================================
+  # 4. Nacos 节点 2
+  # ==========================================
+  nacos2:
+    image: nacos/nacos-server:v3.2.1
+    container_name: nacos2
+    restart: always
+    networks:
+      - nacos-pg-net
+    environment:
+      - MODE=cluster
+      - PREFER_HOST_MODE=hostname
+      - NACOS_SERVERS=nacos1:8848 nacos2:8848 nacos3:8848
+      - SPRING_DATASOURCE_PLATFORM=postgresql
+      - POSTGRESQL_SERVICE_HOST=postgres-primary,postgres-secondary
+      - POSTGRESQL_SERVICE_PORT=5432
+      - POSTGRESQL_SERVICE_DB_NAME=nacos_config
+      - POSTGRESQL_SERVICE_USER=nacos
+      - POSTGRESQL_SERVICE_PASSWORD=nacos123
+      - NACOS_DATASOURCE_URL_PARAMS=targetServerType=primary&connectTimeout=5000&socketTimeout=10000
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - JVM_XMN=128m
+      - NACOS_AUTH_ENABLE=true
+      - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
+      - NACOS_AUTH_IDENTITY_KEY=serverIdentity
+      - NACOS_AUTH_IDENTITY_VALUE=security
+    volumes:
+      - nacos2_logs:/home/nacos/logs
+    ports:
+      - "8858:8848"
+      - "9858:9848"
+      - "9859:9849"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+
+  # ==========================================
+  # 5. Nacos 节点 3
+  # ==========================================
+  nacos3:
+    image: nacos/nacos-server:v3.2.1
+    container_name: nacos3
+    restart: always
+    networks:
+      - nacos-pg-net
+    environment:
+      - MODE=cluster
+      - PREFER_HOST_MODE=hostname
+      - NACOS_SERVERS=nacos1:8848 nacos2:8848 nacos3:8848
+      - SPRING_DATASOURCE_PLATFORM=postgresql
+      - POSTGRESQL_SERVICE_HOST=postgres-primary,postgres-secondary
+      - POSTGRESQL_SERVICE_PORT=5432
+      - POSTGRESQL_SERVICE_DB_NAME=nacos_config
+      - POSTGRESQL_SERVICE_USER=nacos
+      - POSTGRESQL_SERVICE_PASSWORD=nacos123
+      - NACOS_DATASOURCE_URL_PARAMS=targetServerType=primary&connectTimeout=5000&socketTimeout=10000
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - JVM_XMN=128m
+      - NACOS_AUTH_ENABLE=true
+      - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
+      - NACOS_AUTH_IDENTITY_KEY=serverIdentity
+      - NACOS_AUTH_IDENTITY_VALUE=security
+    volumes:
+      - nacos3_logs:/home/nacos/logs
+    ports:
+      - "8868:8848"
+      - "9868:9848"
+      - "9869:9849"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+
+volumes:
+  pg_primary_data:
+  pg_secondary_data:
+  nacos1_logs:
+  nacos2_logs:
+  nacos3_logs:

@@ -12,3 +12,8 @@ Prometheus + Grafana
 
 XXL-JOB
 Flowable
+
+
+https://hub.docker.com/u/bitnami
+https://hub.docker.com/r/bitnami/nginx
+https://hub.docker.com/r/bitnami/postgresql

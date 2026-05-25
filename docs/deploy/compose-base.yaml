@@ -37,7 +37,7 @@ services:
     # 健康检查配置
     healthcheck:
       # 携带密码发送 PING 命令，验证 Redis 是否正常响应
-      test: ["CMD", "redis-cli", "-a", "SecureRedis456!", "ping"]
+      test: [ "CMD", "redis-cli", "-a", "SecureRedis456!", "ping" ]
       # 每隔 10 秒检查一次
       interval: 10s
       # 检查超时时间
@@ -80,7 +80,7 @@ services:
     # 健康检查配置，用于编排系统判断服务是否真正就绪
     healthcheck:
       # 调用官方内置工具验证 PG 实例是否可接受连接
-      test: ["CMD-SHELL", "pg_isready -U app_user -d app_database"]
+      test: [ "CMD-SHELL", "pg_isready -U app_user -d app_database" ]
       # 每隔 10 秒执行一次健康检查
       interval: 10s
       # 单次检查命令的超时时间
@@ -98,14 +98,14 @@ services:
 # 数据卷定义（Docker 自动管理宿主机实际存储路径）
 # ==========================================================
 volumes:
-  postgres_data:  # PostgreSQL 专用持久化卷
+  postgres_data: # PostgreSQL 专用持久化卷
     driver: local  # 使用 Docker 默认本地存储驱动
-  redis_data:  # Redis 专用持久化卷
+  redis_data: # Redis 专用持久化卷
     driver: local  # 使用 Docker 默认本地存储驱动
 
 # ==========================================================
 # 网络定义（实现容器间隔离与安全互通）
 # ==========================================================
 networks:
-  app-network:  # 自定义网络名称
+  app-network: # 自定义网络名称
     driver: bridge  # 使用桥接网络模式，适用于单机多容器场景，默认拒绝外部未授权访问
