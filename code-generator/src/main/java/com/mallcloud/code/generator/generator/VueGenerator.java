@@ -27,7 +27,9 @@ public class VueGenerator implements IGenerator {
 
     @Override
     public void generate(Table table, GlobalConfig globalConfig) {
-
+        if (globalConfig.isEntityGenerateEnable()) {
+            System.out.println("test");
+        }
     }
 }
 

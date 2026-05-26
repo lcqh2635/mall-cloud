@@ -35,8 +35,3 @@ spring:
   # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
-
-code-generator:
-  javadoc-config:
-    author: 龙茶清欢
-    since: yyyy-MM-dd HH:mm:ss

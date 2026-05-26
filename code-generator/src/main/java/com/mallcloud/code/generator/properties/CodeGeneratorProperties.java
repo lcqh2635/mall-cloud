@@ -7,6 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Component
@@ -37,7 +39,7 @@ public class CodeGeneratorProperties {
      */
     @Getter
     @Setter
-    public static class DataSourceConfig {
+    public static class DataSourceConfig implements Serializable {
 
         /**
          * 数据库 JDBC 连接 URL（必填）
