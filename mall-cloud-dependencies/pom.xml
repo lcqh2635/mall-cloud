@@ -44,19 +44,18 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Spring 核心 -->
+        <!-- Spring 生态相关 BOM 核心 -->
         <spring-boot.version>4.0.6</spring-boot.version>
         <spring-boot-admin.version>4.0.3</spring-boot-admin.version>
         <spring-cloud.version>2025.1.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
         <spring-ai-alibaba.version>1.1.2.3</spring-ai-alibaba.version>
-
+        <!-- 数据库操作 ORM 相关 BOM 核心 -->
         <mybatis-plus.version>3.5.16</mybatis-plus.version>
         <mybatis-flex.version>1.11.7</mybatis-flex.version>
         <hutool.version>5.8.44</hutool.version>
 
         <!-- 数据库 -->
-        <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
 
         <!-- 缓存 -->
