@@ -56,6 +56,7 @@ services:
   # ------------------------------------------
   # 2. PostgreSQL 从库 1 (Standby-1)
   # 职责: 异步流复制，可作为只读查询节点或故障转移候选
+  # 查看日志：podman logs -f pg-standby-1
   # ------------------------------------------
   pg-standby-1:
     image: bitnami/postgresql:latest
