@@ -1,4 +1,4 @@
-<#-- TypeScript 类型定义模板：types.ts.ftl -->
+<#-- TypeScript 类型定义模板：types.ftl -->
 <#-- 作者：${author} -->
 <#-- 生成时间：${now?string("yyyy-MM-dd HH:mm:ss")} -->
 <#-- 数据库表：${table.comment} -->

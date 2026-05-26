@@ -168,7 +168,7 @@ public class CodeGeneratorProperties {
                 "api.ts", new CustomFile(
                         "api",
                         ".ts",
-                        "templates/frontend/ts/api.ts.ftl",
+                        "templates/frontend/ts/api.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName().toLowerCase()
                 ),
@@ -176,7 +176,7 @@ public class CodeGeneratorProperties {
                 "types.ts", new CustomFile(
                         "types",
                         ".ts",
-                        "templates/frontend/ts/types.ts.ftl",
+                        "templates/frontend/ts/types.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName().toLowerCase()
                 ),
@@ -184,7 +184,7 @@ public class CodeGeneratorProperties {
                 "Table.vue", new CustomFile(
                         "views",
                         "Table.vue",
-                        "templates/frontend/vue/table.vue.ftl",
+                        "templates/frontend/vue/table.ftl",
                         true,
                         tableInfo -> tableInfo.getEntityName() + "List"
                 ),
@@ -554,21 +554,21 @@ code-generator:
       api.ts:
         package-name: "api"
         file-name: ".ts"
-        template-path: "templates/ts/api.ts.ftl"
+        template-path: "templates/ts/api.ftl"
         enable-file-override: true
         format-name-function: "tableInfo -> tableInfo.getEntityName().toLowerCase()"
       # 类型定义
       types.ts:
         package-name: "types"
         file-name: ".ts"
-        template-path: "templates/ts/types.ts.ftl"
+        template-path: "templates/ts/types.ftl"
         enable-file-override: true
         format-name-function: "tableInfo -> tableInfo.getEntityName().toLowerCase()"
       # Vue 列表页
       Table.vue:
         package-name: "views"
         file-name: "Table.vue"
-        template-path: "templates/vue/table.vue.ftl"
+        template-path: "templates/vue/table.ftl"
         enable-file-override: true
         format-name-function: "tableInfo -> tableInfo.getEntityName() + 'List'"
       # Vue 表单页

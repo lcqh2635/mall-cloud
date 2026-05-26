@@ -1,8 +1,6 @@
 package com.mallcloud.code.generator.properties;
 
-import com.mybatisflex.codegen.config.GlobalConfig;
-import com.mybatisflex.codegen.config.JavadocConfig;
-import com.mybatisflex.codegen.config.PackageConfig;
+import com.mybatisflex.codegen.config.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,13 +17,16 @@ public class CodeGeneratorProperties {
     private DataSourceConfig dataSourceConfig = new DataSourceConfig();
 
     @NestedConfigurationProperty
-    private GlobalConfig globalConfig = new GlobalConfig();
-
-    @NestedConfigurationProperty
     private PackageConfig packageConfig = new PackageConfig();
 
     @NestedConfigurationProperty
     private JavadocConfig javadocConfig = new JavadocConfig();
+
+    @NestedConfigurationProperty
+    private StrategyConfig strategyConfig = new StrategyConfig();
+
+    @NestedConfigurationProperty
+    private TemplateConfig templateConfig = new TemplateConfig();
 
     /**
      * 自定义包装类：映射 MyBatis-Plus 的 DataSourceConfig

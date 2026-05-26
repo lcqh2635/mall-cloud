@@ -221,8 +221,8 @@ public class CodeGenerator {
             // 前端 Vue3 组件模板
             .setOther("/templates/vue-list.vue.ftl")     // 列表页
             .setOther("/templates/vue-form.vue.ftl")     // 表单页
-            .setOther("/templates/api.ts.ftl")           // API 接口
-            .setOther("/templates/types.ts.ftl");        // 类型定义
+            .setOther("/templates/api.ftl")           // API 接口
+            .setOther("/templates/types.ftl");        // 类型定义
 
         // 6. 创建生成器并执行
         AutoGenerator mpg = new AutoGenerator();

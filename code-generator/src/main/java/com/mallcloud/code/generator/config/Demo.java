@@ -110,9 +110,9 @@ public class Demo {
                                     "outputDir", // 自定义输出目录的键
                                     System.getProperty("user.dir") + "/frontend/src" // 前端项目的根目录
                             ))
-                            .customFile(Collections.singletonMap("api.ts", "/templates/api.ts.ftl")) // API 文件
-                            .customFile(Collections.singletonMap("types.ts", "/templates/types.ts.ftl")) // TypeScript 类型定义文件
-                            .customFile(Collections.singletonMap("YourTable.vue", "/templates/table.vue.ftl.ftl")); // Vue 组件文件
+                            .customFile(Collections.singletonMap("api.ts", "/templates/api.ftl")) // API 文件
+                            .customFile(Collections.singletonMap("types.ts", "/templates/types.ftl")) // TypeScript 类型定义文件
+                            .customFile(Collections.singletonMap("YourTable.vue", "/templates/table.ftl.ftl")); // Vue 组件文件
                 })
                 // 模板引擎配置
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
@@ -283,7 +283,7 @@ public class Demo {
                                             .fileName(".ts")
                                             .formatNameFunction(tableInfo -> tableInfo.getEntityName().toLowerCase())
                                             .filePath(System.getProperty("user.dir") + "/project/frontend/src")
-                                            .templatePath("templates/ts/api.ts.ftl") //指定生成模板路径
+                                            .templatePath("templates/ts/api.ftl") //指定生成模板路径
                                             .build()
                             ) // API 文件
                             .customFile(
@@ -293,7 +293,7 @@ public class Demo {
                                             .fileName("Type.ts") // 文件名称
                                             .formatNameFunction(tableInfo -> tableInfo.getEntityName().toLowerCase())
                                             .filePath(System.getProperty("user.dir") + "/project/frontend/src")
-                                            .templatePath("templates/ts/types.ts.ftl") //指定生成模板路径
+                                            .templatePath("templates/ts/types.ftl") //指定生成模板路径
                                             .build()
                             ) // TypeScript 类型定义文件
                             .customFile(
@@ -302,7 +302,7 @@ public class Demo {
                                             .packageName("views")
                                             .fileName("Table.vue") // 文件名称
                                             .filePath(System.getProperty("user.dir") + "/project/frontend/src")
-                                            .templatePath("templates/vue/table.vue.ftl") //指定生成模板路径
+                                            .templatePath("templates/vue/table.ftl") //指定生成模板路径
                                             .build()
                             ); // Vue 组件文件
                 })

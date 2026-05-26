@@ -1,4 +1,4 @@
-<#-- API 接口定义模板：api.ts.ftl -->
+<#-- API 接口定义模板：api.ftl -->
 <#-- 作者：${author} -->
 <#-- 生成时间：${now?string("yyyy-MM-dd HH:mm:ss")} -->
 <#-- 数据库表：${table.comment} -->

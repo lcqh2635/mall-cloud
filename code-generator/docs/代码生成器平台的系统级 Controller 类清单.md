@@ -381,8 +381,8 @@ public class CodeGenController {
      *       "tableNames": ["t_user", "t_product"],
      *       "templateMap": {
      *         "vue-list": "vue-list.vue.ftl",
-     *         "ts-api": "api.ts.ftl",
-     *         "ts-types": "types.ts.ftl"
+     *         "ts-api": "api.ftl",
+     *         "ts-types": "types.ftl"
      *       },
      *       "author": "张三"
      *     }
