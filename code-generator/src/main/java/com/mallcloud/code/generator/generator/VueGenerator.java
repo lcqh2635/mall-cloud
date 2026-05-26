@@ -3,7 +3,9 @@ package com.mallcloud.code.generator.generator;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.entity.Table;
 import com.mybatisflex.codegen.generator.IGenerator;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class VueGenerator implements IGenerator {
     protected String templatePath;
 
@@ -28,7 +30,7 @@ public class VueGenerator implements IGenerator {
     @Override
     public void generate(Table table, GlobalConfig globalConfig) {
         if (globalConfig.isEntityGenerateEnable()) {
-            System.out.println("test");
+            log.info("VueGenerator");
         }
     }
 }

@@ -3,21 +3,35 @@ package com.mallcloud.code.generator.generator;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.entity.Table;
 import com.mybatisflex.codegen.generator.IGenerator;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class VoGenerator implements IGenerator {
-    @Override
-    public String getTemplatePath() {
-        return "";
+    protected String templatePath;
+
+    public VoGenerator() {
+        this("/templates/frontend/ts/api.tpl");
+    }
+
+    public VoGenerator(String templatePath) {
+        this.templatePath = templatePath;
     }
 
     @Override
-    public void setTemplatePath(String s) {
+    public String getTemplatePath() {
+        return this.templatePath;
+    }
 
+    @Override
+    public void setTemplatePath(String templatePath) {
+        this.templatePath = templatePath;
     }
 
     @Override
     public void generate(Table table, GlobalConfig globalConfig) {
-
+        if (globalConfig.isEntityGenerateEnable()) {
+            log.info("VoGenerator");
+        }
     }
 }
 
