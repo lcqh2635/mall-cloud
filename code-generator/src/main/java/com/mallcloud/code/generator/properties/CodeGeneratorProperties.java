@@ -14,6 +14,10 @@ import java.io.Serializable;
 @Component
 @ConfigurationProperties(prefix = "code-generator")
 public class CodeGeneratorProperties {
+    private boolean vueGenerateEnable;
+    private boolean tsGenerateEnable;
+    private boolean dtoGenerateEnable;
+    private boolean voGenerateEnable;
 
     @NestedConfigurationProperty
     private DataSourceConfig dataSourceConfig = new DataSourceConfig();

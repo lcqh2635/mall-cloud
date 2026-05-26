@@ -1,12 +1,17 @@
 package com.mallcloud.code.generator.config;
 
+import com.mallcloud.code.generator.generator.DtoGenerator;
+import com.mallcloud.code.generator.generator.TypeScriptGenerator;
+import com.mallcloud.code.generator.generator.VoGenerator;
+import com.mallcloud.code.generator.generator.VueGenerator;
 import com.mallcloud.code.generator.properties.CodeGeneratorProperties;
 import com.mallcloud.commons.mybatis.entity.BaseEntity;
 import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.ColumnConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
-import com.mybatisflex.codegen.config.JavadocConfig;
 import com.mybatisflex.codegen.dialect.IDialect;
+import com.mybatisflex.codegen.generator.GeneratorFactory;
+import com.mybatisflex.codegen.generator.impl.*;
 import com.mybatisflex.codegen.template.impl.EnjoyTemplate;
 import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.service.IService;
@@ -22,6 +27,13 @@ import org.springframework.context.annotation.Configuration;
 public class CodeGeneratorConfig {
 
     private final CodeGeneratorProperties codeGeneratorProperties;
+
+    static {
+        GeneratorFactory.registerGenerator("dto", new DtoGenerator());
+        GeneratorFactory.registerGenerator("vo", new VoGenerator());
+        GeneratorFactory.registerGenerator("vue", new VueGenerator());
+        GeneratorFactory.registerGenerator("ts", new TypeScriptGenerator());
+    }
 
     void codeGenerator() {
         var dataSourceConfig = codeGeneratorProperties.getDataSourceConfig();
