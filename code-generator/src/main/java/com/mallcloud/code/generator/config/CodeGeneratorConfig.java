@@ -5,6 +5,7 @@ import com.mallcloud.commons.mybatis.entity.BaseEntity;
 import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.ColumnConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
+import com.mybatisflex.codegen.config.JavadocConfig;
 import com.mybatisflex.codegen.dialect.IDialect;
 import com.mybatisflex.codegen.template.impl.EnjoyTemplate;
 import com.mybatisflex.core.BaseMapper;
@@ -12,16 +13,18 @@ import com.mybatisflex.core.service.IService;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 
 // https://mybatis-flex.com/zh/others/codegen.html
 // https://developer.aliyun.com/article/1460051
+@Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
 public class CodeGeneratorConfig {
 
     private final CodeGeneratorProperties codeGeneratorProperties;
 
     void codeGenerator() {
-        CodeGeneratorProperties.DataSourceConfig dataSourceConfig = codeGeneratorProperties.getDataSourceConfig();
+        var dataSourceConfig = codeGeneratorProperties.getDataSourceConfig();
         // 配置数据源
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(dataSourceConfig.getUrl());
@@ -38,19 +41,23 @@ public class CodeGeneratorConfig {
         generator.generate();
     }
 
-    public static GlobalConfig createGlobalConfigUseStyle() {
+    public GlobalConfig createGlobalConfigUseStyle() {
+        var javadocConfig = codeGeneratorProperties.getJavadocConfig();
+
         //创建配置内容
         GlobalConfig globalConfig = new GlobalConfig();
 
-        // 代码注释配置
-        globalConfig.getJavadocConfig()
-                .setAuthor("龙茶清欢")
-                .setSince("yyyy-MM-dd HH:mm:ss");
         // 包配置
         globalConfig.getPackageConfig()
                 // 文件输出目录，默认如下
                 .setSourceDir(System.getProperty("user.dir") + "/src/main/java")
                 .setBasePackage("com.mallcloud");
+
+        // 代码注释配置
+        globalConfig.getJavadocConfig()
+                .setAuthor(javadocConfig.getAuthor())
+                .setSince(javadocConfig.getSince());
+
         // 策略配置
         // 设置表前缀和只生成哪些表，setGenerateTable 未配置时，生成所有表
         globalConfig.getStrategyConfig()

@@ -37,5 +37,6 @@ spring:
     keep-alive: true
 
 code-generator:
-  global-config:
-    file-type: java
+  javadoc-config:
+    author: 龙茶清欢
+    since: yyyy-MM-dd HH:mm:ss

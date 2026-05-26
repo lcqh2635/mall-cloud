@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties(prefix = "mall-cloud.generator")
+@ConfigurationProperties(prefix = "code-generator")
 public class CodeGeneratorProperties {
 
     @NestedConfigurationProperty
@@ -22,10 +22,10 @@ public class CodeGeneratorProperties {
     private GlobalConfig globalConfig = new GlobalConfig();
 
     @NestedConfigurationProperty
-    private JavadocConfig javadocConfig = new JavadocConfig();
+    private PackageConfig packageConfig = new PackageConfig();
 
     @NestedConfigurationProperty
-    private PackageConfig packageConfig = new PackageConfig();
+    private JavadocConfig javadocConfig = new JavadocConfig();
 
     /**
      * 自定义包装类：映射 MyBatis-Plus 的 DataSourceConfig
@@ -59,69 +59,5 @@ public class CodeGeneratorProperties {
          * 默认值：无（必须显式配置）
          */
         private String password;
-
-        /**
-         * JDBC 驱动类全限定名（必填）
-         * MySQL：com.mysql.cj.jdbc.Driver
-         * PostgreSQL：org.postgresql.Driver
-         * Oracle：oracle.jdbc.OracleDriver
-         * SQL Server：com.microsoft.sqlserver.jdbc.SQLServerDriver
-         * 默认值：com.mysql.cj.jdbc.Driver
-         */
-        private String driverClassName = "com.mysql.cj.jdbc.Driver";
-
-        /**
-         * 数据库类型（用于 MyBatis-Plus 生成器自动识别 SQL 语法）
-         * 可选值：MYSQL、POSTGRESQL、ORACLE、SQLSERVER、DB2、H2
-         * 注意：必须与 driverClassName 和 URL 保持一致
-         * 默认值：MYSQL
-         */
-        private DbType dbType = DbType.MYSQL;
-
-        /**
-         * 数据库 Schema 名称（仅适用于 PostgreSQL、Oracle 等支持 Schema 的数据库）
-         * 例如：public、myapp_schema
-         * MySQL 无需设置，留空即可
-         * 默认值：null
-         */
-        private String schema;
-
-        /**
-         * 数据库目录名称（Catalog，适用于 Oracle、SQL Server）
-         * 在 MySQL 中通常为数据库名，与 url 中的 dbname 一致
-         * 默认值：null
-         */
-        private String catalog;
-
-        /**
-         * 是否启用 SSL 连接（适用于生产环境加密通信）
-         * true：强制使用 SSL；false：禁用 SSL（开发环境常用）
-         * 默认值：false
-         */
-        private Boolean useSSL;
-
-        /**
-         * 连接超时时间（毫秒），连接数据库的最大等待时间
-         * 超时后抛出异常，避免长时间阻塞
-         * 默认值：0（无限等待）
-         */
-        private Integer connectTimeout;
-
-        /**
-         * Socket 读写超时时间（毫秒），网络请求最大等待时间
-         * 避免因网络延迟导致生成器卡死
-         * 默认值：0（无限等待）
-         */
-        private Integer socketTimeout;
-
-        @Getter
-        public enum DbType {
-            MYSQL,
-            POSTGRESQL,
-            ORACLE,
-            SQLSERVER,
-            DB2,
-            H2
-        }
     }
 }

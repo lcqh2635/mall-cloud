@@ -1,6 +1,6 @@
 package com.mallcloud.commons.mybatis.config;
 
-public class MybatisConfig {
+public class MybatisFlexConfig {
 
 }
 
