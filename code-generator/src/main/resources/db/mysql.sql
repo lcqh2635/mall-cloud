@@ -118,39 +118,78 @@ CREATE TABLE gen_test_student
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT ='测试2';
 
 
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('datetime', 'Date', 'java.util.Date', now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('date', 'Date', 'java.util.Date', now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('tinyint', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('smallint', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('mediumint', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('int', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('integer', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('bigint', 'Long', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('float', 'Float', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('double', 'Double', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('decimal', 'BigDecimal', 'java.math.BigDecimal', now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('bit', 'Boolean', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('char', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('varchar', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('tinytext', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('text', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('mediumtext', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('longtext', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('timestamp', 'Date', 'java.util.Date', now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('NUMBER', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('BINARY_INTEGER', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('BINARY_FLOAT', 'Float', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('BINARY_DOUBLE', 'Double', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('VARCHAR2', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('NVARCHAR', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('NVARCHAR2', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('CLOB', 'String', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('int8', 'Long', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('int4', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('int2', 'Integer', NULL, now());
-INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time) VALUES ('numeric', 'BigDecimal', 'java.math.BigDecimal', now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('datetime', 'Date', 'java.util.Date', now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('date', 'Date', 'java.util.Date', now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('tinyint', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('smallint', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('mediumint', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('int', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('integer', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('bigint', 'Long', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('float', 'Float', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('double', 'Double', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('decimal', 'BigDecimal', 'java.math.BigDecimal', now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('bit', 'Boolean', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('char', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('varchar', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('tinytext', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('text', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('mediumtext', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('longtext', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('timestamp', 'Date', 'java.util.Date', now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('NUMBER', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('BINARY_INTEGER', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('BINARY_FLOAT', 'Float', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('BINARY_DOUBLE', 'Double', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('VARCHAR2', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('NVARCHAR', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('NVARCHAR2', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('CLOB', 'String', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('int8', 'Long', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('int4', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('int2', 'Integer', NULL, now());
+INSERT INTO gen_field_type (column_type, attr_type, package_name, create_time)
+VALUES ('numeric', 'BigDecimal', 'java.math.BigDecimal', now());
 
-INSERT INTO gen_base_class (package_name, code, fields, remark, create_time) VALUES ('net.maku.framework.mybatis.entity', 'BaseEntity', 'id,creator,create_time,updater,update_time,version,deleted', '使用该基类，则需要表里有这些字段', now());
+INSERT INTO gen_base_class (package_name, code, fields, remark, create_time)
+VALUES ('net.maku.framework.mybatis.entity', 'BaseEntity', 'id,creator,create_time,updater,update_time,version,deleted',
+        '使用该基类，则需要表里有这些字段', now());
 
-INSERT INTO gen_project_modify (project_name, project_code, project_package, project_path, modify_project_name, modify_project_code, modify_project_package, exclusions, modify_suffix, create_time) VALUES ('maku-boot', 'maku', 'net.maku', 'D:/makunet/maku-boot', 'baba-boot', 'baba', 'com.baba', '.git,.idea,target,logs', 'java,xml,yml,txt', now());
-INSERT INTO gen_project_modify (project_name, project_code, project_package, project_path, modify_project_name, modify_project_code, modify_project_package, exclusions, modify_suffix, create_time) VALUES ('maku-cloud', 'maku', 'net.maku', 'D:/makunet/maku-cloud', 'baba-cloud', 'baba', 'com.baba', '.git,.idea,target,logs', 'java,xml,yml,txt', now());
+INSERT INTO gen_project_modify (project_name, project_code, project_package, project_path, modify_project_name,
+                                modify_project_code, modify_project_package, exclusions, modify_suffix, create_time)
+VALUES ('maku-boot', 'maku', 'net.maku', 'D:/makunet/maku-boot', 'baba-boot', 'baba', 'com.baba',
+        '.git,.idea,target,logs', 'java,xml,yml,txt', now());
+INSERT INTO gen_project_modify (project_name, project_code, project_package, project_path, modify_project_name,
+                                modify_project_code, modify_project_package, exclusions, modify_suffix, create_time)
+VALUES ('maku-cloud', 'maku', 'net.maku', 'D:/makunet/maku-cloud', 'baba-cloud', 'baba', 'com.baba',
+        '.git,.idea,target,logs', 'java,xml,yml,txt', now());
