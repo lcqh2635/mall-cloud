@@ -51,8 +51,8 @@ src/
     └── resources/
         ├── mysql-schema.sql      # MySQL 数据库结构脚本
         ├── mysql-data.sql        # MySQL 初始数据脚本
-        ├── postgres-schema.sql # PostgreSQL 数据库结构脚本
-        ├── postgres-data.sql   # PostgreSQL 初始数据脚本
+        ├── schema.sql # PostgreSQL 数据库结构脚本
+        ├── data.sql   # PostgreSQL 初始数据脚本
         └── application.yml       # Spring Boot 配置文件
 ```
 
@@ -160,7 +160,7 @@ INSERT INTO roles (name) VALUES
 3. 加载 `mysql-data.sql` → 插入 3 个用户和 2 个角色
 4. 应用正常启动，数据库已准备好
 
-> ✅ 如果你切换为 `platform=postgresql`，则会自动加载 `postgres-schema.sql` 和 `postgres-data.sql`
+> ✅ 如果你切换为 `platform=postgresql`，则会自动加载 `schema.sql` 和 `data.sql`
 
 ---
 

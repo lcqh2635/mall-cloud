@@ -32,8 +32,8 @@ password:
     sql:
     init:
     platform: postgresql
-    schema-locations: data/postgres-schema.sql
-    data-locations: data/postgres-data.sql
+    schema-locations: data/schema.sql
+    data-locations: data/data.sql
     username: postgres
     password:
     <PASSWORD>

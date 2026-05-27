@@ -35,3 +35,53 @@ spring:
   # 建议将属性spring.main.keep-alive设置为true。这确保了即使所有线程都是虚拟线程，JVM 也会保持活动状态。
   main:
     keep-alive: true
+
+  # ============================================
+  #             数据库基础配置
+  # ============================================
+  datasource:
+    # 数据库驱动类名（PostgreSQL）
+    driver-class-name: org.postgresql.Driver
+    # JDBC 连接 URL，格式：jdbc:postgresql://主机:端口/数据库名?参数
+    url: jdbc:postgresql://localhost:5432/your_database?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    # 数据库用户名
+    username: postgres
+    # 数据库密码
+    password: your_password
+    # ============================================
+    #         HikariCP 连接池配置（默认）
+    # ============================================
+    hikari:
+      # 连接池名称
+      pool-name: MyHikariCP
+      # 最小空闲连接数（建议与最大连接数保持一致或略小）
+      minimum-idle: 5
+      # 最大连接数（根据服务器配置调整，一般CPU核数*2+1）
+      maximum-pool-size: 20
+      # 连接超时时间（毫秒），默认30000（30秒）
+      connection-timeout: 30000
+      # 空闲连接超时时间（毫秒），默认600000（10分钟）
+      idle-timeout: 600000
+      # 连接最大生命周期（毫秒），默认1800000（30分钟）
+      max-lifetime: 1800000
+      # 连接测试查询（用于验证连接是否有效）
+      connection-test-query: SELECT 1
+      # 是否启用JMX监控
+      register-mbeans: true
+  # ============================================
+  #           SQL初始化配置
+  # ============================================
+  sql:
+    init:
+      # 初始化模式：always（总是）、embedded（仅嵌入式）、never（从不）
+      mode: always
+      # 是否继续执行出错脚本（默认false）
+      continue-on-error: false
+      # 数据库平台（用于区分不同数据库的脚本）
+      platform: postgresql
+      # Schema脚本位置（创建表结构）
+      schema-locations: classpath:db/postgres/schema.sql
+      # 数据脚本位置（插入初始数据）
+      data-locations: classpath:db/postgres/data.sql
+      # Schema和Data文件的字符编码
+      encoding: UTF-8
