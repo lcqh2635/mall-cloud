@@ -7,8 +7,7 @@ import com.mallcloud.code.generator.generator.VueGenerator;
 import com.mallcloud.code.generator.properties.CodeGeneratorProperties;
 import com.mallcloud.commons.mybatis.entity.BaseEntity;
 import com.mybatisflex.codegen.Generator;
-import com.mybatisflex.codegen.config.ColumnConfig;
-import com.mybatisflex.codegen.config.GlobalConfig;
+import com.mybatisflex.codegen.config.*;
 import com.mybatisflex.codegen.dialect.IDialect;
 import com.mybatisflex.codegen.generator.GeneratorFactory;
 import com.mybatisflex.codegen.generator.impl.*;
@@ -26,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class CodeGeneratorConfig {
 
-    private final CodeGeneratorProperties codeGeneratorProperties;
+    private final CodeGeneratorProperties properties;
 
     static {
         GeneratorFactory.registerGenerator("dto", new DtoGenerator());
@@ -36,7 +35,7 @@ public class CodeGeneratorConfig {
     }
 
     void codeGenerator() {
-        var dataSourceConfig = codeGeneratorProperties.getDataSourceConfig();
+        var dataSourceConfig = properties.getDataSourceConfig();
         // 配置数据源
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(dataSourceConfig.getUrl());
@@ -54,59 +53,96 @@ public class CodeGeneratorConfig {
     }
 
     public GlobalConfig createGlobalConfigUseStyle() {
-        var javadocConfig = codeGeneratorProperties.getJavadocConfig();
-
         //创建配置内容
         GlobalConfig globalConfig = new GlobalConfig();
 
         // 包配置
+        var packageConfig = properties.getPackageConfig();
         globalConfig.getPackageConfig()
                 // 文件输出目录，默认如下
                 .setSourceDir(System.getProperty("user.dir") + "/src/main/java")
-                .setBasePackage("com.mallcloud");
+                .setBasePackage(packageConfig.getBasePackage());
 
         // 代码注释配置
+        var javadocConfig = properties.getJavadocConfig();
         globalConfig.getJavadocConfig()
                 .setAuthor(javadocConfig.getAuthor())
                 .setSince(javadocConfig.getSince());
 
         // 策略配置
         // 设置表前缀和只生成哪些表，setGenerateTable 未配置时，生成所有表
+        var strategyConfig = properties.getStrategyConfig();
         globalConfig.getStrategyConfig()
                 // 生成哪个 schema 下的表
-                .setGenerateSchema("mall-cloud")
-                // 数据库表前缀
-                .setTablePrefix("t_")
+                .setGenerateSchema(strategyConfig.getGenerateSchema())
                 // 生成哪些表
-                .setGenerateTable("t_user", "t_account")
+                .setGenerateTable(String.valueOf(strategyConfig.getGenerateTables()))
+                // 数据库表前缀
+                .setTablePrefix(strategyConfig.getTablePrefix())
                 // 逻辑删除字段
-                .setLogicDeleteColumn("is_deleted")
+                .setLogicDeleteColumn(strategyConfig.getLogicDeleteColumn())
                 // 乐观锁的字段名称
-                .setVersionColumn("version")
+                .setVersionColumn(strategyConfig.getVersionColumn())
                 // 需要忽略的列，父类 BaseEntity 定义的字段
-                .setIgnoreColumns("create_time", "update_time");
+                .setIgnoreColumns(String.valueOf(strategyConfig.getIgnoreColumns()));
+
         // 模板配置
+        var templateConfig = properties.getTemplateConfig();
         globalConfig.getTemplateConfig()
                 .setTemplate(new EnjoyTemplate())
-                .setEntity("templates/entity.java")
-                .setMapper("templates/mapper.java")
-                .setMapperXml("templates/mapper.xml")
-                .setService("templates/service.java")
-                .setServiceImpl("templates/serviceImpl.java")
-                .setController("templates/controller.java");
+                .setEntity(templateConfig.getEntity())
+                .setTableDef(templateConfig.getTableDef())
+                .setMapper(templateConfig.getMapper())
+                .setMapperXml(templateConfig.getMapperXml())
+                .setService(templateConfig.getService())
+                .setServiceImpl(templateConfig.getServiceImpl())
+                .setController(templateConfig.getController());
 
         // entity 配置，并启用 Lombok
         globalConfig.getEntityConfig()
-                .setOverwriteEnable(true)
+                // 1. 基础配置
+                .setOverwriteEnable(true) // 注意：迭代开发时建议改为 false，防止覆盖手写的业务代码
                 .setWithLombok(true)
-                .setJdkVersion(25)
-                .setClassSuffix("Entity")
-                .setSuperClass(BaseEntity.class);
+                .setJdkVersion(25) // 💡 建议：目前企业主流是 JDK 17 或 21，JDK 25 较新，请确保您的构建工具(Lombok/Maven)已完全兼容
+                .setClassSuffix("Entity");
+        // 3. 动态父类工厂 (核心逻辑)
         globalConfig.setEntitySuperClassFactory(table -> {
             // 在这里，可以通过 table 来指定对应 SuperClass
             // 返回 null，则表示不需要设置父类
-            return null;
+            String tableName = table.getName();
+
+            // 【策略 A：黑名单】关联表、中间表、简单配置表 -> 不需要父类 (return null)
+            if (tableName.contains("_rel") ||
+                    tableName.contains("_relation") ||
+                    tableName.equals("sys_dict") ||
+                    tableName.equals("sys_config")) {
+                return null;
+            }
+
+            // 【策略 B：特征匹配】日志表、流水表 -> 不继承通用Base（或继承专门的 LogEntity）
+            // 因为日志表通常只追加不修改，不需要 updateTime 和 is_deleted
+            if (tableName.endsWith("_log") || tableName.endsWith("_record") || tableName.endsWith("_trace")) {
+                // 或者 return LogBaseEntity.class;
+                return null;
+            }
+
+            // 【策略 C：特征匹配】树形结构表 -> 继承 TreeBaseEntity
+            // 可以通过表名判断，也可以通过表中是否包含 parent_id 字段精准判断
+            if (tableName.contains("dept") ||
+                    tableName.contains("menu") ||
+                    tableName.contains("category") ||
+                    table.containsColumn("parent_id")) {
+                return TreeBaseEntity.class;
+            }
+
+            // 【策略 D：默认兜底】其余 80% 的核心业务表 -> 继承 BaseEntity
+            return BaseEntity.class;
         });
+
+        // TableDef 生成配置
+        globalConfig.getTableDefConfig()
+                .setOverwriteEnable(true)
+                .setClassSuffix("Def");
         // Mapper 生成配置
         globalConfig.getMapperConfig()
                 .setOverwriteEnable(true)
@@ -133,10 +169,6 @@ public class CodeGeneratorConfig {
                 .setOverwriteEnable(true)
                 .setRestStyle(true)
                 .setClassSuffix("Controller");
-        // TableDef 生成配置
-        globalConfig.getTableDefConfig()
-                .setOverwriteEnable(true)
-                .setClassSuffix("Def");
 
         // 可以单独配置某个列
         ColumnConfig columnConfig = new ColumnConfig();

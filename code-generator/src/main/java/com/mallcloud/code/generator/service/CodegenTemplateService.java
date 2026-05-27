@@ -1,4 +1,4 @@
 package com.mallcloud.code.generator.service;
 
-public interface DatabaseMetaService {
+public interface CodegenTemplateService {
 }
