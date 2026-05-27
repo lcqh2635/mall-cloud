@@ -3,6 +3,7 @@ package com.mallcloud.codegen.service.impl;
 import com.mallcloud.codegen.model.CodegenRequest;
 import com.mallcloud.codegen.service.CodegenService;
 import com.mybatisflex.codegen.config.GlobalConfig;
+import jakarta.servlet.ServletOutputStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,11 @@ public class CodegenServiceImpl implements CodegenService {
 
     @Override
     public void generate(String dbUrl, String dbUser, String dbPwd, Set<String> tableNames, String basePackage) {
+
+    }
+
+    @Override
+    public void generateAndDownloadZip(CodegenRequest request, ServletOutputStream outputStream) {
 
     }
 

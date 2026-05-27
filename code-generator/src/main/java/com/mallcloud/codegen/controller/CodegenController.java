@@ -144,7 +144,6 @@ public class CodegenController {
 
             // 5. 调用核心引擎，将生成的 ZIP 数据直接写入 HTTP 响应输出流
             codeGenService.generateAndDownloadZip(request, response.getOutputStream());
-
         } catch (IOException e) {
             log.error("代码生成 ZIP 下载失败，IO 异常: {}", e.getMessage(), e);
             // 注意：此时响应头可能已经发送，无法再返回 JSON 错误信息，只能记录日志
