@@ -19,7 +19,7 @@
 
 ### 1.1 PostgreSQL
 **GitHub**: https://github.com/postgres/postgres  
-**Stars**: 12k+  
+**Stars**: 21k+  
 **语言**: C
 
 #### 作用
@@ -54,7 +54,7 @@
 **GitHub**:
 - MySQL: https://github.com/mysql/mysql-server
 - MariaDB: https://github.com/MariaDB/server  
-  **Stars**: 7k+ (MySQL), 3k+ (MariaDB)  
+  **Stars**: 12k+ (MySQL), 7k+ (MariaDB)  
   **语言**: C/C++
 
 #### 作用
@@ -86,7 +86,7 @@
 
 ### 1.3 TiDB
 **GitHub**: https://github.com/pingcap/tidb  
-**Stars**: 35k+  
+**Stars**: 40k+  
 **语言**: Go
 
 #### 作用
@@ -118,7 +118,7 @@ NewSQL 分布式数据库，兼容 MySQL 协议，支持 HTAP。
 
 ### 1.4 CockroachDB
 **GitHub**: https://github.com/cockroachdb/cockroach  
-**Stars**: 27k+  
+**Stars**: 32k+  
 **语言**: Go
 
 #### 作用
@@ -150,7 +150,7 @@ NewSQL 分布式数据库，兼容 MySQL 协议，支持 HTAP。
 
 ### 1.5 ClickHouse
 **GitHub**: https://github.com/ClickHouse/ClickHouse  
-**Stars**: 33k+  
+**Stars**: 47k+  
 **语言**: C++
 
 #### 作用
@@ -184,7 +184,7 @@ NewSQL 分布式数据库，兼容 MySQL 协议，支持 HTAP。
 
 ### 2.1 MongoDB
 **GitHub**: https://github.com/mongodb/mongo  
-**Stars**: 25k+  
+**Stars**: 28k+  
 **语言**: C++
 
 #### 作用
@@ -216,7 +216,7 @@ NewSQL 分布式数据库，兼容 MySQL 协议，支持 HTAP。
 
 ### 2.2 CouchDB
 **GitHub**: https://github.com/apache/couchdb  
-**Stars**: 1.8k+  
+**Stars**: 6k+  
 **语言**: Erlang
 
 #### 作用
@@ -241,7 +241,7 @@ NewSQL 分布式数据库，兼容 MySQL 协议，支持 HTAP。
 
 ### 2.3 ArangoDB
 **GitHub**: https://github.com/arangodb/arangodb  
-**Stars**: 12k+  
+**Stars**: 14k+  
 **语言**: C++
 
 #### 作用
@@ -268,7 +268,7 @@ NewSQL 分布式数据库，兼容 MySQL 协议，支持 HTAP。
 
 ### 3.1 Redis
 **GitHub**: https://github.com/redis/redis  
-**Stars**: 63k+  
+**Stars**: 74k+  
 **语言**: C
 
 #### 作用
@@ -302,7 +302,7 @@ NewSQL 分布式数据库，兼容 MySQL 协议，支持 HTAP。
 
 ### 3.2 KeyDB
 **GitHub**: https://github.com/Snapchat/KeyDB  
-**Stars**: 6.5k+  
+**Stars**: 12k+  
 **语言**: C++
 
 #### 作用
@@ -324,7 +324,7 @@ Redis 的高性能分支，多线程架构。
 
 ### 3.3 etcd
 **GitHub**: https://github.com/etcd-io/etcd  
-**Stars**: 42k+  
+**Stars**: 51k+  
 **语言**: Go
 
 #### 作用
@@ -354,7 +354,7 @@ Redis 的高性能分支，多线程架构。
 
 ### 3.4 RocksDB
 **GitHub**: https://github.com/facebook/rocksdb  
-**Stars**: 25k+  
+**Stars**: 31k+  
 **语言**: C++
 
 #### 作用
@@ -381,7 +381,7 @@ Redis 的高性能分支，多线程架构。
 
 ### 4.1 Apache Cassandra
 **GitHub**: https://github.com/apache/cassandra  
-**Stars**: 8k+  
+**Stars**: 9k+  
 **语言**: Java
 
 #### 作用
@@ -438,7 +438,7 @@ Redis 的高性能分支，多线程架构。
 
 ### 4.3 ScyllaDB
 **GitHub**: https://github.com/scylladb/scylla  
-**Stars**: 11k+  
+**Stars**: 15k+  
 **语言**: C++
 
 #### 作用
@@ -463,7 +463,7 @@ Cassandra 兼容的高性能替代，无 JVM。
 
 ### 5.1 Neo4j
 **GitHub**: https://github.com/neo4j/neo4j  
-**Stars**: 13k+  
+**Stars**: 16k+  
 **语言**: Java
 
 #### 作用
@@ -494,7 +494,7 @@ Cassandra 兼容的高性能替代，无 JVM。
 
 ### 5.2 Apache AGE
 **GitHub**: https://github.com/apache/age  
-**Stars**: 3k+  
+**Stars**: 4k+  
 **语言**: C
 
 #### 作用
@@ -516,7 +516,7 @@ PostgreSQL 的图数据库扩展。
 
 ### 5.3 Nebula Graph
 **GitHub**: https://github.com/vesoft-inc/nebula  
-**Stars**: 10k+  
+**Stars**: 12k+  
 **语言**: C++
 
 #### 作用
@@ -543,7 +543,7 @@ PostgreSQL 的图数据库扩展。
 
 ### 6.1 InfluxDB
 **GitHub**: https://github.com/influxdata/influxdb  
-**Stars**: 26k+  
+**Stars**: 31k+  
 **语言**: Go
 
 #### 作用
@@ -572,34 +572,9 @@ PostgreSQL 的图数据库扩展。
 
 ---
 
-### 6.2 Prometheus
-**GitHub**: https://github.com/prometheus/prometheus  
-**Stars**: 52k+  
-**语言**: Go
-
-#### 作用
-监控系统 + 时序数据库。
-
-#### 核心特点
-- ✅ **拉取模型**：主动抓取指标
-- ✅ **多维数据模型**：Metric + Labels
-- ✅ **PromQL**：强大的查询语言
-- ✅ **服务发现**：K8s、Consul 等
-- ✅ **告警规则**：Alertmanager 集成
-- ✅ **无需依赖**：单二进制文件
-
-#### 使用场景
-- 🐳 Kubernetes 监控
-- 📊 基础设施监控
-- 📈 应用指标采集
-- 🔔 告警系统
-- 📉 容量规划
-
----
-
 ### 6.3 TimescaleDB
 **GitHub**: https://github.com/timescale/timescaledb  
-**Stars**: 13k+  
+**Stars**: 22k+  
 **语言**: C
 
 #### 作用
@@ -622,7 +597,7 @@ PostgreSQL 的图数据库扩展。
 
 ### 6.4 TDengine
 **GitHub**: https://github.com/taosdata/TDengine  
-**Stars**: 22k+  
+**Stars**: 24k+  
 **语言**: C
 
 #### 作用
@@ -654,7 +629,7 @@ PostgreSQL 的图数据库扩展。
 
 ### 7.1 Elasticsearch
 **GitHub**: https://github.com/elastic/elasticsearch  
-**Stars**: 67k+  
+**Stars**: 76k+  
 **语言**: Java
 
 #### 作用
@@ -686,7 +661,7 @@ PostgreSQL 的图数据库扩展。
 
 ### 7.2 OpenSearch
 **GitHub**: https://github.com/opensearch-project/OpenSearch  
-**Stars**: 8.5k+  
+**Stars**: 13k+  
 **语言**: Java
 
 #### 作用
@@ -709,7 +684,7 @@ Elasticsearch 的开源分支（AWS 主导）。
 
 ### 7.3 Meilisearch
 **GitHub**: https://github.com/meilisearch/meilisearch  
-**Stars**: 40k+  
+**Stars**: 57k+  
 **语言**: Rust
 
 #### 作用
@@ -735,7 +710,7 @@ Elasticsearch 的开源分支（AWS 主导）。
 
 ### 8.1 Memcached
 **GitHub**: https://github.com/memcached/memcached  
-**Stars**: 6.5k+  
+**Stars**: 14k+  
 **语言**: C
 
 #### 作用
@@ -766,7 +741,7 @@ Elasticsearch 的开源分支（AWS 主导）。
 
 ### 9.1 Milvus
 **GitHub**: https://github.com/milvus-io/milvus  
-**Stars**: 27k+  
+**Stars**: 44k+  
 **语言**: C++/Go
 
 #### 作用
@@ -798,7 +773,7 @@ Elasticsearch 的开源分支（AWS 主导）。
 
 ### 9.2 Chroma
 **GitHub**: https://github.com/chroma-core/chroma  
-**Stars**: 14k+  
+**Stars**: 28k+  
 **语言**: Python
 
 #### 作用
@@ -822,7 +797,7 @@ Elasticsearch 的开源分支（AWS 主导）。
 
 ### 9.3 Weaviate
 **GitHub**: https://github.com/weaviate/weaviate  
-**Stars**: 8.5k+  
+**Stars**: 16k+  
 **语言**: Go
 
 #### 作用
@@ -841,36 +816,6 @@ Elasticsearch 的开源分支（AWS 主导）。
 - 📊 多模态搜索（文本 + 图像）
 - 🤖 AI 应用后端
 - 📚 文档管理系统
-
----
-
-## 10. 多模型数据库
-
-### 10.1 OrientDB
-**GitHub**: https://github.com/OrientDB/orientdb  
-**Stars**: 11k+  
-**语言**: Java
-
-#### 作用
-多模型数据库（文档 + 图）。
-
-#### 核心特点
-- ✅ **文档模型**：JSON 文档
-- ✅ **图模型**：节点 + 边
-- ✅ **SQL 支持**：扩展 SQL
-- ✅ **ACID 事务**：多文档
-- ✅ **索引**：多种索引类型
-- ✅ **分布式**：集群模式
-
-#### 使用场景
-- 需要文档 + 图混合场景
-- 社交网络 + 内容管理
-- 知识图谱 + 文档存储
-
----
-
-### 10.2 ArangoDB（已在文档型介绍）
-支持文档、图、键值三模型。
 
 ---
 
