@@ -135,6 +135,15 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Source: https://mvnrepository.com/artifact/cn.hutool/hutool-bom -->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-bom</artifactId>
+                <version>5.5.4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
 
             <!-- ========== 项目自身模块 ========== -->
             <dependency>
