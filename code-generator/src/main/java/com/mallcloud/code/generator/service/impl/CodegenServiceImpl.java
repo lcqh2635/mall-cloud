@@ -22,7 +22,7 @@ import java.util.zip.ZipOutputStream;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CodeGenServiceImpl implements CodegenService {
+public class CodegenServiceImpl implements CodegenService {
 
     @Override
     public void generate(String dbUrl, String dbUser, String dbPwd, Set<String> tableNames, String basePackage) {

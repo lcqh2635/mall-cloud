@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Table("codegen_datasource")
-public class CodegenDatasource {
+public class DatasourceEntity {
     @Id(keyType = KeyType.Auto)
     private Long id;
     private String name;

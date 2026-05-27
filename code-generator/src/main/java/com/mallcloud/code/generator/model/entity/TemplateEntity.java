@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Table("codegen_template")
-public class CodegenTemplate {
+public class TemplateEntity {
     @Id(keyType = KeyType.Auto)
     private Long id;
     private String name;

@@ -1,7 +1,7 @@
 package com.mallcloud.code.generator.service.impl;
 
 import com.mallcloud.code.generator.mapper.CodegenDatasourceMapper;
-import com.mallcloud.code.generator.service.CodegenDatasourceService;
+import com.mallcloud.code.generator.service.DatasourceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CodegenDatasourceServiceImpl implements CodegenDatasourceService {
+public class DatasourceServiceImpl implements DatasourceService {
     private final CodegenDatasourceMapper datasourceMapper;
 
     // ================= 数据源管理 =================
