@@ -85,3 +85,21 @@ spring:
       data-locations: classpath:db/postgres/data.sql
       # Schema和Data文件的字符编码
       encoding: UTF-8
+
+
+codegen:
+  data-source-config:
+    url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  package-config:
+    base-package: "com.mallcloud"
+  javadoc-config:
+    author: "龙茶清欢"
+    since: ${spring.Jackson.date-format}
+  strategy-config:
+    generate-schema: "mall-cloud"
+    generate-tables: t_user, t_order
+    table-prefix: t_
+    logic-delete-column: is_deleted
+    version-column: version

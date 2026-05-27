@@ -1,7 +1,7 @@
 package com.mallcloud.code.generator.controller;
 
-import com.mallcloud.code.generator.model.CodeGenRequest;
-import com.mallcloud.code.generator.service.CodeGenService;
+import com.mallcloud.code.generator.model.CodegenRequest;
+import com.mallcloud.code.generator.service.CodegenService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +18,12 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/api/codegen")
 @RequiredArgsConstructor
-public class CodeGenController {
+public class CodegenController {
 
-    private final CodeGenService codeGenService;
+    private final CodegenService codeGenService;
 
     @PostMapping("/execute")
-    public String executeCodeGen(@RequestBody CodeGenRequest request) {
+    public String executeCodeGen(@RequestBody CodegenRequest request) {
         try {
             codeGenService.generate(
                     request.getDbUrl(),
@@ -45,7 +45,7 @@ public class CodeGenController {
      * @param response HTTP 响应对象，用于输出文件流
      */
     @PostMapping("/download-zip")
-    public void downloadCodeZip(@RequestBody CodeGenRequest request, HttpServletResponse response) {
+    public void downloadCodeZip(@RequestBody CodegenRequest request, HttpServletResponse response) {
         // 1. 动态生成 ZIP 文件名，例如：my-project-code-20260527.zip
         String fileName = request.getProjectName() + "-code-" + System.currentTimeMillis() + ".zip";
 

@@ -12,8 +12,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties(prefix = "code-generator")
-public class CodeGeneratorProperties {
+@ConfigurationProperties(prefix = CodegenProperties.PREFIX)
+public class CodegenProperties {
+    static final String PREFIX = "codegen";
+
     private boolean vueGenerateEnable;
     private boolean tsGenerateEnable;
     private boolean dtoGenerateEnable;

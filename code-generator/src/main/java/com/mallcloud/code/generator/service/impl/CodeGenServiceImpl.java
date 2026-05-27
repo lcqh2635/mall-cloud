@@ -1,7 +1,7 @@
 package com.mallcloud.code.generator.service.impl;
 
-import com.mallcloud.code.generator.model.CodeGenRequest;
-import com.mallcloud.code.generator.service.CodeGenService;
+import com.mallcloud.code.generator.model.CodegenRequest;
+import com.mallcloud.code.generator.service.CodegenService;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.zip.ZipOutputStream;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CodeGenServiceImpl implements CodeGenService {
+public class CodeGenServiceImpl implements CodegenService {
 
     @Override
     public void generate(String dbUrl, String dbUser, String dbPwd, Set<String> tableNames, String basePackage) {
@@ -36,7 +36,7 @@ public class CodeGenServiceImpl implements CodeGenService {
      * @param outputStream HTTP 响应的输出流
      */
     @Override
-    public void generateAndDownloadZip(CodeGenRequest request, OutputStream outputStream) {
+    public void generateAndDownloadZip(CodegenRequest request, OutputStream outputStream) {
         Path tempDir = null;
 
         try {
@@ -80,7 +80,7 @@ public class CodeGenServiceImpl implements CodeGenService {
     /**
      * 构建 MyBatis-Flex 的全局配置
      */
-    private GlobalConfig buildGlobalConfig(CodeGenRequest request, String outputDir, Connection connection) {
+    private GlobalConfig buildGlobalConfig(CodegenRequest request, String outputDir, Connection connection) {
         GlobalConfig globalConfig = new GlobalConfig();
 
         // 1. 基础生成配置：绑定 PG 连接，指定输出到临时目录

@@ -1,5 +1,6 @@
 package com.mallcloud.code.generator;
 
+import com.mallcloud.code.generator.properties.CodegenProperties;
 import com.mallcloud.commons.mybatis.entity.BaseEntity;
 import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.ColumnConfig;
@@ -14,14 +15,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CodeGeneratorApplicationTest {
+class CodegenApplicationTest {
 
-    static void main() {
+    private CodegenProperties properties;
+
+    @Test
+    void CodegenTest() {
         // 配置数据源
+        var dataSourceConfig = properties.getDataSourceConfig();
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/your-database?characterEncoding=utf-8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("******");
+        dataSource.setJdbcUrl(dataSourceConfig.getUrl());
+        dataSource.setUsername(dataSourceConfig.getUsername());
+        dataSource.setPassword(dataSourceConfig.getPassword());
 
         // 创建配置内容，两种风格都可以。
         GlobalConfig globalConfig = createGlobalConfigUseStyle();
@@ -111,8 +116,4 @@ class CodeGeneratorApplicationTest {
         return globalConfig;
     }
 
-    @Test
-    void demo() {
-        System.out.println("test");
-    }
 }

@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CodeGenApplication {
+public class CodegenApplication {
     static void main(String[] args) {
-        SpringApplication.run(CodeGenApplication.class, args);
+        SpringApplication.run(CodegenApplication.class, args);
     }
 }
 // https://mybatis-flex.com/zh/others/codegen.html

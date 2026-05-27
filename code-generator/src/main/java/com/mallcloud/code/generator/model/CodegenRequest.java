@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
-public class CodeGenRequest {
+public class CodegenRequest {
     /** 项目名称，用于生成 ZIP 文件名和基础包名 */
     private String projectName;
 

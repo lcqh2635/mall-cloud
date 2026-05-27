@@ -4,13 +4,12 @@ import com.mallcloud.code.generator.generator.DtoGenerator;
 import com.mallcloud.code.generator.generator.TypeScriptGenerator;
 import com.mallcloud.code.generator.generator.VoGenerator;
 import com.mallcloud.code.generator.generator.VueGenerator;
-import com.mallcloud.code.generator.properties.CodeGeneratorProperties;
+import com.mallcloud.code.generator.properties.CodegenProperties;
 import com.mallcloud.commons.mybatis.entity.BaseEntity;
 import com.mybatisflex.codegen.Generator;
 import com.mybatisflex.codegen.config.*;
 import com.mybatisflex.codegen.dialect.IDialect;
 import com.mybatisflex.codegen.generator.GeneratorFactory;
-import com.mybatisflex.codegen.generator.impl.*;
 import com.mybatisflex.codegen.template.impl.EnjoyTemplate;
 import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.service.IService;
@@ -23,9 +22,9 @@ import org.springframework.context.annotation.Configuration;
 // https://developer.aliyun.com/article/1460051
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
-public class CodeGeneratorConfig {
+public class CodegenConfig {
 
-    private final CodeGeneratorProperties properties;
+    private final CodegenProperties properties;
 
     static {
         GeneratorFactory.registerGenerator("dto", new DtoGenerator());
