@@ -1,7 +1,7 @@
 import {createApp} from "vue";
 import App from "@/App.vue";
 import pinia from "@/stores";
-import router from "@/router";
+import router from "@/routers";
 
 // import '@/styles/main.scss'
 // UnoCSS 样式
