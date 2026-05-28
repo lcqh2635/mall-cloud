@@ -1,6 +1,6 @@
 // src/plugins/directives/index.ts
 import type { App } from 'vue'
-import permission from './permission'
+import permission from './permission.ts'
 
 // 所有指令的映射
 const directives = {
