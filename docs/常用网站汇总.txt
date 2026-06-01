@@ -1,0 +1,164 @@
+英语单词学习
+https://wordforest.cn/
+
+AI 工具
+https://chat.deepseek.com/
+https://solo.trae.cn/
+https://www.doubao.com/chat/
+https://chatglm.cn/main?lang=zh
+https://ai.csdn.net/chat/
+
+在线翻译
+https://fanyi.youdao.com/#/TextTranslate
+https://www.deepl.com/zh/translator
+
+Gitee 国内开源仓库，学习优秀项目
+https://gitee.com/explore
+https://gitee.com/explore/web-app-develop
+
+开发环境及开发工具下载
+https://www.oracle.com/cn/java/technologies/downloads/
+https://maven.apache.org/download.cgi
+https://www.jetbrains.com.cn/
+https://www.jetbrains.com.cn/toolbox-app/
+https://apifox.com/
+
+Java 及 Spring 生态
+https://www.w3school.com.cn/java/index.asp
+https://www.runoob.com/java/java-tutorial.html
+https://docs.springjava.cn/spring-framework/reference/
+https://docs.springjava.cn/spring-boot/index.html
+https://docs.springjava.cn/spring-cloud-gateway/reference/
+https://docs.springjava.cn/spring-cloud-openfeign/reference/
+https://docs.springjava.cn/spring-cloud-stream/reference/
+
+Java 安全认证框架
+https://docs.springjava.cn/spring-security/reference/index.html
+https://sa-token.cc/
+
+关系型数据库Java ORM 框架
+https://mybatis.org/mybatis-3/zh_CN/index.html
+https://baomidou.com/
+https://docs.springjava.cn/spring-data/jpa/reference/
+https://mybatis-flex.com/
+
+ElasticSearch ORM 框架
+https://docs.springjava.cn/spring-data/elasticsearch/reference/
+https://www.easy-es.cn/
+
+SQL 语法学习
+https://www.w3school.com.cn/sql/index.asp
+https://www.runoob.com/sql/sql-tutorial.html
+MySQL 数据库
+https://www.w3school.com.cn/mysql/index.asp
+https://www.runoob.com/mysql/mysql-tutorial.html
+PostgresSQL
+https://www.w3school.com.cn/postgresql/index.asp
+https://www.runoob.com/postgresql/postgresql-tutorial.html
+SQL 在线练习
+https://sqlbolt.com/
+Redis 数据库
+https://www.runoob.com/redis/redis-tutorial.html
+分布式数据库
+TiDB
+https://www.pingcap.com/
+PolarDB
+https://openpolardb.com/home
+
+Maven 项目管理与构建工具
+https://www.runoob.com/maven/maven-tutorial.html
+Maven 中央仓库
+https://central.sonatype.com/
+https://mvnrepository.com/
+Git 版本管理工具
+https://www.runoob.com/git/git-tutorial.html
+
+Java常用工具包
+https://projectlombok.org/
+https://hutool.cn/
+2023年，原EasyExcel作者带领团队启动FastExcel 项目 ，进行底层架构的彻底重构。
+2025年项目进入Apache孵化器，正式更名为 Fesod（Fast. Easy. Done.）。2026年2月发布的2.0.1版本，标志着Java Excel处理技术进入了新的时代。
+https://fesod.apache.org/zh-cn/
+https://doc.xiaominfo.com/
+https://doc.captcha.tianai.cloud/
+
+Java 设计模式
+https://refactoringguru.cn/design-patterns
+https://www.runoob.com/design-pattern/design-pattern-tutorial.html
+
+Docker 及 Docker Compose 容器化技术
+https://docs.docker.com/
+https://www.runoob.com/docker/docker-tutorial.html
+https://docs.docker.com/compose/
+https://www.runoob.com/docker/docker-compose.html
+https://www.runoob.com/docker/docker-dockerfile.html
+
+微服务中间件
+https://nacos.io/
+https://seata.apache.org/zh-cn/
+https://rocketmq.apache.org/zh/
+https://sentinelguard.io/zh-cn/index.html
+https://higress.io/
+https://www.xuxueli.com/xxl-job/
+https://snailjob.opensnail.com/
+分布式链路追踪
+https://skywalking.apache.org/zh/
+https://opentelemetry.io/zh/
+https://opentelemetry.opendocs.io/
+指标采集和可视化
+https://prometheus.io/
+https://prometheus.io/docs/alerting/latest/alertmanager/
+https://grafana.com/
+工作流
+https://n8n.ac.cn/
+
+Kubernetes
+https://kubernetes.io/zh-cn/
+https://minikube.cn/docs/
+
+代码生成器
+https://gitee.com/makunet/maku-generator
+https://gitee.com/log4j/pig/tree/master/pig-visual/pig-codegen
+https://gitee.com/shenzhanwang/RuoYi-activiti/tree/ruoyi-vue-activiti/ruoyi-generator
+
+Linux 命令学习
+https://wangchujiang.com/linux-command/index.html
+https://www.runoob.com/linux/linux-command-manual.html
+
+Spring AI Alibaba
+https://java2ai.com/
+
+Java 后端面试
+https://xiaolincoding.com/
+https://javaguide.cn/
+
+
+前端
+https://www.npmjs.com/
+https://bestofjs.org/
+https://www.zhcndoc.com/
+https://nodejs.cn/
+https://ts.nodejs.cn/
+https://cn.vuejs.org/
+https://cn.vite.dev/
+https://axios.rest/zh/
+https://router.vuejs.org/zh/
+https://pinia.vuejs.org/zh/
+https://praz.codeberg.page/pinia-plugin-persistedstate/zh/
+https://element-plus.org/zh-CN/
+https://vitepress.dev/zh/
+https://cn.vitest.dev/
+https://vue-i18n.intlify.dev/
+https://vueuse.org/
+https://unocss.zhcndoc.com/
+https://echarts.apache.org/zh/index.html
+https://vue-echarts.dev/
+https://cn.sli.dev/
+
+https://github.com/shikijs/shiki
+https://shiki.zhcndoc.com/
+https://github.com/shikijs/shiki-magic-move
+https://shiki-magic-move.netlify.app/
+
+
+bun add -D shiki shiki-magic-move
