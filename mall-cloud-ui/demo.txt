@@ -78,7 +78,12 @@ bun add nprogress && bun add -d @types/nprogress
 bun add vue-router-progress
 # 流程图/时序图渲染。VitePress 内置支持，但需额外安装 mermaid 本体才能在 Markdown 中使用 mermaid 代码块
 bun add mermaid
-
+# 当前最推荐的富文本编辑器。ProseMirror 内核，模块化架构，TS 友好，支持协同编辑、自定义扩展，比 Quill/WangEditor 现代且可维护性强得多
+bun add @tiptap/vue-3 @tiptap/starter-kit
+# 企业级文件上传库。支持分片、断点续传、拖拽、多来源（本地/URL/摄像头）、进度管理，UI 可定制，远超 Element Plus 自带 Upload
+bun add @uppy/core @uppy/vue @uppy/xhr-upload
+# CSV/Excel 解析神器。纯前端解析大文件不卡顿，支持流式读取、Worker 后台处理，比 xlsx 库轻量且专注 CSV 场景
+bun add papaparse && bun add -d @types/papaparse
 
 # 开发构建依赖
 
@@ -120,6 +125,8 @@ bun add -d vitepress-plugin-tabs
 bun add -d @biomejs/biome
 # Git Hooks 管理器。比 husky 更快（Go 编写），原生支持并行执行、文件过滤，与 Biome 搭配做提交前检查体验极佳
 bun add -d lefthook
+# i18n 编译优化插件。将 JSON/YAML 语言包预编译为 JS 函数，运行时零解析开销，包体积减少 30%+
+bun add -d @intlify/unplugin-vue-i18n
 
 
 
