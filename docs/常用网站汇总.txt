@@ -155,6 +155,15 @@ https://echarts.apache.org/zh/index.html
 https://vue-echarts.dev/
 https://cn.sli.dev/
 
+https://biome.nodejs.cn/
+https://shadcn-vue.nodejs.cn/
+https://vue-bits.nodejs.cn/
+https://vue-flow.nodejs.cn/
+https://lucide.nodejs.cn/
+https://lodash.nodejs.cn/
+https://husky.nodejs.cn/
+https://qrcode.nodejs.cn/
+
 https://github.com/shikijs/shiki
 https://shiki.zhcndoc.com/
 https://github.com/shikijs/shiki-magic-move
