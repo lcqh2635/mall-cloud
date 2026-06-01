@@ -126,8 +126,7 @@ bun add -d @biomejs/biome
 # Git Hooks 管理器。比 husky 更快（Go 编写），原生支持并行执行、文件过滤，与 Biome 搭配做提交前检查体验极佳
 bun add -d lefthook
 # i18n 编译优化插件。将 JSON/YAML 语言包预编译为 JS 函数，运行时零解析开销，包体积减少 30%+
-bun add -d @intlify/unplugin-vue-i18n
-
+bun add -d @intlify/unplugin-vue-i18n @intlify/vue-i18n-extensions@next
 
 
 
