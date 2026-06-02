@@ -1,3 +1,6 @@
+网易企业邮箱
+https://mail.qiye.163.com/
+
 英语单词学习
 https://wordforest.cn/
 
@@ -134,10 +137,22 @@ https://javaguide.cn/
 
 
 前端
+https://risingstars.js.org/2025/zh
+https://uiverse.io/
+https://codepen.io/
+https://www.transition.style/
+
 https://www.npmjs.com/
 https://bestofjs.org/
 https://www.zhcndoc.com/
+https://www.zhcndoc.com/projects#project-index
 https://nodejs.cn/
+
+# TanStack 是由著名前端开源开发者 Tanner Linsley 创建的一个顶级前端开源工具集生态
+https://tanstack.com/
+https://tanstack.com.cn/
+
+
 https://ts.nodejs.cn/
 https://cn.vuejs.org/
 https://cn.vite.dev/
@@ -163,13 +178,152 @@ https://lucide.nodejs.cn/
 https://lodash.nodejs.cn/
 https://husky.nodejs.cn/
 https://qrcode.nodejs.cn/
+https://lefthook.dev/
 
 https://github.com/shikijs/shiki
 https://shiki.zhcndoc.com/
 https://github.com/shikijs/shiki-magic-move
 https://shiki-magic-move.netlify.app/
-
-
 bun add -D shiki shiki-magic-move
+@iconify/vue
+
+unplugin-icons
+bun add -D unplugin-icons
+
+https://devtools.vuejs.org/
+vite-plugin-vue-devtools
+https://vite-plugin-mock-dev-server.netlify.app/zh/
+bun add -D vite-plugin-mock-dev-server
+vite-plugin-compression2
 
 
+
+# 通过 npm 全局安装 Bun 运行环境
+npm install -g bun
+
+Bun 包管理器常用命令速查
+bun add <pkg>       npm install <pkg>       安装生产依赖
+bun add -d <pkg>    npm install -D <pkg>    安装开发依赖
+bun remove <pkg>    npm uninstall <pkg>     卸载依赖
+bun install         npm install             根据 bun.lockb 安装所有依赖
+bun update          npm update              更新所有依赖到最新版本
+bun run <script>    npm run <script>        执行 package.json 中的脚本
+bunx <cmd>          npx <cmd>               临时执行未安装的命令行工具
+
+
+# 核心基础依赖
+# Vue3 核心框架，提供响应式系统、组件化等基础能力
+bun add vue
+# Vue3 官方路由管理器，支持动态路由、导航守卫、懒加载等
+bun add vue-router
+# Vue3 官方推荐的状态管理库，替代 Vuex，完美支持 TS 和 Composition API
+bun add pinia
+# Pinia 持久化插件，自动将状态保存到 localStorage 或者 sessionStorage
+bun add pinia-plugin-persistedstate
+# 基于 Promise 的 HTTP 客户端，用于前后端数据交互（也可选 ofetch）
+bun add axios
+# 基于 Vue 3 的 UI 组件库
+bun add element-plus
+# Element Plus 配套的图标库
+bun add @element-plus/icons-vue
+# JavaScript 工具库，ES Module 版本，支持 Tree-shaking
+bun add lodash-es
+# 包含 200+ 高质量 Composition API 工具集（防抖、节流、暗色模式、鼠标位置、本地存储响应式等），避免重复造轮子
+bun add @vueuse/core
+# VueUse 官方的动画插件，基于 Popmotion，提供 useSpring、useAnimate 等组合式函数，与 Vue 响应式无缝集成
+bun add @vueuse/motion
+# VueUse 的第三方集成包（如结合 axios、fuse.js、qrcode 等），按需安装
+bun add @vueuse/integrations
+# 国内最常用的图表库。vue-echarts 是其官方 Vue3 封装，支持响应式 resize 和按需引入，大幅减小打包体积
+bun add echarts vue-echarts
+# Vue3 官方国际化方案，支持组合式 API、按需加载语言包、TS 类型安全
+bun add vue-i18n
+# 全屏 API 封装。抹平了各浏览器 Fullscreen API 的差异，提供 Promise 化接口和事件监听，比手写 document.documentElement.requestFullscreen 可靠得多
+bun add screenfull
+# 页面加载进度条。路由切换或异步请求时顶部显示细进度条，体积极小（<2KB），经典且稳定。需额外安装 @types/nprogress
+bun add nprogress && bun add -d @types/nprogres
+# 流程图/时序图渲染。VitePress 内置支持，但需额外安装 mermaid 本体才能在 Markdown 中使用 mermaid 代码块
+bun add mermaid
+# 当前最推荐的富文本编辑器。ProseMirror 内核，模块化架构，TS 友好，支持协同编辑、自定义扩展，比 Quill/WangEditor 现代且可维护性强得多
+bun add @tiptap/vue-3 @tiptap/starter-kit
+# 企业级文件上传库。支持分片、断点续传、拖拽、多来源（本地/URL/摄像头）、进度管理，UI 可定制，远超 Element Plus 自带 Upload
+bun add @uppy/core @uppy/vue @uppy/xhr-upload
+# CSV/Excel 解析神器。纯前端解析大文件不卡顿，支持流式读取、Worker 后台处理，比 xlsx 库轻量且专注 CSV 场景
+bun add papaparse && bun add -d @types/papaparse
+
+# Vue Bits 是前端界大名鼎鼎的 React 动效组件库 React Bits 的官方 Vue 3 移植版，它是一个开源的、高质量的、包含大量动画和交互效果的 Vue 组件集合
+# 第一步：安装管理工具 jsrepo。打开终端，全局安装 jsrepo，这是专门用来拉取此类“复制即用”组件库的官方工具：
+npm install -g jsrepo
+# 第二步：在项目中拉取组件，进入你的 Vite + Vue 3 项目根目录，使用 jsrepo 命令将你看中的组件直接下载到项目中
+例如，你想引入一个炫酷的“动态背景”或“3D 卡片”组件，语法：jsrepo add <仓库名>/<组件路径>
+jsrepo add vue-bits/backgrounds/aurora
+# 执行后，jsrepo 会自动将 Aurora 组件的 .vue 文件及其相关的依赖文件下载到你项目的 src/components（或你配置的目录）下
+
+
+# 开发构建依赖
+# Bun 全局 API 类型定义。提供 Bun.file()、Bun.serve()、import.meta.env 等原生 API 的 TS 类型推导。纯前端 SPA 项目不需要装，仅在使用 Bun 特有 API（如 SSR、BFF、脚本）时必需
+bun add -d @types/bun
+# Vite 的 Vue3 SFC 编译插件，让 Vite 能正确处理 .vue 文件
+bun add -d @vitejs/plugin-vue
+# Vue3 官方 TSConfig 预设。包含 Vue SFC、JSX、路径别名等最佳实践配置，通过 extends 继承即可，避免手动维护易出错的 compilerOptions
+bun add -d @vue/tsconfig
+# TypeScript 编译器核心
+bun add -d typescript
+# 下一代前端构建工具，提供极速冷启动和 HMR
+bun add -d vite
+# Vue3 专用的 TypeScript 类型检查工具，支持 .vue 文件的类型推导
+bun add -d vue-tsc
+# 神器：自动导入 Vue/Pinia/ElementPlus API，无需手动 import
+bun add -d unplugin-auto-import
+# 神器：按需自动注册组件，减少打包体积
+bun add -d unplugin-vue-components
+# 原子化 CSS 引擎，UnoCSS 对 Vite 集成更优；Tailwind 生态更广
+bun add -d unocss 或 bun add -d tailwindcss postcss autoprefixer
+# CSS 转换工具，Tailwind 依赖它
+bun add -d postcss
+# 自动添加浏览器前缀
+bun add -d autoprefixer
+# 下一代 Linter + Formatter。Rust 编写，单二进制文件同时替代 ESLint + Prettier，速度比 ESLint 快 20-100 倍，零配置开箱即用。若选用它，可卸载 eslint/prettier 全家桶
+bun add -d @biomejs/biome
+# Git Hooks 工具，提交前自动执行 lint 和格式化，保证代码质量
+bun add -d husky lint-staged
+# Git Hooks 管理器。比 husky 更快（Go 编写），原生支持并行执行、文件过滤，与 Biome 搭配做提交前检查体验极佳
+# Lefthook 可以看作是 Husky + lint-staged 这一套经典组合的 “终极强化版”
+bun add -d lefthook
+# 首选测试框架。由 Vite 团队打造，与 Vite 配置完全共享，TS/JSX 开箱即用，比 Jest 快 10 倍以上，完美适配 Bun
+bun add -d vitest
+# 静态文档站点生成器。基于 Vite + Vue3，Markdown 即组件，支持全文搜索、i18n、自定义主题。适合项目文档、API 手册、博客，比 VuePress 快一个数量级
+bun add -d vitepress
+# 本地全文搜索插件，基于 flexsearch，无需 Algolia 账号，构建时生成索引，离线可用
+bun add -d vitepress-plugin-search
+# Markdown 标签页组件，用于展示多语言代码示例（如 JS/TS/Bun 对比），文档必备
+bun add -d vitepress-plugin-tabs
+# 将 SVG 图标生成雪碧图（Sprite），通过 <svg-icon name="xxx" /> 方式使用，支持多色、CSS 控制大小颜色
+bun add -d vite-plugin-svg-icons
+# i18n 编译优化插件。将 JSON/YAML 语言包预编译为 JS 函数，运行时零解析开销，包体积减少 30%+
+bun add -d @intlify/unplugin-vue-i18n @intlify/vue-i18n-extensions@next
+
+
+
+# 如果你正在从头搭建一个企业级后台管理系统（Vue3 + TS + Element Plus + Pinia），可以使用以下命令快速安装所有核心依赖：
+# 1. 创建项目 (使用 Bun 初始化 Vite 项目)
+bun create vite my-vue-app --template vue-ts --immediate
+# 3. 安装运行时依赖
+bun add \
+vue-router vue-i18n axios \
+pinia pinia-plugin-persistedstate \
+element-plus @element-plus/icons-vue \
+echarts vue-echarts screenfull nprogress \
+@vueuse/core @vueuse/motion @vueuse/integrations
+
+# 4. 安装开发依赖 (自动导入、类型检查、代码规范)
+bun add -d \
+lefthook vitest unocss \
+unplugin-auto-import unplugin-vue-components \
+@types/bun @biomejs/biome
+
+
+# 优质前端管理后台
+https://gitee.com/lingchen163/art-design-pro
+# 精简版本
+bun run clean:dev
