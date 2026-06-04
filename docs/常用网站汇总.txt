@@ -303,6 +303,10 @@ bun add -d vite-plugin-svg-icons
 # i18n 编译优化插件。将 JSON/YAML 语言包预编译为 JS 函数，运行时零解析开销，包体积减少 30%+
 bun add -d @intlify/unplugin-vue-i18n @intlify/vue-i18n-extensions@next
 
+# 专门的终端框绘制库，目前最流行、最轻量、效果最好的库是 boxen。配合终端着色库 picocolors，我们可以做出极其酷炫的终端面板效果。
+# https://www.npmjs.com/package/boxen
+bun add -D boxen
+
 
 
 # 如果你正在从头搭建一个企业级后台管理系统（Vue3 + TS + Element Plus + Pinia），可以使用以下命令快速安装所有核心依赖：

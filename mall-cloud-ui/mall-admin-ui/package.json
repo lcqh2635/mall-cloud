@@ -78,6 +78,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/ui": "^4.1.6",
     "@vue/tsconfig": "^0.9.1",
+    "boxen": "^8.0.1",
     "postcss": "^8.5.14",
     "postcss-preset-env": "^11.3.0",
     "sass": "^1.99.0",

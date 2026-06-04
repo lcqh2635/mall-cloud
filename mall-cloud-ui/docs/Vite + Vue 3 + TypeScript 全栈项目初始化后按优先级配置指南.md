@@ -236,7 +236,7 @@ export default defineConfig({
         // 可添加自定义 API 集合，例如 @vueuse/core
       ],
       // 生成类型声明文件，以便 TypeScript 识别
-      dts: 'src/auto-imports.d.ts',
+      dts: 'src/types/auto-imports.d.ts',
       // 自动导入的目录下的模块（如 src/composables 下的组合式函数）
       dirs: ['src/composables', 'src/stores'],
       // 为 Vue 模板中的组件自动导入提供支持
@@ -249,7 +249,7 @@ export default defineConfig({
       // 指定组件目录，src/components 下的组件会被自动注册
       dirs: ['src/components'],
       // 生成组件类型声明
-      dts: 'src/components.d.ts',
+      dts: 'src/types/components.d.ts',
       // 组件名称扩展名
       extensions: ['vue'],
       // 深度扫描子目录
