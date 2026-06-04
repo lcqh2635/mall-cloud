@@ -29,7 +29,23 @@ bun add -D @types/bun
 **说明**：这是项目的地基。Vite 负责极速冷启动和模块热替换，TypeScript 提供类型安全，别名配置能极大改善后续开发时的路径引入体验。
 
 
-#### 1. `tsconfig.app.json` (TypeScript 配置)
+#### 1. `tsconfig.node.json` (该文件的作用是：指导 IDE（如 VSCode）和 TypeScript 语言服务如何进行类型检查和代码提示）
+```json
+{
+   "compilerOptions": {
+      "target": "ESNext",
+      "lib": ["ESNext", "DOM", "DOM.Iterable"],
+      "module": "ESNext",
+      // 💡 提示：如果你想要 Bun 的专属类型提示（如 Bun.env 等），可以运行 bun add -d @types/bun，
+      // 然后将上面 types 数组改为 ["bun"] 或 ["node", "bun"]。但对于 vite.config.ts 来说，
+      // 仅保留 "node" 通常足够了，因为里面用的都是 Node 的 API（如 path/url）。
+      "types": ["bun"]
+   }
+}
+
+```
+
+#### 2. `tsconfig.app.json` (TypeScript 配置)
 ```json
 {
   "compilerOptions": {
@@ -59,46 +75,12 @@ bun add -D @types/bun
 
 ```
 
-
-#### 1. `vite.config.ts` (Vite 核心配置)
+#### 3. `vite.config.ts` (Vite 核心配置)
 ```typescript
 import {defineConfig} from 'vite'
-import vue from '@vitejs/plugin-vue'
 import {fileURLToPath} from 'url'
 
-// 后续会加入的插件先在此处引入
-import UnoCSS from 'unocss/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
-import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
-
 export default defineConfig({
-   plugins: [
-      vue(),
-      UnoCSS(), // 原子化 CSS 引擎
-      AutoImport({
-         // 自动导入 Vue、Vue Router、Pinia、VueUse 等 API，无需手动 import
-         imports: ['vue', 'vue-router', 'pinia', '@vueuse/core'],
-         // 自动导入 Element Plus 的方法 (如 ElMessage, ElMessageBox)
-         resolvers: [ElementPlusResolver()],
-         dts: 'src/auto-imports.d.ts', // 生成 TypeScript 声明文件
-      }),
-      Components({
-         // 自动导入 Element Plus 组件
-         resolvers: [
-            ElementPlusResolver(),
-            // 自动注册图标组件，允许在模板中直接使用 <i-ep-edit />
-            IconsResolver({enabledCollections: ['ep']}),
-         ],
-         dts: 'src/components.d.ts',
-      }),
-      Icons({
-         autoInstall: true, // 自动安装用到的图标集
-         compiler: 'vue3',
-      }),
-   ],
    resolve: {
       alias: {
          // 👉 官方推荐的 ESM 写法
@@ -118,19 +100,7 @@ export default defineConfig({
          '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
          '@views': fileURLToPath(new URL('./src/views', import.meta.url)),
       },
-   },
-
-   server: {
-      port: 3000,
-      proxy: {
-         // 开发环境代理配置，解决跨域问题
-         '/api': {
-            target: 'http://your-backend-api.com',
-            changeOrigin: true,
-            rewrite: (path) => path.replace(/^\/api/, ''),
-         },
-      },
-   },
+   }
 })
 ```
 
