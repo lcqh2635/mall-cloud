@@ -243,13 +243,22 @@ export default defineConfig(async ({command, mode}) => {
         // 对应的也要在 tsconfig.json 中配置 alias 以获得智能类型提示
         resolve: {
             alias: {
-                "@": resolve(process.cwd(), "src"),
-                "@views": resolve(process.cwd(), "src/views"),
-                "@assets": resolve(process.cwd(), "src/assets"),
-                "@components": resolve(process.cwd(), "src/components"),
-                "@utils": resolve(process.cwd(), "src/utils"),
-                "@hooks": resolve(process.cwd(), "src/hooks"),
-                "@plugins": resolve(process.cwd(), "src/plugins"),
+                // 👉 官方推荐的 ESM 写法
+                // import.meta.url 返回当前模块(vite.config.ts)的绝对 URL (file:///路径)
+                // new URL('./src', import.meta.url) 基于当前文件路径解析出 src 的 URL
+                // fileURLToPath() 将 file:// 协议的 URL 转换为系统可识别的绝对文件路径
+
+                '@': fileURLToPath(new URL('./src', import.meta.url)),
+                '@api': fileURLToPath(new URL('./src/api', import.meta.url)),
+                '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
+                '@comps': fileURLToPath(new URL('./src/components', import.meta.url)),
+                '@hooks': fileURLToPath(new URL('./src/composables', import.meta.url)),
+                '@layouts': fileURLToPath(new URL('./src/layouts', import.meta.url)),
+                '@locales': fileURLToPath(new URL('./src/locales', import.meta.url)),
+                '@router': fileURLToPath(new URL('./src/router', import.meta.url)),
+                '@stores': fileURLToPath(new URL('./src/stores', import.meta.url)),
+                '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+                '@views': fileURLToPath(new URL('./src/views', import.meta.url)),
             },
         },
 
