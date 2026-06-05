@@ -65,6 +65,7 @@ touch src/locales/index.ts
 mkdir -vp src/locales/lang/{zh-CN,en-US}
 touch src/locales/lang/zh-CN/{common,layout,login,dashboard,index}.ts
 touch src/locales/lang/en-US/{common,layout,login,dashboard,index}.ts
+touch src/types/{api,env,vue-shims}.d.ts
 touch src/styles/{index,variables}.scss
 touch src/utils/{index,storage,format,validate,request}.ts
 mkdir -vp src/views/{dashboard,user}
