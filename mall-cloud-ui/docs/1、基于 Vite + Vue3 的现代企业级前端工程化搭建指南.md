@@ -48,6 +48,10 @@ touch .env .env.development .env.production .env.test
 touch bunfig.toml README.zh-CN.md uno.config.ts
 # 创建 src 源码目录结构
 mkdir -vp src/{api,composables,directives,layouts,locales,plugins,router,stores,styles,types,utils,views}
+mkdir -vp src/api/{types,modules,enums}
+touch src/api/{index,request}.ts
+touch src/api/types/{user,order}.d.ts
+touch src/api/modules/{user,order}.ts
 mkdir -vp src/assets/{images,fonts}
 touch src/composables/{index,useAuth}.ts
 touch src/directives/{index,auth,permission}.ts
@@ -67,7 +71,7 @@ touch src/locales/lang/zh-CN/{common,layout,login,dashboard,index}.ts
 touch src/locales/lang/en-US/{common,layout,login,dashboard,index}.ts
 touch src/types/{api,env,vue-shims}.d.ts
 touch src/styles/{index,variables}.scss
-touch src/utils/{index,storage,format,validate,request}.ts
+touch src/utils/{index,storage,format,validate}.ts
 mkdir -vp src/views/{dashboard,user}
 ```
 
