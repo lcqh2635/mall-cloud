@@ -40,18 +40,23 @@ bunx --bun biome init
 bunx --bun lefthook install
 
 # 创建根目录结构
-mkdir -vp mocks plugins docs
+mkdir -vp mocks plugins docs tests
+mkdir -vp tests/{unit,e2e}
 # 创建环境配置文件
 touch .env .env.development .env.production .env.test
 # 创建配置文件
 touch bunfig.toml README.zh-CN.md uno.config.ts
 # 创建 src 源码目录结构
-mkdir -vp src/{composables,directives,layouts,locales,routers,services,stores,types,utils,views}
-# 创建 routers 目录结构
-touch src/routers/index.ts
-mkdir -vp src/routers/{guards,modules}
-touch src/routers/{routes,constants}.ts
-touch src/routers/guards/{auth,permission}.ts
+mkdir -vp src/{api,composables,directives,layouts,locales,plugins,router,stores,styles,types,utils,views}
+mkdir -vp src/assets/{images,fonts}
+touch src/composables/{index,useAuth}.ts
+touch src/directives/{index,auth,permission}.ts
+touch src/layouts/{index,DefaultLayout}.vue
+mkdir -vp src/layouts/components
+# 创建 router 目录结构
+touch src/router/{index,routes,constants}.ts
+mkdir -vp src/router/{guards,modules}
+touch src/router/guards/{auth,permission}.ts
 # 创建 stores 目录结构
 touch src/stores/index.ts
 mkdir -vp src/stores/modules
@@ -60,6 +65,9 @@ touch src/locales/index.ts
 mkdir -vp src/locales/lang/{zh-CN,en-US}
 touch src/locales/lang/zh-CN/{common,layout,login,dashboard,index}.ts
 touch src/locales/lang/en-US/{common,layout,login,dashboard,index}.ts
+touch src/styles/{index,variables}.scss
+touch src/utils/{index,storage,format,validate,request}.ts
+mkdir -vp src/views/{dashboard,user}
 ```
 
 ---
