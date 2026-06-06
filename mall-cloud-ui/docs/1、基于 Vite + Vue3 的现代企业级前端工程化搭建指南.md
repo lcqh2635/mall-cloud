@@ -28,9 +28,10 @@ bun add -D @types/bun
 bun add -D unocss @unocss/reset
 # 当你安装了 @iconify-json/ep 并配合 unplugin-icons 使用后，@element-plus/icons-vue 就变得完全多余了。
 bun add -D unplugin-auto-import unplugin-vue-components unplugin-icons @iconify-json/ep
-bun add -D rollup-plugin-visualizer vitest vitepress @intlify/unplugin-vue-i18n
+bun add -D rollup-plugin-visualizer vitepress @intlify/unplugin-vue-i18n
 bun add -D vite-plugin-vue-devtools vite-plugin-mock-dev-server vite-plugin-compression2
 bun add -D boxen figlet @types/figlet
+bun add -D playwright vitest vitest-browser-vue @vitest/browser-playwright @vitest/browser-preview
 bun add -D @biomejs/biome lefthook
 
 # 代码规范配置 (Biome + Lefthook)
@@ -63,7 +64,8 @@ touch src/composables/{index,useAuth}.ts
 # 创建 directives 目录结构
 touch src/directives/{index,auth,permission}.ts
 # 创建 layouts 目录结构
-touch src/layouts/{index,DefaultLayout,MixedLayout,TopNavLayout}.vue
+touch src/layouts/index.vue
+touch src/layouts/modules/{DefaultLayout,MixedLayout,TopNavLayout}.vue
 mkdir -vp src/layouts/components/{Logo,Sidebar,Navbar,AppMain}
 # 创建 locales 目录结构
 touch src/locales/index.ts
