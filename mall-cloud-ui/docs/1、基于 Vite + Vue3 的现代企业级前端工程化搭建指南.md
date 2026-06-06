@@ -42,37 +42,53 @@ bunx --bun lefthook install
 # 创建根目录结构
 mkdir -vp mocks plugins docs tests
 mkdir -vp tests/{unit,e2e}
+touch tests/unit/{index,api}.test.ts
 # 创建环境配置文件
 touch .env .env.development .env.production .env.test
 # 创建配置文件
 touch bunfig.toml README.zh-CN.md uno.config.ts
 # 创建 src 源码目录结构
-mkdir -vp src/{api,composables,directives,layouts,locales,plugins,router,stores,styles,types,utils,views}
+mkdir -vp src/{api,assets,components,composables,directives,layouts,locales,plugins,router,stores,styles,types,utils,views}
+# 创建 api 目录结构
 mkdir -vp src/api/{types,modules,enums}
 touch src/api/{index,request}.ts
 touch src/api/types/{user,order}.d.ts
 touch src/api/modules/{user,order}.ts
-mkdir -vp src/assets/{images,fonts}
+# 创建 assets 目录结构
+mkdir -vp src/assets/{images,fonts,svgs}
+# 创建 composables 目录结构
+touch src/components/index.ts
+# 创建 composables 目录结构
 touch src/composables/{index,useAuth}.ts
+# 创建 directives 目录结构
 touch src/directives/{index,auth,permission}.ts
-touch src/layouts/{index,DefaultLayout}.vue
-mkdir -vp src/layouts/components
-# 创建 router 目录结构
-touch src/router/{index,routes,constants}.ts
-mkdir -vp src/router/{guards,modules}
-touch src/router/guards/{auth,permission}.ts
-# 创建 stores 目录结构
-touch src/stores/index.ts
-mkdir -vp src/stores/modules
+# 创建 layouts 目录结构
+touch src/layouts/{index,DefaultLayout,MixedLayout,TopNavLayout}.vue
+mkdir -vp src/layouts/components/{Logo,Sidebar,Navbar,AppMain}
 # 创建 locales 目录结构
 touch src/locales/index.ts
 mkdir -vp src/locales/lang/{zh-CN,en-US}
 touch src/locales/lang/zh-CN/{common,layout,login,dashboard,index}.ts
 touch src/locales/lang/en-US/{common,layout,login,dashboard,index}.ts
-touch src/types/{api,env,vue-shims}.d.ts
+# 创建 plugins 目录结构
+touch src/plugins/{index}.ts
+# 创建 router 目录结构
+touch src/router/{index,routes,constants}.ts
+mkdir -vp src/router/{guards,modules}
+touch src/router/guards/{auth,permission}.ts
+touch src/router/modules/{user,order}.ts
+# 创建 stores 目录结构
+touch src/stores/index.ts
+mkdir -vp src/stores/modules
+touch src/stores/modules/{app,user}.ts
+# 创建 styles 目录结构
 touch src/styles/{index,variables}.scss
+# 创建 types 目录结构
+touch src/types/{api,env,vue-shims}.d.ts
+# 创建 utils 目录结构
 touch src/utils/{index,storage,format,validate}.ts
-mkdir -vp src/views/{dashboard,user}
+# 创建 views 目录结构
+mkdir -vp src/views/{login,dashboard,user}
 ```
 
 ---
