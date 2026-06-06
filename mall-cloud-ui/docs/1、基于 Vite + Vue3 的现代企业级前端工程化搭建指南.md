@@ -65,6 +65,7 @@ touch src/composables/{index,useAuth}.ts
 touch src/directives/{index,auth,permission}.ts
 # 创建 layouts 目录结构
 touch src/layouts/index.vue
+mkdir -vp src/layouts/modules
 touch src/layouts/modules/{DefaultLayout,MixedLayout,TopNavLayout}.vue
 mkdir -vp src/layouts/components/{Logo,Sidebar,Navbar,AppMain}
 # 创建 locales 目录结构
