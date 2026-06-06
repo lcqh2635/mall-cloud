@@ -92,6 +92,10 @@ touch src/types/{api,env,vue-shims}.d.ts
 touch src/utils/{index,storage,format,validate}.ts
 # 创建 views 目录结构
 mkdir -vp src/views/{login,dashboard,user,system}
+touch src/views/dashboard/index.vue
+touch src/views/login/index.vue
+touch src/views/user/index.vue
+touch src/views/system/index.vue
 ```
 
 ---
