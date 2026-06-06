@@ -67,11 +67,11 @@ touch src/layouts/{index,DefaultLayout,MixedLayout,TopNavLayout}.vue
 mkdir -vp src/layouts/components/{Logo,Sidebar,Navbar,AppMain}
 # 创建 locales 目录结构
 touch src/locales/index.ts
-mkdir -vp src/locales/lang/{zh-CN,en-US}
-touch src/locales/lang/zh-CN/{common,layout,login,dashboard,index}.ts
-touch src/locales/lang/en-US/{common,layout,login,dashboard,index}.ts
+mkdir -vp src/locales/modules/{zh-CN,en-US}
+touch src/locales/modules/zh-CN/{common,layout,login,dashboard,index}.ts
+touch src/locales/modules/en-US/{common,layout,login,dashboard,index}.ts
 # 创建 plugins 目录结构
-touch src/plugins/{index}.ts
+touch src/plugins/index.ts
 # 创建 router 目录结构
 touch src/router/{index,routes,constants}.ts
 mkdir -vp src/router/{guards,modules}
@@ -88,7 +88,7 @@ touch src/types/{api,env,vue-shims}.d.ts
 # 创建 utils 目录结构
 touch src/utils/{index,storage,format,validate}.ts
 # 创建 views 目录结构
-mkdir -vp src/views/{login,dashboard,user}
+mkdir -vp src/views/{login,dashboard,user,system}
 ```
 
 ---
