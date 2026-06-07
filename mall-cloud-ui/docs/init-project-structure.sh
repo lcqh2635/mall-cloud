@@ -7,14 +7,43 @@
 # 版本：2.0.0
 # 使用方法：chmod +x scripts/init-project-structure.sh && ./scripts/init-project-structure.sh
 # ==============================================================================
+
+# 确保脚本在遇到错误时立即退出
 set -euo pipefail
+
+# =========================================================
+# 🎯 核心优化：自动定位并切换到项目根目录
+# =========================================================
+# 1. 获取当前脚本所在的绝对目录 (即 scripts/)
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# 2. 切换到脚本所在目录的上一级 (即项目根目录)
+cd "$SCRIPT_DIR/.." || exit
+
+# 3. 安全校验：检查当前目录是否存在 package.json，以确认我们真的在根目录
+if [ ! -f "package.json" ]; then
+    echo "❌ 错误：未找到 package.json。请确认此脚本位于项目的 scripts/ 目录下。"
+    exit 1
+fi
+
+# 4. 打印当前工作目录，方便确认
+echo "✅ 工作目录已自动切换至: $(pwd)"
+echo "🚀 开始初始化 Vue3 + Vite + TS 项目结构..."
+echo "---------------------------------------------------"
+
+# =========================================================
+# 📂 目录与文件创建逻辑 (保持不变)
+# =========================================================
 
 echo "🚀 Initializing Vue3 + Vite + TS project structure..."
 
 # ========== 根目录 ==========
 echo ">>> 创建项目基础目录..."
 mkdir -vp docs plugins tests scripts/{deploy,utils} mocks/{handlers,data}
+touch docs/README.md
+touch plugins/README.md
 touch scripts/init-project-structure.sh
+touch scripts/{deploy,utils}/README.md
 touch mocks/handlers/api.mock.ts
 touch mocks/data/data.mock.ts
 touch bunfig.toml README.zh-CN.md uno.config.ts vitest.config.ts
