@@ -31,7 +31,7 @@ bun add -D unplugin-auto-import unplugin-vue-components unplugin-icons @iconify-
 bun add -D rollup-plugin-visualizer vitepress @intlify/unplugin-vue-i18n
 bun add -D vite-plugin-vue-devtools vite-plugin-mock-dev-server vite-plugin-compression2
 bun add -D boxen figlet @types/figlet
-bun add -D playwright vitest vitest-browser-vue @vitest/browser-playwright @vitest/browser-preview
+bun add -D playwright vitest vitest-browser-vue @vitest/browser-playwright
 bun add -D @biomejs/biome lefthook
 
 # 代码规范配置 (Biome + Lefthook)
@@ -39,63 +39,6 @@ bun add -D @biomejs/biome lefthook
 bunx --bun biome init
 # 如果不存在 lefthook 配置文件，则创建一个空的 lefthook.yml 文件，里面包含配置一些示例。
 bunx --bun lefthook install
-
-# 创建根目录结构
-mkdir -vp mocks plugins docs tests
-mkdir -vp tests/{unit,e2e}
-touch tests/unit/{index,api}.test.ts
-# 创建环境配置文件
-touch .env .env.development .env.production .env.test
-# 创建配置文件
-touch bunfig.toml README.zh-CN.md uno.config.ts
-# 创建 src 源码目录结构
-mkdir -vp src/{api,assets,components,composables,directives,layouts,locales,plugins,router,stores,styles,types,utils,views}
-# 创建 api 目录结构
-mkdir -vp src/api/{types,modules,enums}
-touch src/api/{index,request}.ts
-touch src/api/types/{user,order}.d.ts
-touch src/api/modules/{user,order}.ts
-# 创建 assets 目录结构
-mkdir -vp src/assets/{images,fonts,svgs}
-# 创建 composables 目录结构
-touch src/components/index.ts
-# 创建 composables 目录结构
-touch src/composables/{index,useAuth}.ts
-# 创建 directives 目录结构
-touch src/directives/{index,auth,permission}.ts
-# 创建 layouts 目录结构
-touch src/layouts/index.vue
-mkdir -vp src/layouts/modules
-touch src/layouts/modules/{DefaultLayout,MixedLayout,TopNavLayout}.vue
-mkdir -vp src/layouts/components/{Logo,Sidebar,Navbar,AppMain}
-# 创建 locales 目录结构
-touch src/locales/index.ts
-mkdir -vp src/locales/modules/{zh-CN,en-US}
-touch src/locales/modules/zh-CN/{common,layout,login,dashboard,index}.ts
-touch src/locales/modules/en-US/{common,layout,login,dashboard,index}.ts
-# 创建 plugins 目录结构
-touch src/plugins/index.ts
-# 创建 router 目录结构
-touch src/router/{index,routes,constants}.ts
-mkdir -vp src/router/{guards,modules}
-touch src/router/guards/{auth,permission}.ts
-touch src/router/modules/{user,order}.ts
-# 创建 stores 目录结构
-touch src/stores/index.ts
-mkdir -vp src/stores/modules
-touch src/stores/modules/{app,user}.ts
-# 创建 styles 目录结构
-touch src/styles/{index,variables}.scss
-# 创建 types 目录结构
-touch src/types/{api,env,vue-shims}.d.ts
-# 创建 utils 目录结构
-touch src/utils/{index,storage,format,validate}.ts
-# 创建 views 目录结构
-mkdir -vp src/views/{login,dashboard,user,system}
-touch src/views/dashboard/index.vue
-touch src/views/login/index.vue
-touch src/views/user/index.vue
-touch src/views/system/index.vue
 ```
 
 ---
