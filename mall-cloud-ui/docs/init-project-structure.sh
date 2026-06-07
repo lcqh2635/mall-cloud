@@ -46,7 +46,7 @@ touch scripts/init-project-structure.sh
 touch scripts/{deploy,utils}/README.md
 touch mocks/handlers/api.mock.ts
 touch mocks/data/data.mock.ts
-touch bunfig.toml README.zh-CN.md uno.config.ts vitest.config.ts
+touch bunfig.toml README.zh-CN.md uno.config.ts vitest.config.ts playwright.config.ts
 
 # ========== 环境配置 ==========
 echo ">>> 创建环境变量文件..."
@@ -62,11 +62,12 @@ touch tests/unit/stores/user.spec.ts
 
 # ========== src 源码 ==========
 echo ">>> 创建 src 核心入口..."
-mkdir -vp src/{api/{types,modules,enums},assets/{images,fonts,svgs},components,composables,directives,layouts/{modules,components/{Logo,Sidebar,Navbar,AppMain}},locales/modules/{zh-CN,en-US},plugins,router/{guards,modules},stores/modules,styles,types,utils,views/{login,dashboard,user,system}}
+mkdir -vp src/{api/{types,modules,enums},assets/{images,fonts,svgs},components,composables,directives,layouts/{modules,components/{Logo,Sidebar,Navbar,AppMain}},locales/modules/{zh-CN,en-US},plugins,router/{guards,modules},stores/modules,styles,types,utils,views/{login,dashboard,user,system}/components}
 # API
 touch src/api/{index,request}.ts
 touch src/api/types/{user,order}.ts
 touch src/api/modules/{user,order}.ts
+touch src/api/enums/{http-status,result-code,user-status}.ts
 # Components
 touch src/components/index.ts
 # Composables
