@@ -93,7 +93,7 @@ touch src/stores/modules/{app,user}.ts
 # Styles
 touch src/styles/{index,variables}.scss
 # Types (全局声明保留 .d.ts)
-touch src/types/{api,env,vue-shims}.d.ts
+touch src/types/{api,env,vue-shims,vue-router}.d.ts
 # Utils
 touch src/utils/{index,storage,format,validate}.ts
 # Views
