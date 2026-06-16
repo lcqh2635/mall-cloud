@@ -1,0 +1,112 @@
+{
+  "name": "vue3-app-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "A project built with Bun",
+  "author": {
+    "name": "龙茶清欢",
+    "email": "lcqh2635@gmail.com"
+  },
+  "license": "MIT",
+  "packageManager": "bun@1.1.20",
+  "engines": {
+    "bun": ">=1.1.20"
+  },
+  "scripts": {
+    "dev": "bun run --bun vite --mode development",
+    "test": "bun run --bun vitest --mode test",
+    "prod": "bun run --bun vite --mode production",
+    "build": "bun run --bun vue-tsc --noEmit && bun run --bun vite build",
+    "preview": "bun run --bun vite preview",
+    "format": "biome format --write .",
+    "lint": "biome lint --write .",
+    "check": "biome check --write .",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "tauri:build:android": "tauri android build",
+    "tauri:build:ios": "tauri ios build",
+    "distribute": "bun run tauri:build",
+    "docs:dev": "bun run --bun vitepress dev docs --open",
+    "docs:build": "bun run --bun vitepress build docs",
+    "docs:preview": "bun run --bun vitepress preview docs",
+    "commit": "cz",
+    "preinstall": "bunx only-allow bun",
+    "postinstall": "bun run scripts/setup.ts",
+    "prepare": "bun run scripts/prepare.ts",
+    "update": "bun update && cargo update --manifest-path src-tauri/Cargo.toml"
+  },
+  "dependencies": {
+    "@tiptap/starter-kit": "^3.24.0",
+    "@tiptap/vue-3": "^3.24.0",
+    "@unocss/reset": "^66.7.0",
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/integrations": "^14.3.0",
+    "axios": "^1.17.0",
+    "echarts": "^6.1.0",
+    "element-plus": "^2.14.1",
+    "mitt": "^3.0.1",
+    "nprogress": "^0.2.0",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "screenfull": "^6.0.2",
+    "vue": "^3.5.34",
+    "vue-echarts": "^8.0.1",
+    "vue-i18n": "^11.4.5",
+    "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "@iconify-json/ep": "^1.2.4",
+    "@intlify/unplugin-vue-i18n": "^11.2.3",
+    "@intlify/vue-i18n-extensions": "^9.0.0",
+    "@types/bun": "^1.3.14",
+    "@types/figlet": "^1.7.0",
+    "@types/nprogress": "^0.2.3",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/tsconfig": "^0.9.1",
+    "boxen": "^8.0.1",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "figlet": "^1.11.0",
+    "lefthook": "^2.1.9",
+    "postcss": "^8.5.14",
+    "postcss-preset-env": "^11.3.0",
+    "rollup-plugin-visualizer": "^7.0.1",
+    "sass": "^1.99.0",
+    "typescript": "~6.0.2",
+    "unocss": "^66.7.0",
+    "unplugin-auto-import": "^21.0.0",
+    "unplugin-icons": "^23.0.1",
+    "unplugin-turbo-console": "^2.3.2",
+    "unplugin-vue-components": "^32.1.0",
+    "vite": "^8.0.12",
+    "vite-plugin-compression2": "^2.5.3",
+    "vite-plugin-mock-dev-server": "^2.3.0",
+    "vite-plugin-vue-devtools": "^8.1.2",
+    "vitepress": "^1.6.4",
+    "vitest": "^4.1.8",
+    "vue-tsc": "^3.2.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcqh2635/tauri-bun-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lcqh2635/tauri-bun-ts/issues"
+  },
+  "homepage": "https://github.com/lcqh2635/tauri-bun-ts",
+  "keywords": [
+    "vue3",
+    "typescript",
+    "bun"
+  ],
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
