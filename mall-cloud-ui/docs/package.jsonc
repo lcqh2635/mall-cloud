@@ -14,9 +14,9 @@
     "bun": ">=1.1.20"
   },
   "scripts": {
-    "dev": "bun run --bun vite --mode development",
-    "test": "bun run --bun vitest --mode test",
-    "prod": "bun run --bun vite --mode production",
+    "dev": "bun run --bun vite",
+    "test": "bun run --bun vitest",
+    "prod": "bun run --bun vite",
     "build": "bun run --bun vue-tsc --noEmit && bun run --bun vite build",
     "preview": "bun run --bun vite preview",
     "format": "biome format --write .",

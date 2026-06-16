@@ -9,39 +9,32 @@
     "email": "lcqh2635@gmail.com"
   },
   "license": "MIT",
+  "engines": {
+    "bun": ">=1.1.20"
+  },
   "scripts": {
-    "comments": "// -b, --bun  强制脚本或包使用 Bun 的运行时而不是 Node.js",
-    "dev": "bun run --bun vite --mode .env.development",
-    "test": "bun run --bun vitest --mode .env.test",
-    "prod": "bun run --bun vite --mode .env.production",
+    "dev": "bun run --bun vite",
+    "test": "bun run --bun vitest",
+    "prod": "bun run --bun vite",
     "build": "bun run --bun vue-tsc --noEmit && bun run --bun vite build",
     "preview": "bun run --bun vite preview",
+    "format": "biome format --write .",
+    "lint": "biome lint --write .",
+    "check": "biome check --write .",
     "tauri": "tauri",
-    "tauri:dev": "bun run --bun tauri dev",
-    "tauri:build": "bun run --bun tauri build",
-    "tauri:build:android": "bun run --bun tauri android build",
-    "tauri:build:ios": "bun run --bun tauri ios build",
-    "distribute": "bun run --bun tauri build",
-    "format": "bun run --bun prettier --write .",
-    "preinstall": "npx only-allow bun",
-    "postinstall": "echo '依赖包下载完成...'",
-    "update": "bun update && cargo update --manifest-path src-tauri/Cargo.toml",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "tauri:build:android": "tauri android build",
+    "tauri:build:ios": "tauri ios build",
+    "distribute": "bun run tauri:build",
     "docs:dev": "bun run --bun vitepress dev docs --open",
     "docs:build": "bun run --bun vitepress build docs",
-    "docs:preview": "bun run --bun vitepress preview docs"
-  },
-  "lint-staged": {
-    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "biome check --files-ignore-unknown=true",
-      "biome check --write --no-errors-on-unmatched",
-      "biome check --write --organize-imports-enabled=false --no-errors-on-unmatched",
-      "biome check --write --unsafe --no-errors-on-unmatched",
-      "biome format --write --no-errors-on-unmatched",
-      "biome lint --write --no-errors-on-unmatched"
-    ],
-    "*": [
-      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
-    ]
+    "docs:preview": "bun run --bun vitepress preview docs",
+    "commit": "cz",
+    "preinstall": "bunx only-allow bun",
+    "postinstall": "bun run scripts/setup.ts",
+    "prepare": "bun run scripts/prepare.ts",
+    "update": "bun update && cargo update --manifest-path src-tauri/Cargo.toml"
   },
   "dependencies": {
     "@tauri-apps/api": "^2",
@@ -91,10 +84,6 @@
     "vitepress": "^1.6.4",
     "vitest": "^4.1.6",
     "vue-tsc": "^2.1.10"
-  },
-  "engines": {
-    "bun": ">=1.1.20",
-    "node": ">=28.0.0"
   },
   "repository": {
     "type": "git",
