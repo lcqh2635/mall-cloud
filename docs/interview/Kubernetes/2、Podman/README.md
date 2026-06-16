@@ -148,10 +148,10 @@ podman run -d \
   --hostname my_web_app \
   --restart=unless-stopped \
   -p 8080:80 \
-  -p 8443:443/udp \
+  -p 8443:443 \
   -e TZ=Asia/Shanghai \
   -e DB_PORT=5432 \
-  -v /opt/app/conf/nginx.conf:/etc/nginx/nginx.conf:ro,Z \
+  -v /opt/app/conf/nginx.conf:/etc/nginx/nginx.conf:ro \
   -v app_data:/var/www/html:Z \
   nginx:alpine
 ```
